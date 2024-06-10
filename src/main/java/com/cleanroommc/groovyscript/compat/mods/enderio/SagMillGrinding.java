@@ -12,7 +12,10 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import crazypants.enderio.base.recipe.sagmill.GrindingBall;
 import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SagMillGrinding extends VirtualizedRegistry<GrindingBall> {
@@ -120,11 +123,11 @@ public class SagMillGrinding extends VirtualizedRegistry<GrindingBall> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable GrindingBall register() {
-            if (!validate()) return null;
+        public @NotNull List<GrindingBall> register() {
+            if (!validate()) return Collections.emptyList();
             GrindingBall recipe = new GrindingBall(new RecipeInput(input.get(0)), grinding, chance, power, duration);
             ModSupport.ENDER_IO.get().sagMillGrinding.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

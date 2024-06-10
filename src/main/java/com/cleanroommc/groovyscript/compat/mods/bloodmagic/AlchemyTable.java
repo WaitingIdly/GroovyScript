@@ -15,9 +15,10 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(type = Admonition.Type.DANGER,
@@ -186,10 +187,10 @@ public class AlchemyTable extends VirtualizedRegistry<RecipeAlchemyTable> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeAlchemyTable register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeAlchemyTable> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeAlchemyTable recipe = ModSupport.BLOOD_MAGIC.get().alchemyTable.add(IngredientHelper.toIngredientNonNullList(input), output.get(0), syphon, ticks, minimumTier);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -10,8 +10,10 @@ import epicsquid.roots.recipe.FeyCraftingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static epicsquid.roots.init.ModRecipes.*;
@@ -121,12 +123,12 @@ public class FeyCrafter extends VirtualizedRegistry<Pair<ResourceLocation, FeyCr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FeyCraftingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<FeyCraftingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             FeyCraftingRecipe recipe = new FeyCraftingRecipe(output.get(0), xp);
             input.forEach(i -> recipe.addIngredient(i.toMcIngredient()));
             ModSupport.ROOTS.get().feyCrafter.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

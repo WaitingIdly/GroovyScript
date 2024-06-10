@@ -14,9 +14,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static epicsquid.roots.init.ModRecipes.addMortarRecipe;
@@ -259,10 +260,12 @@ public class Mortar extends VirtualizedRegistry<Pair<ResourceLocation, MortarRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MortarRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MortarRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             if (input.size() == 1 && generate) {
+                List<MortarRecipe> recipes = new ArrayList<>();
+
                 List<Ingredient> ingredients = new ArrayList<>();
                 int count = output.get(0).getCount();
 
@@ -273,14 +276,15 @@ public class Mortar extends VirtualizedRegistry<Pair<ResourceLocation, MortarRec
                     MortarRecipe recipe = new MortarRecipe(copy, ingredients.toArray(new Ingredient[0]), red1, green1, blue1, red2, green2, blue2);
                     recipe.setRegistryName(new ResourceLocation(name.toString() + "_" + i));
                     ModSupport.ROOTS.get().mortar.add(recipe.getRegistryName(), recipe);
+                    recipes.add(recipe);
                 }
-                return null;
+                return recipes;
             }
 
             MortarRecipe recipe = new MortarRecipe(output.get(0), input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new), red1, red2, green1, green2, blue1, blue2);
             recipe.setRegistryName(name);
             ModSupport.ROOTS.get().mortar.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
 
         }
     }

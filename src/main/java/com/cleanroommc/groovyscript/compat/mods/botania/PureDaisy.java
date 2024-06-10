@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePureDaisy;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class PureDaisy extends VirtualizedRegistry<RecipePureDaisy> {
@@ -177,11 +180,11 @@ public class PureDaisy extends VirtualizedRegistry<RecipePureDaisy> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipePureDaisy register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipePureDaisy> register() {
+            if (!validate()) return Collections.emptyList();
             RecipePureDaisy recipe = new RecipePureDaisy(input, output, time);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

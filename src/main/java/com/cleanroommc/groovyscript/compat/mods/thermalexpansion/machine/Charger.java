@@ -14,7 +14,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Charger extends VirtualizedRegistry<ChargerRecipe> {
@@ -41,7 +45,7 @@ public class Charger extends VirtualizedRegistry<ChargerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, item('minecraft:obsidian'), item('minecraft:diamond') * 2", commented = true))
-    public ChargerRecipe add(int energy, IIngredient input, ItemStack output) {
+    public List<ChargerRecipe> add(int energy, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -119,17 +123,17 @@ public class Charger extends VirtualizedRegistry<ChargerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ChargerRecipe register() {
-            if (!validate()) return null;
-            ChargerRecipe recipe = null;
+        public @NotNull List<ChargerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ChargerRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 // For some reason this specific Recipe is public. The rest aren't.
-                ChargerRecipe recipe1 = new ChargerRecipe(itemStack, output.get(0), energy);
-                ModSupport.THERMAL_EXPANSION.get().charger.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                ChargerRecipe recipe = new ChargerRecipe(itemStack, output.get(0), energy);
+                ModSupport.THERMAL_EXPANSION.get().charger.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

@@ -11,12 +11,13 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.FabricationChamberRecipes;
 import sonar.calculator.mod.common.recipes.FabricationSonarRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -120,14 +121,14 @@ public class FabricationChamber extends VirtualizedRegistry<FabricationSonarReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FabricationSonarRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<FabricationSonarRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             FabricationSonarRecipe recipe = FabricationChamberRecipes.instance()
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), output, new ArrayList<>(), true);
 
             ModSupport.CALCULATOR.get().fabricationChamber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

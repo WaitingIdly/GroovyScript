@@ -11,8 +11,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static epicsquid.roots.init.ModRecipes.getAnimalHarvestRecipes;
@@ -115,11 +117,11 @@ public class AnimalHarvest extends VirtualizedRegistry<Pair<ResourceLocation, An
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AnimalHarvestRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AnimalHarvestRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             AnimalHarvestRecipe recipe = new AnimalHarvestRecipe(name, entity);
             ModSupport.ROOTS.get().animalHarvest.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

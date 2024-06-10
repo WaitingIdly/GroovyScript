@@ -18,10 +18,12 @@ import net.minecraft.util.SoundEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -399,8 +401,8 @@ public class Cauldron extends VirtualizedRegistry<ICauldronRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICauldronRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICauldronRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             ICauldronRecipe recipe;
 
@@ -432,7 +434,7 @@ public class Cauldron extends VirtualizedRegistry<ICauldronRecipe> {
             }
 
             ModSupport.INSPIRATIONS.get().cauldron.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
 
 

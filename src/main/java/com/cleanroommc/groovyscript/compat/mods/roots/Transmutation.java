@@ -16,11 +16,9 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static epicsquid.roots.init.ModRecipes.removeTransmutationRecipe;
 
@@ -183,15 +181,15 @@ public class Transmutation extends VirtualizedRegistry<Pair<ResourceLocation, Tr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TransmutationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<TransmutationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             TransmutationRecipe recipe = new TransmutationRecipe(start);
             recipe.setRegistryName(name);
             if (state == null) recipe.item(output.get(0));
             else recipe.state(state);
             recipe.condition(condition);
             ModSupport.ROOTS.get().transmutation.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -14,10 +14,13 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import slimeknights.tconstruct.library.smeltery.CastingRecipe;
 import slimeknights.tconstruct.library.smeltery.ICastingRecipe;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class Casting implements IDynamicGroovyProperty {
@@ -156,12 +159,12 @@ public class Casting implements IDynamicGroovyProperty {
             }
 
             @Override
-            public @Nullable ICastingRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<ICastingRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 CastingRecipe recipe = new CastingRecipe(output.get(0), cast != null ? MeltingRecipeBuilder.recipeMatchFromIngredient(cast)
                                                                                      : null, fluidInput.get(0), time, consumesCast, false);
                 add(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }
@@ -281,12 +284,12 @@ public class Casting implements IDynamicGroovyProperty {
             }
 
             @Override
-            public @Nullable ICastingRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<ICastingRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 CastingRecipe recipe = new CastingRecipe(output.get(0), cast != null ? MeltingRecipeBuilder.recipeMatchFromIngredient(cast)
                                                                                      : null, fluidInput.get(0), time, consumesCast, false);
                 add(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }

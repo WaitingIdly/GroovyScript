@@ -11,9 +11,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -166,10 +167,10 @@ public class Meteor extends VirtualizedRegistry<WayofTime.bloodmagic.meteor.Mete
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WayofTime.bloodmagic.meteor.Meteor register() {
-            if (!validate()) return null;
+        public @NotNull List<WayofTime.bloodmagic.meteor.Meteor> register() {
+            if (!validate()) return Collections.emptyList();
             WayofTime.bloodmagic.meteor.Meteor recipe = ModSupport.BLOOD_MAGIC.get().meteor.add(catalyst, components, explosionStrength, radius, cost);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

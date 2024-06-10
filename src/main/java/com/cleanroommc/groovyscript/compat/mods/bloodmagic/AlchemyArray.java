@@ -15,7 +15,10 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class AlchemyArray extends VirtualizedRegistry<RecipeAlchemyArray> {
@@ -196,10 +199,10 @@ public class AlchemyArray extends VirtualizedRegistry<RecipeAlchemyArray> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeAlchemyArray register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeAlchemyArray> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeAlchemyArray recipe = ModSupport.BLOOD_MAGIC.get().alchemyArray.add(input.get(0).toMcIngredient(), catalyst.toMcIngredient(), output.get(0), texture);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

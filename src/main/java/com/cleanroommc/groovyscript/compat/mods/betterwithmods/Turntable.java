@@ -13,8 +13,9 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -153,12 +154,12 @@ public class Turntable extends VirtualizedRegistry<TurntableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TurntableRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<TurntableRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             TurntableRecipe recipe = new TurntableRecipe(input, output, outputBlock, rotations);
             ModSupport.BETTER_WITH_MODS.get().turntable.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

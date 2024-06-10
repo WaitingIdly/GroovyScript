@@ -10,7 +10,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.WeightedOre;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class StoneMiningLens extends VirtualizedRegistry<WeightedOre> {
@@ -118,11 +121,11 @@ public class StoneMiningLens extends VirtualizedRegistry<WeightedOre> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WeightedOre register() {
-            if (!validate()) return null;
+        public @NotNull List<WeightedOre> register() {
+            if (!validate()) return Collections.emptyList();
             WeightedOre recipe = new WeightedOre(ore, weight);
             ModSupport.ACTUALLY_ADDITIONS.get().stoneMiningLens.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

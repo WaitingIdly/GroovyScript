@@ -14,8 +14,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static epicsquid.roots.init.ModRecipes.*;
@@ -160,12 +162,12 @@ public class BarkCarving extends VirtualizedRegistry<Pair<ResourceLocation, Bark
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BarkRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BarkRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             BarkRecipe recipe;
             recipe = new BarkRecipe(name, output.get(0), input.get(0).toMcIngredient().getMatchingStacks()[0]);
             ModSupport.ROOTS.get().barkCarving.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

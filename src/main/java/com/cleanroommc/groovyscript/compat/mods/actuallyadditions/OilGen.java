@@ -11,7 +11,10 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.OilGenRecipe;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class OilGen extends VirtualizedRegistry<OilGenRecipe> {
@@ -130,11 +133,11 @@ public class OilGen extends VirtualizedRegistry<OilGenRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable OilGenRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<OilGenRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             OilGenRecipe recipe = new OilGenRecipe(fluidInput.get(0).getFluid().getName(), amount, time);
             ModSupport.ACTUALLY_ADDITIONS.get().oilGen.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

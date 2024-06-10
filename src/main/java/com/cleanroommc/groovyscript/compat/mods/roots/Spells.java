@@ -14,12 +14,9 @@ import epicsquid.roots.properties.PropertyTable;
 import epicsquid.roots.spell.SpellBase;
 import epicsquid.roots.spell.SpellRegistry;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RegistryDescription(
         reloadability = RegistryDescription.Reloadability.FLAWED,
@@ -253,11 +250,11 @@ public class Spells extends VirtualizedRegistry<SpellBase> {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @Nullable SpellBase.SpellRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<SpellBase.SpellRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 SpellBase.SpellRecipe recipe = new SpellBase.SpellRecipe(input.stream().map(IIngredient::toMcIngredient).toArray());
                 this.spell.setRecipe(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }
@@ -306,10 +303,10 @@ public class Spells extends VirtualizedRegistry<SpellBase> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Map<CostType, IModifierCost> register() {
-            if (!validate()) return null;
-            if (list.isEmpty()) return epicsquid.roots.modifiers.Cost.noCost();
-            return epicsquid.roots.modifiers.Cost.of(list.toArray(new IModifierCost[0]));
+        public @NotNull List<Map<CostType, IModifierCost>> register() {
+            if (!validate()) return Collections.emptyList();
+            if (list.isEmpty()) return Collections.singletonList(epicsquid.roots.modifiers.Cost.noCost());
+            return Collections.singletonList(epicsquid.roots.modifiers.Cost.of(list.toArray(new IModifierCost[0])));
         }
     }
 }

@@ -10,8 +10,10 @@ import epicsquid.roots.recipe.PyreCraftingRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static epicsquid.roots.init.ModRecipes.*;
@@ -141,14 +143,14 @@ public class Pyre extends VirtualizedRegistry<Pair<ResourceLocation, PyreCraftin
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PyreCraftingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PyreCraftingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PyreCraftingRecipe recipe = new PyreCraftingRecipe(output.get(0), xp);
             input.forEach(i -> recipe.addIngredient(i.toMcIngredient()));
             recipe.setBurnTime(this.burnTime);
             recipe.setName(name.toString());
             ModSupport.ROOTS.get().pyre.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

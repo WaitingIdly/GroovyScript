@@ -19,10 +19,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.codehaus.groovy.runtime.MethodClosure;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Resonator extends VirtualizedRegistry<IResonatorRecipe> {
@@ -194,11 +196,10 @@ public class Resonator extends VirtualizedRegistry<IResonatorRecipe> {
             msg.add(energy < 100, () -> "energy must not be less than 1 GP (100)");
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public IResonatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IResonatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IResonatorRecipe recipe = new ResonatorRecipe(input.get(0).getMatchingStacks()[0], output.get(0), energy, ownerTag) {
                 public String getRequirementText() {
                     return requirementText == null ? "" : requirementText;
@@ -209,7 +210,7 @@ public class Resonator extends VirtualizedRegistry<IResonatorRecipe> {
                 }
             };
             ModSupport.EXTRA_UTILITIES_2.get().resonator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

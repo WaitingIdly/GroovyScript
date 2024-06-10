@@ -14,9 +14,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -193,9 +194,10 @@ public class LightTransmutation extends VirtualizedRegistry<LightOreTransmutatio
             if (outStack == null && output != null) outStack = new ItemStack(output.getBlock());
         }
 
+        @Override
         @RecipeBuilderRegistrationMethod
-        public LightOreTransmutations.Transmutation register() {
-            if (!validate()) return null;
+        public @NotNull List<LightOreTransmutations.Transmutation> register() {
+            if (!validate()) return Collections.emptyList();
             LightOreTransmutations.Transmutation recipe;
             if (inBlock == null) {
                 recipe = new LightOreTransmutations.Transmutation(input, output, inStack, outStack, cost);
@@ -204,7 +206,7 @@ public class LightTransmutation extends VirtualizedRegistry<LightOreTransmutatio
             }
             recipe.setRequiredType(constellation);
             ModSupport.ASTRAL_SORCERY.get().lightTransmutation.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

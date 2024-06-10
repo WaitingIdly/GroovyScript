@@ -17,9 +17,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -248,11 +249,11 @@ public class Melting extends MeltingRecipeRegistry {
             }
 
             @Override
-            public @Nullable EntityMeltingRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<EntityMeltingRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 EntityMeltingRecipe recipe = new EntityMeltingRecipe(input, output);
                 add(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }

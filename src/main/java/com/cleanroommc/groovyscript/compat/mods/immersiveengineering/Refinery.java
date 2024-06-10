@@ -9,8 +9,9 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -131,11 +132,11 @@ public class Refinery extends VirtualizedRegistry<RefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RefineryRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RefineryRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RefineryRecipe recipe = new RefineryRecipe(fluidOutput.get(0), fluidInput.get(0), fluidInput.get(1), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().refinery.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

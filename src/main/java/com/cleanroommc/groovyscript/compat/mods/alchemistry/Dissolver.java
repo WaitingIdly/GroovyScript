@@ -10,12 +10,9 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -167,18 +164,17 @@ public class Dissolver extends VirtualizedRegistry<DissolverRecipe> {
             msg.add(rolls < 1, "rolls must be greater than or equal to 1, yet it was {}", rolls);
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public DissolverRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DissolverRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             DissolverRecipe recipe = new DissolverRecipe(input.get(0).toMcIngredient(), false, new ProbabilitySet(probabilityGroup, relativeProbability, rolls));
             if (reversible) {
                 ModSupport.ALCHEMISTRY.get().combiner.add(new CombinerRecipe(recipe.getInputs().get(0), probabilityGroup.stream().map(ProbabilityGroup::getOutput).flatMap(Collection::stream).collect(Collectors.toList()), ""));
             }
             ModSupport.ALCHEMISTRY.get().dissolver.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

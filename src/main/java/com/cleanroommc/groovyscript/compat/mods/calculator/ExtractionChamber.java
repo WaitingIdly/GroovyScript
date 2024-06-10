@@ -8,12 +8,13 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.calculator.mod.common.recipes.ExtractionChamberRecipes;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -120,8 +121,8 @@ public class ExtractionChamber extends VirtualizedRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CalculatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CalculatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             List<Object> specialOutput = new ArrayList<>();
             specialOutput.add(output.get(0));
@@ -132,7 +133,7 @@ public class ExtractionChamber extends VirtualizedRegistry<CalculatorRecipe> {
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), specialOutput, new ArrayList<>(), false);
 
             ModSupport.CALCULATOR.get().extractionChamber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -18,9 +18,10 @@ import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
 import crazypants.enderio.base.recipe.slicensplice.SliceAndSpliceRecipeManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -148,8 +149,8 @@ public class SliceNSplice extends VirtualizedRegistry<IManyToOneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeOutput recipeOutput = new RecipeOutput(output.get(0), 1, xp);
             List<IRecipeInput> inputs = new ArrayList<>();
             for (int i = 0; i < input.size(); i++) {
@@ -159,7 +160,7 @@ public class SliceNSplice extends VirtualizedRegistry<IManyToOneRecipe> {
             }
             ManyToOneRecipe recipe = new ManyToOneRecipe(recipeOutput, energy, RecipeBonusType.NONE, RecipeLevel.IGNORE, inputs.toArray(new IRecipeInput[0]));
             ModSupport.ENDER_IO.get().sliceNSplice.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

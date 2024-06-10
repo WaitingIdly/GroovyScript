@@ -8,12 +8,14 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.calculator.mod.common.recipes.StoneSeparatorRecipes;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class StoneSeparator extends VirtualizedRegistry<CalculatorRecipe> {
@@ -101,14 +103,14 @@ public class StoneSeparator extends VirtualizedRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CalculatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CalculatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = StoneSeparatorRecipes.instance()
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), output, new ArrayList<>(), false);
 
             ModSupport.CALCULATOR.get().stoneSeparator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

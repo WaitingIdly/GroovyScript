@@ -11,7 +11,7 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.lexicon.KnowledgeType;
 import vazkii.botania.api.lexicon.LexiconCategory;
@@ -428,8 +428,8 @@ public class Lexicon {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @Nullable LexiconEntry register() {
-                if (!validate()) return null;
+            public @NotNull List<LexiconEntry> register() {
+                if (!validate()) return Collections.emptyList();
                 LexiconEntry entry = new LexiconEntry(name, category);
                 if (priority) entry.setPriority();
                 entry.setKnowledgeType(type);
@@ -437,7 +437,7 @@ public class Lexicon {
                 pages.forEach(entry::addPage);
                 extraRecipes.forEach(entry::addExtraDisplayedRecipe);
                 add(entry);
-                return entry;
+                return Collections.singletonList(entry);
             }
         }
     }

@@ -13,8 +13,10 @@ import epicsquid.roots.util.IngredientWithStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -147,12 +149,12 @@ public class Chrysopoeia extends VirtualizedRegistry<Pair<ResourceLocation, Chry
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ChrysopoeiaRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ChrysopoeiaRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ChrysopoeiaRecipe recipe = new ChrysopoeiaRecipe(new IngredientWithStack(IngredientHelper.toItemStack(input.get(0))), output.get(0)/*, byproduct, overload, byproductChance*/);
             recipe.setRegistryName(name);
             ModSupport.ROOTS.get().chrysopoeia.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

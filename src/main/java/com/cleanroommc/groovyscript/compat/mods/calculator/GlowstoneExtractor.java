@@ -8,12 +8,14 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.GlowstoneExtractorRecipes;
 import sonar.core.recipes.DefaultSonarRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class GlowstoneExtractor extends VirtualizedRegistry<DefaultSonarRecipe.Value> {
@@ -95,14 +97,14 @@ public class GlowstoneExtractor extends VirtualizedRegistry<DefaultSonarRecipe.V
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DefaultSonarRecipe.Value register() {
-            if (!validate()) return null;
+        public @NotNull List<DefaultSonarRecipe.Value> register() {
+            if (!validate()) return Collections.emptyList();
 
             DefaultSonarRecipe.Value recipe = GlowstoneExtractorRecipes.instance()
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), output, Arrays.asList(value), false);
 
             ModSupport.CALCULATOR.get().glowstoneExtractor.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

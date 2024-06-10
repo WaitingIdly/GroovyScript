@@ -7,10 +7,13 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import rustic.common.crafting.BrewingBarrelRecipe;
 import rustic.common.crafting.IBrewingBarrelRecipe;
 import rustic.common.crafting.Recipes;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class BrewingBarrel extends VirtualizedRegistry<IBrewingBarrelRecipe> {
@@ -89,11 +92,11 @@ public class BrewingBarrel extends VirtualizedRegistry<IBrewingBarrelRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IBrewingBarrelRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IBrewingBarrelRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IBrewingBarrelRecipe recipe = new BrewingBarrelRecipe(fluidOutput.get(0), fluidInput.get(0));
             ModSupport.RUSTIC.get().brewingBarrel.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

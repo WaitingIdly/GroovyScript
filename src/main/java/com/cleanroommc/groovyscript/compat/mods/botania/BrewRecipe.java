@@ -9,11 +9,12 @@ import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeBrew;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -130,12 +131,12 @@ public class BrewRecipe extends VirtualizedRegistry<RecipeBrew> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeBrew register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeBrew> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeBrew recipe = new RecipeBrew(brew, input.stream().map(i -> i instanceof OreDictIngredient ? ((OreDictIngredient) i).getOreDict()
                                                                                                             : i.getMatchingStacks()[0]).toArray());
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

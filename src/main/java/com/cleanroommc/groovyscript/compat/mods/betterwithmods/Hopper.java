@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.helper.ingredient.ItemStackList;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Hopper extends VirtualizedRegistry<HopperInteractions.HopperRecipe> {
@@ -129,12 +131,12 @@ public class Hopper extends VirtualizedRegistry<HopperInteractions.HopperRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable HopperInteractions.HopperRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<HopperInteractions.HopperRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
-            HopperInteractions.HopperRecipe recipe = new HopperInteractions.HopperRecipe(name.toString(), input.get(0).toMcIngredient(), output, inWorldItemOutput);
+            HopperInteractions.HopperRecipe recipe = new HopperInteractions.HopperRecipe(super.name.toString(), input.get(0).toMcIngredient(), output, inWorldItemOutput);
             ModSupport.BETTER_WITH_MODS.get().hopper.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

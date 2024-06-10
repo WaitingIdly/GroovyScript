@@ -13,8 +13,10 @@ import org.cyclops.evilcraft.block.EnvironmentalAccumulatorConfig;
 import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeComponent;
 import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipeProperties;
 import org.cyclops.evilcraft.core.weather.WeatherType;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 @RegistryDescription
@@ -178,8 +180,8 @@ public class EnvironmentalAccumulator extends VirtualizedRegistry<IRecipe<Enviro
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>> register() {
+            if (!validate()) return Collections.emptyList();
             IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe =
                     org.cyclops.evilcraft.block.EnvironmentalAccumulator.getInstance().getRecipeRegistry().registerRecipe(
                             new EnvironmentalAccumulatorRecipeComponent(input.get(0).toMcIngredient(), inputWeather),
@@ -187,7 +189,7 @@ public class EnvironmentalAccumulator extends VirtualizedRegistry<IRecipe<Enviro
                             new EnvironmentalAccumulatorRecipeProperties(duration, cooldowntime, processingspeed)
                     );
             ModSupport.EVILCRAFT.get().environmentalAccumulator.add(recipe, false);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

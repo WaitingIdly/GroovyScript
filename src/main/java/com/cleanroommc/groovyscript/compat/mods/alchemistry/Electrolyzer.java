@@ -13,9 +13,11 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Electrolyzer extends VirtualizedRegistry<ElectrolyzerRecipe> {
@@ -156,18 +158,17 @@ public class Electrolyzer extends VirtualizedRegistry<ElectrolyzerRecipe> {
             msg.add(consumptionChance < 0 || consumptionChance > 100, "consumption chance must be between 0 and 100, yet it was {}", consumptionChance);
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public ElectrolyzerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ElectrolyzerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ElectrolyzerRecipe recipe = new ElectrolyzerRecipe(fluidInput.get(0),
                                                                input.size() >= 1 ? input.get(0).toMcIngredient() : Ingredient.EMPTY, consumptionChance,
                                                                output.get(0), output.getOrEmpty(1),
                                                                output.getOrEmpty(2), chance.size() >= 1 ? chance.getInt(0) : 0,
                                                                output.getOrEmpty(3), chance.size() >= 2 ? chance.getInt(1) : 0);
             ModSupport.ALCHEMISTRY.get().electrolyzer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

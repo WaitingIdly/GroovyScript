@@ -12,13 +12,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import rustic.common.crafting.ICondenserRecipe;
 import rustic.common.crafting.Recipes;
 import rustic.common.items.ModItems;
 import rustic.common.util.ElixirUtils;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Alchemy extends VirtualizedRegistry<ICondenserRecipe> {
@@ -154,15 +156,15 @@ public class Alchemy extends VirtualizedRegistry<ICondenserRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICondenserRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICondenserRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             ICondenserRecipe recipe = new CondenserRecipe(output.get(0), input, modifier, bottle,
                                                           fluidInput.isEmpty() ? new FluidStack(FluidRegistry.WATER, 125) : fluidInput.getOrEmpty(0),
                                                           time, advanced);
 
             ModSupport.RUSTIC.get().alchemy.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

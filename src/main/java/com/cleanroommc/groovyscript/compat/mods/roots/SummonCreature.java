@@ -14,8 +14,9 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -123,12 +124,12 @@ public class SummonCreature extends VirtualizedRegistry<Pair<ResourceLocation, S
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SummonCreatureRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SummonCreatureRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             List<Ingredient> ingredients = input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList());
             SummonCreatureRecipe recipe = new SummonCreatureRecipe(name, entity, ingredients);
             ModSupport.ROOTS.get().summonCreature.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

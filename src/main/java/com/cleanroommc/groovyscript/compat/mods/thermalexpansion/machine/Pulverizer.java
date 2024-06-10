@@ -14,7 +14,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
@@ -41,7 +45,7 @@ public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), item('minecraft:gold_ingot'), item('minecraft:gold_ingot'), 100"))
-    public PulverizerRecipe add(int energy, IIngredient input, ItemStack primaryOutput, ItemStack secondaryOutput, int chance) {
+    public List<PulverizerRecipe> add(int energy, IIngredient input, ItemStack primaryOutput, ItemStack secondaryOutput, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -131,16 +135,16 @@ public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PulverizerRecipe register() {
-            if (!validate()) return null;
-            PulverizerRecipe recipe = null;
+        public @NotNull List<PulverizerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<PulverizerRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                PulverizerRecipe recipe1 = PulverizerRecipeAccessor.createPulverizerRecipe(itemStack, output.get(0), output.getOrEmpty(1), chance, energy);
-                ModSupport.THERMAL_EXPANSION.get().pulverizer.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                PulverizerRecipe recipe = PulverizerRecipeAccessor.createPulverizerRecipe(itemStack, output.get(0), output.getOrEmpty(1), chance, energy);
+                ModSupport.THERMAL_EXPANSION.get().pulverizer.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

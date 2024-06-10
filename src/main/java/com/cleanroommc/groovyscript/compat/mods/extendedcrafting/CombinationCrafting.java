@@ -15,9 +15,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(value = "groovyscript.wiki.extendedcrafting.combination_crafting.note0", type = Admonition.Type.INFO, format = Admonition.Format.STANDARD)
@@ -184,14 +186,13 @@ public class CombinationCrafting extends VirtualizedRegistry<CombinationRecipe> 
             msg.add(perTick < 0, () -> "per tick must not be negative");
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public CombinationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CombinationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CombinationRecipe recipe = new CombinationRecipe(output.get(0), cost, perTick, input.get(0).toMcIngredient(), IngredientHelper.toIngredientNonNullList(pedestals));
             ModSupport.EXTENDED_CRAFTING.get().combinationCrafting.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

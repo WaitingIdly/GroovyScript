@@ -10,7 +10,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.KilnPitRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Kiln extends ForgeRegistryWrapper<KilnPitRecipe> {
@@ -25,7 +28,7 @@ public class Kiln extends ForgeRegistryWrapper<KilnPitRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'clay_to_iron', item('minecraft:clay_ball') * 5, item('minecraft:iron_ingot'), 1200, 0.5f, [item('minecraft:dirt'), item('minecraft:cobblestone')]"))
-    public KilnPitRecipe add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, Iterable<ItemStack> failureOutput) {
+    public List<KilnPitRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, Iterable<ItemStack> failureOutput) {
         return recipeBuilder()
                 .burnTime(burnTime)
                 .failureChance(failureChance)
@@ -128,11 +131,11 @@ public class Kiln extends ForgeRegistryWrapper<KilnPitRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable KilnPitRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<KilnPitRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             KilnPitRecipe recipe = new KilnPitRecipe(output.get(0), input.get(0).toMcIngredient(), burnTime, failureChance, failureOutput.toArray(new ItemStack[0])).setRegistryName(name);
             PyroTech.kiln.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

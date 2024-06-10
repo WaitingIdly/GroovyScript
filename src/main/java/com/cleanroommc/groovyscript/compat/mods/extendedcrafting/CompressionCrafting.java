@@ -14,7 +14,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CompressionCrafting extends VirtualizedRegistry<CompressorRecipe> {
@@ -177,14 +180,13 @@ public class CompressionCrafting extends VirtualizedRegistry<CompressorRecipe> {
             msg.add(powerRate < 0, "power rate must not be negative");
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public CompressorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CompressorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CompressorRecipe recipe = new CompressorRecipe(output.get(0), input.get(0).toMcIngredient(), inputCount, catalyst.toMcIngredient(), consumeCatalyst, powerCost, powerRate);
             ModSupport.EXTENDED_CRAFTING.get().compressionCrafting.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

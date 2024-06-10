@@ -14,7 +14,10 @@ import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class AtomicReconstructor extends VirtualizedRegistry<LensConversionRecipe> {
@@ -121,11 +124,11 @@ public class AtomicReconstructor extends VirtualizedRegistry<LensConversionRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable LensConversionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<LensConversionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             LensConversionRecipe recipe = new LensConversionRecipe(input.get(0).toMcIngredient(), output.get(0), energyUse, ActuallyAdditionsAPI.lensDefaultConversion);
             ModSupport.ACTUALLY_ADDITIONS.get().atomicReconstructor.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

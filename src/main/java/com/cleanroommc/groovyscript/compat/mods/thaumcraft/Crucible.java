@@ -13,7 +13,7 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -21,10 +21,7 @@ import thaumcraft.api.crafting.CrucibleRecipe;
 import thaumcraft.api.crafting.IThaumcraftRecipe;
 import thaumcraft.common.config.ConfigRecipes;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -175,9 +172,11 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrucibleRecipe register() {
-            if (!validate()) return null;
-            return ModSupport.THAUMCRAFT.get().crucible.add(researchKey, this.output.get(0), catalyst, aspects);
+        public @NotNull List<CrucibleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            CrucibleRecipe recipe = new CrucibleRecipe(researchKey, output.get(0), catalyst.toMcIngredient(), aspects);
+            ModSupport.THAUMCRAFT.get().crucible.add(recipe);
+            return Collections.singletonList(recipe);
         }
     }
 }

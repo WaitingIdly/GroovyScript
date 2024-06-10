@@ -13,8 +13,10 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 import static epicsquid.roots.init.ModRecipes.getRunicShearRecipes;
@@ -155,11 +157,11 @@ public class RunicShearBlock extends VirtualizedRegistry<Pair<ResourceLocation, 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RunicShearRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RunicShearRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RunicShearRecipe recipe = new RunicShearRecipe(name, state, replacementState, output.get(0), displayItem);
             ModSupport.ROOTS.get().runicShearBlock.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

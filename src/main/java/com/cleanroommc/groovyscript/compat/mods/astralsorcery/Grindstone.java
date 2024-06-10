@@ -13,6 +13,10 @@ import hellfirepvp.astralsorcery.common.crafting.grindstone.GrindstoneRecipe;
 import hellfirepvp.astralsorcery.common.crafting.grindstone.GrindstoneRecipeRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Grindstone extends VirtualizedRegistry<GrindstoneRecipe> {
@@ -128,12 +132,13 @@ public class Grindstone extends VirtualizedRegistry<GrindstoneRecipe> {
             msg.add(secondaryChance < 0 || secondaryChance > 1, () -> "Secondary chance must be between [0,1]. Instead found " + secondaryChance + ".");
         }
 
+        @Override
         @RecipeBuilderRegistrationMethod
-        public GrindstoneRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<GrindstoneRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             GrindstoneRecipe recipe = new GrindstoneRecipe(AstralSorcery.toItemHandle(input.get(0)), output.get(0), weight, secondaryChance);
             ModSupport.ASTRAL_SORCERY.get().grindstone.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

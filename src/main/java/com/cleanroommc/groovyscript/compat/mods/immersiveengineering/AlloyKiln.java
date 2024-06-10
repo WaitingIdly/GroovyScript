@@ -12,8 +12,9 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -131,11 +132,11 @@ public class AlloyKiln extends VirtualizedRegistry<AlloyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AlloyRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AlloyRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             AlloyRecipe recipe = new AlloyRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), ImmersiveEngineering.toIngredientStack(input.get(1)), time);
             ModSupport.IMMERSIVE_ENGINEERING.get().alloyKiln.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

@@ -11,7 +11,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Evaporator extends VirtualizedRegistry<EvaporatorRecipe> {
@@ -31,7 +34,7 @@ public class Evaporator extends VirtualizedRegistry<EvaporatorRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public EvaporatorRecipe add(FluidStack input, ItemStack output) {
+    public List<EvaporatorRecipe> add(FluidStack input, ItemStack output) {
         return new RecipeBuilder().fluidInput(input).output(output).register();
     }
 
@@ -99,14 +102,13 @@ public class Evaporator extends VirtualizedRegistry<EvaporatorRecipe> {
             validateFluids(msg, 1, 1, 0, 0);
         }
 
-        @Nullable
         @Override
         @RecipeBuilderRegistrationMethod
-        public EvaporatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<EvaporatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             EvaporatorRecipe recipe = new EvaporatorRecipe(fluidInput.get(0), output.get(0));
             ModSupport.ALCHEMISTRY.get().evaporator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

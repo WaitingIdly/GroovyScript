@@ -10,11 +10,12 @@ import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePetals;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,12 +124,12 @@ public class Apothecary extends VirtualizedRegistry<RecipePetals> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipePetals register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipePetals> register() {
+            if (!validate()) return Collections.emptyList();
             RecipePetals recipe = new RecipePetals(output.get(0), input.stream().map(i -> i instanceof OreDictIngredient ? ((OreDictIngredient) i).getOreDict()
                                                                                                                          : i.getMatchingStacks()[0]).toArray());
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

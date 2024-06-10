@@ -16,7 +16,10 @@ import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.block.BloodInfuserConfig;
 import org.cyclops.evilcraft.core.recipe.custom.DurationXpRecipeProperties;
 import org.cyclops.evilcraft.core.recipe.custom.IngredientFluidStackAndTierRecipeComponent;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class BloodInfuser extends VirtualizedRegistry<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> {
@@ -152,8 +155,8 @@ public class BloodInfuser extends VirtualizedRegistry<IRecipe<IngredientFluidSta
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> register() {
+            if (!validate()) return Collections.emptyList();
             IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> recipe =
                     org.cyclops.evilcraft.block.BloodInfuser.getInstance().getRecipeRegistry().registerRecipe(
                             new IngredientFluidStackAndTierRecipeComponent(input.get(0).toMcIngredient(), fluidInput.get(0), tier),
@@ -161,7 +164,7 @@ public class BloodInfuser extends VirtualizedRegistry<IRecipe<IngredientFluidSta
                             new DurationXpRecipeProperties(duration, xp)
                     );
             ModSupport.EVILCRAFT.get().bloodInfuser.add(recipe, false);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

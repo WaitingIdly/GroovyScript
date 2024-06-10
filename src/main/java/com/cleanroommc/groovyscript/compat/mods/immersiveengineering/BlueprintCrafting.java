@@ -14,10 +14,11 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -190,12 +191,12 @@ public class BlueprintCrafting extends VirtualizedRegistry<BlueprintCraftingReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BlueprintCraftingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BlueprintCraftingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Object[] inputs = ArrayUtils.mapToArray(input, ImmersiveEngineering::toIngredientStack);
             BlueprintCraftingRecipe recipe = new BlueprintCraftingRecipe(category, output.get(0), inputs);
             ModSupport.IMMERSIVE_ENGINEERING.get().blueprint.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

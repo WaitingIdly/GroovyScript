@@ -15,7 +15,10 @@ import org.cyclops.integrateddynamics.Configs;
 import org.cyclops.integrateddynamics.block.BlockDryingBasin;
 import org.cyclops.integrateddynamics.block.BlockDryingBasinConfig;
 import org.cyclops.integrateddynamics.block.BlockMechanicalDryingBasin;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class DryingBasin extends VirtualizedRegistry<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> {
@@ -148,8 +151,8 @@ public class DryingBasin extends VirtualizedRegistry<IRecipe<IngredientAndFluidS
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties> register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> register() {
+            if (!validate()) return Collections.emptyList();
 
             ItemStack itemInput = input.isEmpty() ? ItemStack.EMPTY : IngredientHelper.toItemStack(input.get(0));
 

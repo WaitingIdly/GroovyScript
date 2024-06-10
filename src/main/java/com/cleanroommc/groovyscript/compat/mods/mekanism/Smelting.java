@@ -15,6 +15,7 @@ import mekanism.common.recipe.outputs.ItemStackOutput;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -91,13 +92,13 @@ public class Smelting extends VirtualizedMekanismRegistry<SmeltingRecipe> {
         @RecipeBuilderRegistrationMethod
         public @NotNull List<SmeltingRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            SmeltingRecipe recipe = null;
+            List<SmeltingRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 SmeltingRecipe r = new SmeltingRecipe(itemStack.copy(), output.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().smelting.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

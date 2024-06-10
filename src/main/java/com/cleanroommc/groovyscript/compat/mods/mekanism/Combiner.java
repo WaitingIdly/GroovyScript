@@ -13,6 +13,7 @@ import mekanism.common.recipe.machines.CombinerRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -96,13 +97,13 @@ public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
         @RecipeBuilderRegistrationMethod
         public @NotNull List<CombinerRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            CombinerRecipe recipe = null;
+            List<CombinerRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 CombinerRecipe r = new CombinerRecipe(itemStack.copy(), extra, output.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().combiner.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 

@@ -15,9 +15,10 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -171,11 +172,11 @@ public class FlowerGeneration extends VirtualizedRegistry<FlowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FlowerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<FlowerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             FlowerRecipe recipe = new FlowerRecipe(super.name, flower, allowedSoils);
             ModSupport.ROOTS.get().flowerGeneration.add(super.name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

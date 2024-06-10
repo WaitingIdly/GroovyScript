@@ -27,7 +27,7 @@ import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -201,10 +201,10 @@ public class AlloySmelter extends VirtualizedRegistry<IManyToOneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Void register() {
-            if (!validate()) return null;
+        public @NotNull List<Void> register() {
+            if (!validate()) return Collections.emptyList();
             AlloyRecipeManager.getInstance().addRecipe(true, ArrayUtils.mapToList(input, RecipeInput::new, new NNList<>()), output.get(0), energy, xp, level);
-            return null;
+            return Collections.emptyList(); // TODO make return different stuff
         }
     }
 }

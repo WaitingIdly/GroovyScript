@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.gildedgames.the_aether.api.enchantments.AetherEnchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Enchanter extends ForgeRegistryWrapper<AetherEnchantment> {
@@ -70,12 +73,12 @@ public class Enchanter extends ForgeRegistryWrapper<AetherEnchantment> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable AetherEnchantment register() {
-            if (!validate()) return null;
+        public @NotNull List<AetherEnchantment> register() {
+            if (!validate()) return Collections.emptyList();
 
             AetherEnchantment enchantment = new AetherEnchantment(input.get(0).getMatchingStacks()[0], output.get(0), time);
             ModSupport.AETHER.get().enchanter.add(enchantment);
-            return enchantment;
+            return Collections.singletonList(enchantment);
         }
     }
 }

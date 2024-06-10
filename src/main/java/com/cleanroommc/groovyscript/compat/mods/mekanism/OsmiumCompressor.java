@@ -15,7 +15,10 @@ import mekanism.common.recipe.inputs.AdvancedMachineInput;
 import mekanism.common.recipe.machines.OsmiumCompressorRecipe;
 import mekanism.common.recipe.outputs.ItemStackOutput;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompressorRecipe> {
@@ -74,8 +77,8 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable OsmiumCompressorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<OsmiumCompressorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Gas gas = gasInput.isEmpty() ? MekanismFluids.LiquidOsmium : gasInput.get(0).getGas();
             OsmiumCompressorRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
@@ -83,7 +86,7 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().osmiumCompressor.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

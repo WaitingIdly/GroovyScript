@@ -10,7 +10,11 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CompostBinRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CompostBin extends ForgeRegistryWrapper<CompostBinRecipe> {
@@ -26,7 +30,7 @@ public class CompostBin extends ForgeRegistryWrapper<CompostBinRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay2', ore('ingotIron') * 5, item('minecraft:clay_ball') * 20, 2"))
-    public CompostBinRecipe add(String name, IIngredient input, ItemStack output, int compostValue) {
+    public List<CompostBinRecipe> add(String name, IIngredient input, ItemStack output, int compostValue) {
         return recipeBuilder()
                 .compostValue(compostValue)
                 .name(name)
@@ -100,21 +104,23 @@ public class CompostBin extends ForgeRegistryWrapper<CompostBinRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable CompostBinRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CompostBinRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack[] in = input.get(0).getMatchingStacks();
             if (in.length > 1) {
                 int j = 1;
+                List<CompostBinRecipe> recipes = new ArrayList<>();
                 for (ItemStack i : in) {
                     ResourceLocation rl = new ResourceLocation(super.name.getNamespace(), super.name.getPath() + "_" + (j++));
                     CompostBinRecipe recipe = new CompostBinRecipe(output.get(0), i, compostValue).setRegistryName(rl);
                     PyroTech.compostBin.add(recipe);
+                    recipes.add(recipe);
                 }
-                return null;
+                return recipes;
             }
             CompostBinRecipe recipe = new CompostBinRecipe(output.get(0), in[0], compostValue).setRegistryName(super.name);
             PyroTech.compostBin.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

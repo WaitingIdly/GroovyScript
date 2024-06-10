@@ -11,7 +11,10 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.ChoppingBlockRecipe;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ChoppingBlock extends ForgeRegistryWrapper<ChoppingBlockRecipe> {
@@ -96,11 +99,11 @@ public class ChoppingBlock extends ForgeRegistryWrapper<ChoppingBlockRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable ChoppingBlockRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ChoppingBlockRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ChoppingBlockRecipe recipe = new ChoppingBlockRecipe(output.get(0), input.get(0).toMcIngredient(), chops.toIntArray(), quantities.toIntArray()).setRegistryName(super.name);
             PyroTech.choppingBlock.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

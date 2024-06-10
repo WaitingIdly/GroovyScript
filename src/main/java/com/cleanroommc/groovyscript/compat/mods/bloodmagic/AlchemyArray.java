@@ -12,7 +12,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -179,11 +182,11 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeAlchemyArray register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeAlchemyArray> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeAlchemyArray recipe = new RecipeAlchemyArray(input.get(0).toMcIngredient(), catalyst.toMcIngredient(), output.get(0), texture);
             ModSupport.BLOOD_MAGIC.get().alchemyArray.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

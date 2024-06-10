@@ -10,9 +10,11 @@ import epicsquid.roots.properties.Property;
 import epicsquid.roots.properties.PropertyTable;
 import epicsquid.roots.ritual.RitualBase;
 import epicsquid.roots.ritual.RitualRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         reloadability = RegistryDescription.Reloadability.FLAWED,
@@ -152,11 +154,11 @@ public class Rituals extends VirtualizedRegistry<RitualBase> {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @Nullable RitualBase.RitualRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<RitualBase.RitualRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 RitualBase.RitualRecipe recipe = new RitualBase.RitualRecipe(ritual, input.stream().map(IIngredient::toMcIngredient).toArray());
                 this.ritual.setRecipe(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }

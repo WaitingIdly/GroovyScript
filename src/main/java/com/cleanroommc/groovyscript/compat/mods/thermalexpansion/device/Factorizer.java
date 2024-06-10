@@ -16,10 +16,9 @@ import com.google.common.primitives.Booleans;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -51,7 +50,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public FactorizerManager.FactorizerRecipe add(boolean combine, boolean split, IIngredient input, ItemStack output) {
+    public List<FactorizerManager.FactorizerRecipe> add(boolean combine, boolean split, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .combine(combine)
                 .split(split)
@@ -183,23 +182,23 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FactorizerManager.FactorizerRecipe register() {
-            if (!validate()) return null;
-            FactorizerManager.FactorizerRecipe recipe = null;
+        public @NotNull List<FactorizerManager.FactorizerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<FactorizerManager.FactorizerRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 if (combine) {
-                    FactorizerManager.FactorizerRecipe recipe1 = FactorizerRecipeAccessor.createFactorizerRecipe(itemStack, output.get(0));
-                    ModSupport.THERMAL_EXPANSION.get().factorizer.add(false, recipe1);
-                    if (recipe == null) recipe = recipe1;
+                    FactorizerManager.FactorizerRecipe recipe = FactorizerRecipeAccessor.createFactorizerRecipe(itemStack, output.get(0));
+                    ModSupport.THERMAL_EXPANSION.get().factorizer.add(false, recipe);
+                    recipes.add(recipe);
                 }
                 if (split) {
-                    FactorizerManager.FactorizerRecipe recipe1 = FactorizerRecipeAccessor.createFactorizerRecipe(output.get(0), itemStack);
-                    ModSupport.THERMAL_EXPANSION.get().factorizer.add(true, recipe1);
-                    if (recipe == null) recipe = recipe1;
+                    FactorizerManager.FactorizerRecipe recipe = FactorizerRecipeAccessor.createFactorizerRecipe(output.get(0), itemStack);
+                    ModSupport.THERMAL_EXPANSION.get().factorizer.add(true, recipe);
+                    recipes.add(recipe);
                 }
             }
-            return recipe;
+            return recipes;
         }
     }
 }

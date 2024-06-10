@@ -11,10 +11,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -186,13 +187,13 @@ public class ArcFurnace extends StandardListRegistry<ArcFurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ArcFurnaceRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ArcFurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Object[] additives = ArrayUtils.mapToArray(input, ImmersiveEngineering::toIngredientStack);
             ArcFurnaceRecipe recipe = new ArcFurnaceRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(mainInput), slag, time, energyPerTick, additives);
             if (specialRecipeType != null) recipe.setSpecialRecipeType(specialRecipeType);
             ModSupport.IMMERSIVE_ENGINEERING.get().arcFurnace.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

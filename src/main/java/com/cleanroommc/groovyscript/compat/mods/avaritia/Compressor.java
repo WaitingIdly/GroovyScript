@@ -11,9 +11,10 @@ import morph.avaritia.recipe.AvaritiaRecipeManager;
 import morph.avaritia.recipe.compressor.CompressorRecipe;
 import morph.avaritia.recipe.compressor.ICompressorRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Compressor extends VirtualizedRegistry<ICompressorRecipe> {
@@ -128,12 +129,12 @@ public class Compressor extends VirtualizedRegistry<ICompressorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICompressorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICompressorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CompressorRecipe recipe = new CompressorRecipe(this.output.get(0), this.inputCount, true, Collections.singletonList(this.input.get(0).toMcIngredient()));
             recipe.setRegistryName(this.name);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

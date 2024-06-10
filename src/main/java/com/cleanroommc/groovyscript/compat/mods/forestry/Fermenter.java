@@ -10,7 +10,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import forestry.api.recipes.IFermenterRecipe;
 import forestry.factory.recipes.FermenterRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Fermenter extends ForestryRegistry<IFermenterRecipe> {
 
@@ -127,15 +130,15 @@ public class Fermenter extends ForestryRegistry<IFermenterRecipe> {
         }
 
         @Override
-        public @Nullable IFermenterRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IFermenterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IFermenterRecipe recipe;
             IIngredient catalyst = input.get(0);
             if (catalyst instanceof OreDictIngredient oreDictIngredient)
                 recipe = new FermenterRecipe(oreDictIngredient.getOreDict(), value, modifier, fluidInput.get(0).getFluid(), fluidOutput.get(0));
             else recipe = new FermenterRecipe(catalyst.getMatchingStacks()[0], value, modifier, fluidInput.get(0).getFluid(), fluidOutput.get(0));
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -16,9 +16,11 @@ import forestry.factory.recipes.FabricatorSmeltingRecipe;
 import forestry.factory.recipes.FabricatorSmeltingRecipeManager;
 import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
 
@@ -166,12 +168,12 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
         }
 
         @Override
-        public @Nullable IFabricatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IFabricatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ShapedRecipeCustom internal = Carpenter.convertPatternToInternal(output.get(0), pattern, keys);
             IFabricatorRecipe recipe = new FabricatorRecipe(catalyst.getMatchingStacks()[0], fluidInput.get(0), output.get(0), internal.getRawIngredients(), internal.getOreDicts(), internal.getWidth(), internal.getHeight());
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

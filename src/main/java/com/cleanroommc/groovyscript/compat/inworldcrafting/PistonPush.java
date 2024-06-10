@@ -14,10 +14,11 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.Optional;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -128,11 +129,11 @@ public class PistonPush extends StandardListRegistry<PistonPush.PistonPushRecipe
         }
 
         @Override
-        public @Nullable PistonPush.PistonPushRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PistonPush.PistonPushRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PistonPushRecipe pistonPushRecipe = new PistonPushRecipe(this.input.get(0), this.output.get(0), this.maxConversionsPerPush, this.minHarvestLevel, this.startCondition);
             VanillaModule.inWorldCrafting.pistonPush.add(pistonPushRecipe);
-            return null;
+            return Collections.singletonList(pistonPushRecipe);
         }
     }
 

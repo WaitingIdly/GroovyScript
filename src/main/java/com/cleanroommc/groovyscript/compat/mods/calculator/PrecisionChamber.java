@@ -7,12 +7,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.calculator.mod.common.recipes.PrecisionChamberRecipes;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 
 @RegistryDescription
@@ -83,14 +85,14 @@ public class PrecisionChamber extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CalculatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CalculatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = PrecisionChamberRecipes.instance()
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), output, new ArrayList<>(), false);
 
             ModSupport.CALCULATOR.get().precisionChamber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

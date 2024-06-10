@@ -11,7 +11,7 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -246,8 +246,8 @@ public class Excavator extends VirtualizedRegistry<Pair<ExcavatorHandler.Mineral
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ExcavatorHandler.MineralMix register() {
-            if (!validate()) return null;
+        public @NotNull List<ExcavatorHandler.MineralMix> register() {
+            if (!validate()) return Collections.emptyList();
             ExcavatorHandler.MineralMix recipe = new ExcavatorHandler.MineralMix(name, fail, ores.toArray(new String[0]), chances.elements());
 
             int[] dims = dimensions.stream().mapToInt(Integer::intValue).toArray();
@@ -258,7 +258,7 @@ public class Excavator extends VirtualizedRegistry<Pair<ExcavatorHandler.Mineral
             recipe.recalculateChances();
 
             ModSupport.IMMERSIVE_ENGINEERING.get().excavator.add(recipe, weight);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

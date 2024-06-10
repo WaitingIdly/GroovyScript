@@ -9,10 +9,14 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.DryingRecipe;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
+
+public class Drying extends VirtualizedRegistry<DryingRecipe> {
 
 @RegistryDescription
 public class Drying extends StandardListRegistry<DryingRecipe> {
@@ -113,11 +117,11 @@ public class Drying extends StandardListRegistry<DryingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DryingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DryingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             DryingRecipe recipe = new DryingRecipe(MeltingRecipeBuilder.recipeMatchFromIngredient(input.get(0)), output.get(0), time);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

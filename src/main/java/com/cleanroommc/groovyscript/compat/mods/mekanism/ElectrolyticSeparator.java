@@ -12,7 +12,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.FluidInput;
 import mekanism.common.recipe.machines.SeparatorRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<SeparatorRecipe> {
@@ -74,11 +77,11 @@ public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<Separator
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SeparatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SeparatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SeparatorRecipe recipe = new SeparatorRecipe(fluidInput.get(0), energy, gasOutput.get(0), gasOutput.get(1));
             ModSupport.MEKANISM.get().electrolyticSeparator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

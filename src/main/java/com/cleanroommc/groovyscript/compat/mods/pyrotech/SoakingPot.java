@@ -10,7 +10,10 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.SoakingPotRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SoakingPot extends ForgeRegistryWrapper<SoakingPotRecipe> {
@@ -25,7 +28,7 @@ public class SoakingPot extends ForgeRegistryWrapper<SoakingPotRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'dirt_to_apple', item('minecraft:dirt'), fluid('water'), item('minecraft:apple'), 1200"))
-    public SoakingPotRecipe add(String name, IIngredient input, FluidStack fluidInput, ItemStack output, int time) {
+    public List<SoakingPotRecipe> add(String name, IIngredient input, FluidStack fluidInput, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .name(name)
@@ -109,11 +112,11 @@ public class SoakingPot extends ForgeRegistryWrapper<SoakingPotRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SoakingPotRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SoakingPotRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SoakingPotRecipe recipe = new SoakingPotRecipe(output.get(0), input.get(0).toMcIngredient(), fluidInput.get(0), campfireRequired, time).setRegistryName(super.name);
             PyroTech.soakingPot.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

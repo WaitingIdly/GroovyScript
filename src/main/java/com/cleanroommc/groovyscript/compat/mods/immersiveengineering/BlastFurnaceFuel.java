@@ -9,8 +9,9 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -88,11 +89,11 @@ public class BlastFurnaceFuel extends StandardListRegistry<BlastFurnaceRecipe.Bl
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BlastFurnaceRecipe.BlastFurnaceFuel register() {
-            if (!validate()) return null;
+        public @NotNull List<BlastFurnaceRecipe.BlastFurnaceFuel> register() {
+            if (!validate()) return Collections.emptyList();
             BlastFurnaceRecipe.BlastFurnaceFuel recipe = new BlastFurnaceRecipe.BlastFurnaceFuel(ImmersiveEngineering.toIngredientStack(input.get(0)), time);
             ModSupport.IMMERSIVE_ENGINEERING.get().blastFurnaceFuel.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

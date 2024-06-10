@@ -16,8 +16,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -161,8 +163,8 @@ public class Spawning extends VirtualizedRegistry<Pair<WootMobName, SpawnRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ISpawnRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ISpawnRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             SpawnRecipe recipe = defaultSpawnRecipe
                     ? ((SpawnRecipeRepositoryAccessor) Woot.spawnRecipeRepository).getDefaultSpawnRecipe()
@@ -176,7 +178,7 @@ public class Spawning extends VirtualizedRegistry<Pair<WootMobName, SpawnRecipe>
             //recipe.setEfficiency(efficiency);
 
             if (!defaultSpawnRecipe) ModSupport.WOOT.get().spawning.add(name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

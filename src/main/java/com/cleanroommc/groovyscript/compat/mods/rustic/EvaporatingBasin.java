@@ -7,9 +7,12 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.Alias;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import rustic.common.crafting.IEvaporatingBasinRecipe;
 import rustic.common.crafting.Recipes;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -88,11 +91,11 @@ public class EvaporatingBasin extends StandardListRegistry<IEvaporatingBasinReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IEvaporatingBasinRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IEvaporatingBasinRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IEvaporatingBasinRecipe recipe = new ExtendedEvaporatingBasinRecipe(output.get(0), fluidInput.get(0), time);
             ModSupport.RUSTIC.get().evaporatingBasin.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -6,10 +6,11 @@ import com.cleanroommc.groovyscript.core.mixin.tconstruct.TinkerRegistryAccessor
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -96,11 +97,11 @@ public class Alloying extends StandardListRegistry<AlloyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AlloyRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AlloyRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             AlloyRecipe recipe = new AlloyRecipe(fluidOutput.get(0), fluidInput.toArray(new FluidStack[0]));
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

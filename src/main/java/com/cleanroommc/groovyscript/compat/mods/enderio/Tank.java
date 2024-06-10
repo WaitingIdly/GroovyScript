@@ -20,10 +20,11 @@ import crazypants.enderio.base.recipe.RecipeLevel;
 import crazypants.enderio.base.recipe.tank.TankMachineRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -247,8 +248,8 @@ public class Tank extends VirtualizedRegistry<TankMachineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TankMachineRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<TankMachineRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Things in = RecipeUtils.toThings(input.get(0));
             Things out = new Things().add(output.getOrEmpty(0));
             TankMachineRecipe recipe = new TankMachineRecipe(
@@ -261,7 +262,7 @@ public class Tank extends VirtualizedRegistry<TankMachineRecipe> {
                     RecipeLevel.IGNORE);
 
             ModSupport.ENDER_IO.get().tank.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

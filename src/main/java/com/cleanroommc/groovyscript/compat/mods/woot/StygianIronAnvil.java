@@ -12,8 +12,10 @@ import ipsis.Woot;
 import ipsis.woot.crafting.AnvilRecipe;
 import ipsis.woot.crafting.IAnvilRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -124,8 +126,8 @@ public class StygianIronAnvil extends StandardListRegistry<IAnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IAnvilRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IAnvilRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             if (((AnvilManagerAccessor) Woot.anvilManager).getValidBaseItems().stream().noneMatch(x -> x.isItemEqual(base)))
                 ((AnvilManagerAccessor) Woot.anvilManager).getValidBaseItems().add(base);
@@ -133,7 +135,7 @@ public class StygianIronAnvil extends StandardListRegistry<IAnvilRecipe> {
             IAnvilRecipe recipe = new AnvilRecipe(output.get(0), base, preserveBase);
             recipe.getInputs().addAll(input.stream().map(x -> x.toMcIngredient().getMatchingStacks()[0]).collect(Collectors.toList()));
             ModSupport.WOOT.get().stygianIronAnvil.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

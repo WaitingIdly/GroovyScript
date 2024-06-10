@@ -17,7 +17,10 @@ import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import it.unimi.dsi.fastutil.floats.FloatList;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -119,15 +122,15 @@ public class SagMill extends StandardListRegistry<Recipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Recipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Recipe> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeOutput[] outputs = new RecipeOutput[output.size()];
             for (int i = 0; i < outputs.length; i++) {
                 outputs[i] = new RecipeOutput(output.get(i), chances.get(i));
             }
             Recipe recipe = new SagRecipe(new RecipeInput(input.get(0)), energy, bonusType, level, outputs);
             ModSupport.ENDER_IO.get().sagMill.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

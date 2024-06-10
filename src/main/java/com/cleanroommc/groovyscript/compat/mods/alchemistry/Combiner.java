@@ -11,8 +11,9 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,13 +91,13 @@ public class Combiner extends StandardListRegistry<CombinerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CombinerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CombinerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             List<ItemStack> inputs = input.stream().map(x -> x.isEmpty() ? ItemStack.EMPTY : IngredientHelper.toItemStack(x)).collect(Collectors.toList());
             CombinerRecipe recipe = new CombinerRecipe(output.get(0), inputs, gamestage);
             ModSupport.ALCHEMISTRY.get().combiner.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

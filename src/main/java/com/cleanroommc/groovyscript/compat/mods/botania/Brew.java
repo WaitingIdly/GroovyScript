@@ -8,11 +8,12 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.potion.PotionEffect;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription(
@@ -172,14 +173,14 @@ public class Brew extends VirtualizedRegistry<vazkii.botania.api.brew.Brew> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable vazkii.botania.api.brew.Brew register() {
-            if (!validate()) return null;
+        public @NotNull List<vazkii.botania.api.brew.Brew> register() {
+            if (!validate()) return Collections.emptyList();
             if (name == null) name = key;
             vazkii.botania.api.brew.Brew brew = new vazkii.botania.api.brew.Brew(key, name, color, cost, effects.toArray(new PotionEffect[0]));
             if (!canInfuseBloodPendant) brew.setNotBloodPendantInfusable();
             if (!canInfuseIncense) brew.setNotIncenseInfusable();
             ModSupport.BOTANIA.get().brew.add(brew);
-            return brew;
+            return Collections.singletonList(brew);
         }
     }
 }

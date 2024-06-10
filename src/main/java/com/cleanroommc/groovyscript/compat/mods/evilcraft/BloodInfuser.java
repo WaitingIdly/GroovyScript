@@ -15,7 +15,10 @@ import org.cyclops.evilcraft.Configs;
 import org.cyclops.evilcraft.block.BloodInfuserConfig;
 import org.cyclops.evilcraft.core.recipe.custom.DurationXpRecipeProperties;
 import org.cyclops.evilcraft.core.recipe.custom.IngredientFluidStackAndTierRecipeComponent;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -128,8 +131,8 @@ public class BloodInfuser extends StandardListRegistry<IRecipe<IngredientFluidSt
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> register() {
+            if (!validate()) return Collections.emptyList();
             IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> recipe = org.cyclops.evilcraft.block.BloodInfuser.getInstance()
                     .getRecipeRegistry()
                     .registerRecipe(
@@ -138,7 +141,7 @@ public class BloodInfuser extends StandardListRegistry<IRecipe<IngredientFluidSt
                             new DurationXpRecipeProperties(duration, xp)
                     );
             ModSupport.EVILCRAFT.get().bloodInfuser.addScripted(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

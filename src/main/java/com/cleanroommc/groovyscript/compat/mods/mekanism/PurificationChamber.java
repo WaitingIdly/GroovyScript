@@ -14,7 +14,10 @@ import mekanism.common.recipe.inputs.AdvancedMachineInput;
 import mekanism.common.recipe.machines.PurificationRecipe;
 import mekanism.common.recipe.outputs.ItemStackOutput;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class PurificationChamber extends VirtualizedMekanismRegistry<PurificationRecipe> {
@@ -73,15 +76,15 @@ public class PurificationChamber extends VirtualizedMekanismRegistry<Purificatio
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PurificationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PurificationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PurificationRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 PurificationRecipe r = new PurificationRecipe(new AdvancedMachineInput(itemStack, gasInput.get(0).getGas()), new ItemStackOutput(output.get(0)));
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().purificationChamber.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

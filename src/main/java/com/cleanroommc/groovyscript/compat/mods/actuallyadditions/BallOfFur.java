@@ -8,7 +8,10 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.BallOfFurReturn;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -68,11 +71,11 @@ public class BallOfFur extends StandardListRegistry<BallOfFurReturn> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BallOfFurReturn register() {
-            if (!validate()) return null;
+        public @NotNull List<BallOfFurReturn> register() {
+            if (!validate()) return Collections.emptyList();
             BallOfFurReturn recipe = new BallOfFurReturn(output.get(0), weight);
             ModSupport.ACTUALLY_ADDITIONS.get().ballOfFur.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

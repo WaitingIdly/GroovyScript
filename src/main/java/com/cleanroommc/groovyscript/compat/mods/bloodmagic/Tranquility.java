@@ -8,15 +8,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.core.mixin.bloodmagic.BloodMagicValueManagerAccessor;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
+import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -130,7 +129,7 @@ public class Tranquility extends VirtualizedRegistry<Pair<IBlockState, Tranquili
     }
 
 
-    public static class RecipeBuilder {
+    public static class RecipeBuilder extends AbstractRecipeBuilder<Pair<IBlockState, TranquilityStack>> {
 
         @Property
         private IBlockState blockstate;
@@ -193,31 +192,36 @@ public class Tranquility extends VirtualizedRegistry<Pair<IBlockState, Tranquili
             return this;
         }
 
+        @Override
         public String getErrorMsg() {
             return "Error adding Blood Magic Tranquility key recipe";
         }
 
-        public boolean validate() {
-            GroovyLog.Msg msg = GroovyLog.msg(getErrorMsg()).error();
-
+        @Override
+        public void validate(GroovyLog.Msg msg) {
             msg.add(blockstate == null && block == null, "either blockstate or block must be non null");
             msg.add(tranquility == null, "tranquility must be a string matching one of the Enums ({})", Arrays.stream(EnumTranquilityType.values()).map(Enum::name).collect(Collectors.joining(", ")));
             msg.add(value < 0, "value must be a nonnegative integer, yet it was {}", value);
-            return !msg.postIfNotEmpty();
         }
 
+        @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Pair<?, TranquilityStack> register() {
-            if (!validate()) return null;
+        public @NotNull List<Pair<IBlockState, TranquilityStack>> register() {
+            if (!validate()) return Collections.emptyList();
             TranquilityStack stack = new TranquilityStack(tranquility, value);
             if (block != null) {
-                ModSupport.BLOOD_MAGIC.get().tranquility.add(block, stack);
-                return Pair.of(block, stack);
-            } else if (blockstate != null) {
-                ModSupport.BLOOD_MAGIC.get().tranquility.add(blockstate, stack);
-                return Pair.of(blockstate, stack);
+                List<Pair<IBlockState, TranquilityStack>> entries = new ArrayList<>();
+                for (IBlockState state : block.getBlockState().getValidStates()) {
+                    ModSupport.BLOOD_MAGIC.get().tranquility.add(state, stack);
+                    entries.add(Pair.of(state, stack));
+                }
+                return entries;
             }
-            return null;
+            if (blockstate != null) {
+                ModSupport.BLOOD_MAGIC.get().tranquility.add(blockstate, stack);
+                return Collections.singletonList(Pair.of(blockstate, stack));
+            }
+            return Collections.emptyList();
         }
     }
 }

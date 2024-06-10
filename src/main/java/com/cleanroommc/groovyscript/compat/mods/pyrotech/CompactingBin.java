@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CompactingBinRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CompactingBin extends ForgeRegistryWrapper<CompactingBinRecipe> {
@@ -25,7 +28,7 @@ public class CompactingBin extends ForgeRegistryWrapper<CompactingBinRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay', ore('ingotIron') * 5, item('minecraft:clay_ball') * 20, 9"))
-    public CompactingBinRecipe add(String name, IIngredient input, ItemStack output, int hits) {
+    public List<CompactingBinRecipe> add(String name, IIngredient input, ItemStack output, int hits) {
         return recipeBuilder()
                 .toolUses(hits)
                 .name(name)
@@ -93,11 +96,11 @@ public class CompactingBin extends ForgeRegistryWrapper<CompactingBinRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable CompactingBinRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CompactingBinRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CompactingBinRecipe recipe = new CompactingBinRecipe(output.get(0), input.get(0).toMcIngredient(), toolUses).setRegistryName(super.name);
             PyroTech.compactingBin.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

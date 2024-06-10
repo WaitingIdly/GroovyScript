@@ -11,8 +11,10 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import de.ellpeck.naturesaura.api.NaturesAuraAPI;
 import de.ellpeck.naturesaura.api.recipes.AltarRecipe;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -163,11 +165,11 @@ public class Altar extends VirtualizedRegistry<AltarRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AltarRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AltarRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             AltarRecipe recipe = new AltarRecipe(super.name, input.get(0).toMcIngredient(), output.get(0), catalyst.toMcIngredient(), aura, time);
             ModSupport.NATURES_AURA.get().altar.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

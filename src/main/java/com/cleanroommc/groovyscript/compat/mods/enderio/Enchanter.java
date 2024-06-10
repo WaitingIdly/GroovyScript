@@ -18,10 +18,11 @@ import crazypants.enderio.base.recipe.enchanter.EnchanterRecipe;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -163,11 +164,11 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable EnchanterRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<EnchanterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             EnchanterRecipe recipe = new CustomEnchanterRecipe(input, amount, enchantment, costMultiplier, lapis, book);
             ModSupport.ENDER_IO.get().enchanter.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

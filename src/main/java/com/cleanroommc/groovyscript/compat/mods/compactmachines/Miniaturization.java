@@ -11,10 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import org.dave.compactmachines3.miniaturization.MultiblockRecipe;
 import org.dave.compactmachines3.miniaturization.MultiblockRecipes;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -175,8 +176,8 @@ public class Miniaturization extends StandardListRegistry<MultiblockRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable org.dave.compactmachines3.miniaturization.MultiblockRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<org.dave.compactmachines3.miniaturization.MultiblockRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             org.dave.compactmachines3.miniaturization.MultiblockRecipe recipe = new org.dave.compactmachines3.miniaturization.MultiblockRecipe(
                     super.name.toString(),
@@ -206,7 +207,7 @@ public class Miniaturization extends StandardListRegistry<MultiblockRecipe> {
             });
 
             ModSupport.COMPACT_MACHINES.get().miniaturization.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
 
         @SuppressWarnings("ClassCanBeRecord")

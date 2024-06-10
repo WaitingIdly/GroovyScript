@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CampfireRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Campfire extends ForgeRegistryWrapper<CampfireRecipe> {
@@ -24,7 +27,7 @@ public class Campfire extends ForgeRegistryWrapper<CampfireRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt', item('minecraft:apple'), item('minecraft:dirt'), 1000"))
-    public CampfireRecipe add(String name, IIngredient input, ItemStack output, int duration) {
+    public List<CampfireRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)
@@ -98,11 +101,11 @@ public class Campfire extends ForgeRegistryWrapper<CampfireRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable CampfireRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CampfireRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CampfireRecipe recipe = new CampfireRecipe(output.get(0), input.get(0).toMcIngredient(), duration).setRegistryName(super.name);
             PyroTech.campfire.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

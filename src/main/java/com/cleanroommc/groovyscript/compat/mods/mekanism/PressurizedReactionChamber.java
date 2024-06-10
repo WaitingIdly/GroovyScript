@@ -15,7 +15,10 @@ import mekanism.common.recipe.machines.PressurizedRecipe;
 import mekanism.common.recipe.outputs.PressurizedOutput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<PressurizedRecipe> {
@@ -99,8 +102,8 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PressurizedRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PressurizedRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PressurizedOutput pressurizedOutput = new PressurizedOutput(output.getOrEmpty(0), gasOutput.get(0));
             PressurizedRecipe recipe = null;
             if (input.isEmpty()) {
@@ -113,7 +116,7 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
                     ModSupport.MEKANISM.get().pressurizedReactionChamber.add(r);
                 }
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

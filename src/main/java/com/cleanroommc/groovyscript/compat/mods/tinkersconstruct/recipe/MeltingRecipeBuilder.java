@@ -10,9 +10,12 @@ import com.cleanroommc.groovyscript.core.mixin.tconstruct.MeltingRecipeAccessor;
 import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @Property(property = "input", comp = @Comp(eq = 1))
 public class MeltingRecipeBuilder extends AbstractRecipeBuilder<MeltingRecipe> {
@@ -70,13 +73,13 @@ public class MeltingRecipeBuilder extends AbstractRecipeBuilder<MeltingRecipe> {
 
     @Override
     @RecipeBuilderRegistrationMethod
-    public @Nullable MeltingRecipe register() {
-        if (!validate()) return null;
+    public @NotNull List<MeltingRecipe> register() {
+        if (!validate()) return Collections.emptyList();
         int amount = fluidOutput.get(0).amount;
         IIngredient input = this.input.get(0);
         RecipeMatch match = recipeMatchFromIngredient(input, amount);
         MeltingRecipe recipe = new MeltingRecipe(match, fluidOutput.get(0), temp);
         registry.add(recipe);
-        return recipe;
+        return Collections.singletonList(recipe);
     }
 }

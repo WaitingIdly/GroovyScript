@@ -16,9 +16,11 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,7 +87,7 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), item('minecraft:gold_ingot'), item('minecraft:diamond'), 1000"))
-    public EnchanterRecipe add(int energy, IIngredient primaryInput, IIngredient secondaryInput, ItemStack output, int experience) {
+    public List<EnchanterRecipe> add(int energy, IIngredient primaryInput, IIngredient secondaryInput, ItemStack output, int experience) {
         return recipeBuilder()
                 .energy(energy)
                 .experience(experience)
@@ -184,18 +186,18 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable EnchanterRecipe register() {
-            if (!validate()) return null;
-            EnchanterRecipe recipe = null;
+        public @NotNull List<EnchanterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<EnchanterRecipe> recipes = new ArrayList<>();
 
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {
                 for (ItemStack input1 : input.get(1).getMatchingStacks()) {
-                    EnchanterRecipe recipe1 = EnchanterRecipeAccessor.createEnchanterRecipe(input0, input1, output.get(0), experience, energy, type);
-                    ModSupport.THERMAL_EXPANSION.get().enchanter.add(recipe1);
-                    if (recipe == null) recipe = recipe1;
+                    EnchanterRecipe recipe = EnchanterRecipeAccessor.createEnchanterRecipe(input0, input1, output.get(0), experience, energy, type);
+                    ModSupport.THERMAL_EXPANSION.get().enchanter.add(recipe);
+                    recipes.add(recipe);
                 }
             }
-            return recipe;
+            return recipes;
         }
     }
 }

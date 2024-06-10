@@ -13,9 +13,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -155,13 +157,13 @@ public class RunicShearEntity extends VirtualizedRegistry<RunicShearEntityRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RunicShearEntityRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RunicShearEntityRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RunicShearEntityRecipe recipe;
             if (functionMap == null) recipe = new RunicShearEntityRecipe(super.name, output.get(0), entity, cooldown);
             else recipe = new RunicShearConditionalEntityRecipe(super.name, functionMap, new HashSet<>(output), entity, cooldown);
             ModSupport.ROOTS.get().runicShearEntity.add(super.name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -10,8 +10,9 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -119,11 +120,11 @@ public class CokeOven extends StandardListRegistry<CokeOvenRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CokeOvenRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CokeOvenRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CokeOvenRecipe recipe = new CokeOvenRecipe(output.get(0), ImmersiveEngineering.toIEInput(input.get(0)), time, creosote);
             ModSupport.IMMERSIVE_ENGINEERING.get().cokeOven.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

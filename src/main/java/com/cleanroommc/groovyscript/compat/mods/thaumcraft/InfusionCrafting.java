@@ -15,17 +15,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.IThaumcraftRecipe;
 import thaumcraft.api.crafting.InfusionRecipe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static thaumcraft.common.config.ConfigRecipes.compileGroups;
@@ -218,13 +215,13 @@ public class InfusionCrafting extends VirtualizedRegistry<Pair<ResourceLocation,
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable InfusionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<InfusionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             Object[] inputs = this.input.stream().map(IIngredient::toMcIngredient).toArray();
             InfusionRecipe recipe = new InfusionRecipe(researchKey, output.get(0), instability, aspects, mainInput.toMcIngredient(), inputs);
             ModSupport.THAUMCRAFT.get().infusionCrafting.add(RecipeName.generateRl("infusion_matrix_recipe"), recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

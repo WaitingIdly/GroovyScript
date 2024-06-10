@@ -14,7 +14,10 @@ import hellfirepvp.astralsorcery.common.crafting.infusion.InfusionRecipeRegistry
 import hellfirepvp.astralsorcery.common.crafting.infusion.recipes.BasicInfusionRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class InfusionAltar extends VirtualizedRegistry<BasicInfusionRecipe> {
@@ -167,8 +170,8 @@ public class InfusionAltar extends VirtualizedRegistry<BasicInfusionRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BasicInfusionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BasicInfusionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             BasicInfusionRecipe recipe = new BasicInfusionRecipe(output.get(0), AstralSorcery.toItemHandle(input.get(0))) {
 
                 @Override
@@ -181,7 +184,7 @@ public class InfusionAltar extends VirtualizedRegistry<BasicInfusionRecipe> {
             if (consumeMultiple) recipe.setConsumeMultiple();
             recipe.craftingTickTime();
             ModSupport.ASTRAL_SORCERY.get().infusionAltar.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -11,7 +11,10 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.lens.Lens;
 import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -110,11 +113,11 @@ public class AtomicReconstructor extends StandardListRegistry<LensConversionReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable LensConversionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<LensConversionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             LensConversionRecipe recipe = new LensConversionRecipe(input.get(0).toMcIngredient(), output.get(0), energyUse, type);
             ModSupport.ACTUALLY_ADDITIONS.get().atomicReconstructor.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

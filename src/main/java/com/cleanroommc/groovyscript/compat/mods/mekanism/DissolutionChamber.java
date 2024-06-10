@@ -13,7 +13,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.DissolutionRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class DissolutionChamber extends VirtualizedMekanismRegistry<DissolutionRecipe> {
@@ -70,15 +73,15 @@ public class DissolutionChamber extends VirtualizedMekanismRegistry<DissolutionR
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DissolutionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DissolutionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             DissolutionRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 DissolutionRecipe r = new DissolutionRecipe(itemStack, gasOutput.get(0));
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().dissolutionChamber.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

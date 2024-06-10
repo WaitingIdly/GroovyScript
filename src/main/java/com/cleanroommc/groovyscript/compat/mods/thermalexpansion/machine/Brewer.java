@@ -18,9 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -76,7 +78,7 @@ public class Brewer extends VirtualizedRegistry<BrewerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, item('minecraft:obsidian') * 2, fluid('water') * 1000, fluid('steam') * 100", commented = true))
-    public BrewerRecipe add(int energy, IIngredient input, FluidStack fluidInput, FluidStack fluidOutput) {
+    public List<BrewerRecipe> add(int energy, IIngredient input, FluidStack fluidInput, FluidStack fluidOutput) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -159,16 +161,16 @@ public class Brewer extends VirtualizedRegistry<BrewerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BrewerRecipe register() {
-            if (!validate()) return null;
-            BrewerRecipe recipe = null;
+        public @NotNull List<BrewerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<BrewerRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                BrewerRecipe recipe1 = BrewerRecipeAccessor.createBrewerRecipe(itemStack, fluidInput.get(0), fluidOutput.get(0), energy);
-                ModSupport.THERMAL_EXPANSION.get().brewer.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                BrewerRecipe recipe = BrewerRecipeAccessor.createBrewerRecipe(itemStack, fluidInput.get(0), fluidOutput.get(0), energy);
+                ModSupport.THERMAL_EXPANSION.get().brewer.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

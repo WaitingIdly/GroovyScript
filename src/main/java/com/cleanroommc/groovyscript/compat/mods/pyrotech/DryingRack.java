@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.DryingRackRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class DryingRack extends ForgeRegistryWrapper<DryingRackRecipe> {
@@ -25,7 +28,7 @@ public class DryingRack extends ForgeRegistryWrapper<DryingRackRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt', item('minecraft:apple'), item('minecraft:dirt'), 1200"))
-    public DryingRackRecipe add(String name, IIngredient input, ItemStack output, int dryTime) {
+    public List<DryingRackRecipe> add(String name, IIngredient input, ItemStack output, int dryTime) {
         return recipeBuilder()
                 .dryTime(dryTime)
                 .name(name)
@@ -99,11 +102,11 @@ public class DryingRack extends ForgeRegistryWrapper<DryingRackRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable DryingRackRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DryingRackRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             DryingRackRecipe recipe = new DryingRackRecipe(output.get(0), input.get(0).toMcIngredient(), dryTime).setRegistryName(super.name);
             PyroTech.dryingRack.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

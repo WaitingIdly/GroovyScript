@@ -10,8 +10,9 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -110,12 +111,12 @@ public class Saw extends StandardListRegistry<SawRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SawRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SawRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             SawRecipe recipe = new SawRecipe(input, output);
             ModSupport.BETTER_WITH_MODS.get().saw.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

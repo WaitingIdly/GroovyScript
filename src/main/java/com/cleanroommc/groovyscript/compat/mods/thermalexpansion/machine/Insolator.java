@@ -16,9 +16,11 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,7 +86,7 @@ public class Insolator extends VirtualizedRegistry<InsolatorRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, 100, item('minecraft:obsidian'), item('minecraft:gold_ingot') * 2, item('minecraft:clay'), item('minecraft:diamond'), 5, InsolatorManager.Type.TREE", imports = "cofh.thermalexpansion.util.managers.machine.InsolatorManager"))
-    public InsolatorRecipe add(int energy, int water, IIngredient primaryInput, IIngredient secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, InsolatorManager.Type type) {
+    public List<InsolatorRecipe> add(int energy, int water, IIngredient primaryInput, IIngredient secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, InsolatorManager.Type type) {
         return recipeBuilder()
                 .energy(energy)
                 .water(water)
@@ -207,18 +209,18 @@ public class Insolator extends VirtualizedRegistry<InsolatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable InsolatorRecipe register() {
-            if (!validate()) return null;
-            InsolatorRecipe recipe = null;
+        public @NotNull List<InsolatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<InsolatorRecipe> recipes = new ArrayList<>();
 
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {
                 for (ItemStack input1 : input.get(1).getMatchingStacks()) {
-                    InsolatorRecipe recipe1 = InsolatorRecipeAccessor.createInsolatorRecipe(input1, input0, output.get(0), output.getOrEmpty(1), chance, energy, water, type);
-                    ModSupport.THERMAL_EXPANSION.get().insolator.add(recipe1);
-                    if (recipe == null) recipe = recipe1;
+                    InsolatorRecipe recipe = InsolatorRecipeAccessor.createInsolatorRecipe(input1, input0, output.get(0), output.getOrEmpty(1), chance, energy, water, type);
+                    ModSupport.THERMAL_EXPANSION.get().insolator.add(recipe);
+                    recipes.add(recipe);
                 }
             }
-            return recipe;
+            return recipes;
         }
     }
 }

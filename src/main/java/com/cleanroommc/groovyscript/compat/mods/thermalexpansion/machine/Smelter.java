@@ -16,9 +16,11 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -68,7 +70,7 @@ public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, item('minecraft:obsidian'), item('minecraft:gold_ingot') * 2, item('minecraft:clay'), item('minecraft:diamond'), 5", commented = true))
-    public SmelterRecipe add(int energy, IIngredient input0, IIngredient input1, ItemStack output0, ItemStack output1, int chance) {
+    public List<SmelterRecipe> add(int energy, IIngredient input0, IIngredient input1, ItemStack output0, ItemStack output1, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -158,17 +160,17 @@ public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SmelterRecipe register() {
-            if (!validate()) return null;
-            SmelterRecipe recipe = null;
+        public @NotNull List<SmelterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<SmelterRecipe> recipes = new ArrayList<>();
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {
                 for (ItemStack input1 : input.get(1).getMatchingStacks()) {
-                    SmelterRecipe recipe1 = SmelterRecipeAccessor.createSmelterRecipe(input0, input1, output.get(0), output.getOrEmpty(1), chance, energy);
-                    ModSupport.THERMAL_EXPANSION.get().smelter.add(recipe1);
-                    if (recipe == null) recipe = recipe1;
+                    SmelterRecipe recipe = SmelterRecipeAccessor.createSmelterRecipe(input0, input1, output.get(0), output.getOrEmpty(1), chance, energy);
+                    ModSupport.THERMAL_EXPANSION.get().smelter.add(recipe);
+                    recipes.add(recipe);
                 }
             }
-            return recipe;
+            return recipes;
         }
     }
 }

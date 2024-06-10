@@ -16,7 +16,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collections;
+import java.util.List;
 
 public class FluidToBlock extends VirtualizedRegistry<FluidToBlock.Recipe> {
 
@@ -138,7 +142,7 @@ public class FluidToBlock extends VirtualizedRegistry<FluidToBlock.Recipe> {
         }
 
         @Override
-        public @Nullable FluidToBlock.Recipe register() {
+        public @NotNull List<Recipe> register() {
             Recipe recipe = new Recipe(
                     this.fluidInput.get(0).getFluid(),
                     this.input.toArray(new IIngredient[0]),
@@ -147,7 +151,7 @@ public class FluidToBlock extends VirtualizedRegistry<FluidToBlock.Recipe> {
                     this.afterRecipe,
                     this.outputBlock);
             VanillaModule.inWorldCrafting.fluidToBlock.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

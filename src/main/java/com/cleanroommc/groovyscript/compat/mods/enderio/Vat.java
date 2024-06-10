@@ -19,9 +19,10 @@ import crazypants.enderio.base.recipe.vat.VatRecipeManager;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import it.unimi.dsi.fastutil.floats.FloatList;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -183,8 +184,8 @@ public class Vat extends VirtualizedRegistry<VatRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Recipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Recipe> register() {
+            if (!validate()) return Collections.emptyList();
             List<IRecipeInput> inputs = new ArrayList<>();
             for (int i = 0; i < itemInputs1.size(); i++) {
                 IIngredient ingredient = itemInputs1.get(i);
@@ -202,7 +203,7 @@ public class Vat extends VirtualizedRegistry<VatRecipe> {
 
             Recipe recipe = new Recipe(new RecipeOutput(output), energy, RecipeBonusType.NONE, level, inputs.toArray(new IRecipeInput[0]));
             ModSupport.ENDER_IO.get().vat.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

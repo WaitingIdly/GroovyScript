@@ -11,9 +11,11 @@ import forestry.factory.recipes.SqueezerRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -116,12 +118,12 @@ public class Squeezer extends ForestryRegistry<ISqueezerRecipe> {
         }
 
         @Override
-        public @Nullable ISqueezerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ISqueezerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             NonNullList<ItemStack> list = NonNullList.from(ItemStack.EMPTY, input.stream().map(i -> i.getMatchingStacks()[0]).toArray(ItemStack[]::new));
             ISqueezerRecipe recipe = new SqueezerRecipe(time, list, fluidOutput.get(0), output.getOrEmpty(0), chance);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

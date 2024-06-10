@@ -12,7 +12,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -154,11 +157,11 @@ public class BloodAltar extends StandardListRegistry<RecipeBloodAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeBloodAltar register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeBloodAltar> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeBloodAltar recipe = new RecipeBloodAltar(input.get(0).toMcIngredient(), output.get(0), minimumTier, syphon, consumeRate, drainRate);
             ModSupport.BLOOD_MAGIC.get().bloodAltar.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

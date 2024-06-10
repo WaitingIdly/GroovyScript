@@ -18,9 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -175,16 +177,16 @@ public class Reactant extends VirtualizedRegistry<ReactantManager.Reaction> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ReactantManager.Reaction register() {
-            if (!validate()) return null;
-            ReactantManager.Reaction recipe = null;
+        public @NotNull List<ReactantManager.Reaction> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ReactantManager.Reaction> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                ReactantManager.Reaction recipe1 = ReactionAccessor.createReaction(itemStack, fluidInput.get(0).getFluid(), energy);
-                ModSupport.THERMAL_EXPANSION.get().reactant.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                ReactantManager.Reaction recipe = ReactionAccessor.createReaction(itemStack, fluidInput.get(0).getFluid(), energy);
+                ModSupport.THERMAL_EXPANSION.get().reactant.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

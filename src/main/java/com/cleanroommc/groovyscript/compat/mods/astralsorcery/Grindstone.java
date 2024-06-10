@@ -12,6 +12,10 @@ import hellfirepvp.astralsorcery.common.crafting.grindstone.GrindstoneRecipeRegi
 import net.minecraft.item.ItemStack;
 
 import java.util.Collection;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
@@ -110,11 +114,11 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public GrindstoneRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<GrindstoneRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             GrindstoneRecipe recipe = new GrindstoneRecipe(AstralSorcery.toItemHandle(input.get(0)), output.get(0), weight, secondaryChance);
             ModSupport.ASTRAL_SORCERY.get().grindstone.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

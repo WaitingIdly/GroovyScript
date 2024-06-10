@@ -10,8 +10,10 @@ import epicsquid.roots.init.ModRecipes;
 import epicsquid.roots.recipe.AnimalHarvestFishRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -124,11 +126,11 @@ public class AnimalHarvestFish extends VirtualizedRegistry<AnimalHarvestFishReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AnimalHarvestFishRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AnimalHarvestFishRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             AnimalHarvestFishRecipe recipe = new AnimalHarvestFishRecipe(super.name, output.get(0), weight);
             ModSupport.ROOTS.get().animalHarvestFish.add(super.name, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

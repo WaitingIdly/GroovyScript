@@ -14,7 +14,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition("groovyscript.wiki.thermalexpansion.sawmill.note0")
@@ -43,7 +47,7 @@ public class Sawmill extends VirtualizedRegistry<SawmillRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian') * 4, item('minecraft:gold_ingot'), item('minecraft:diamond'), 25"))
-    public SawmillRecipe add(int energy, IIngredient input, ItemStack outputItem, ItemStack secondaryOutput, int chance) {
+    public List<SawmillRecipe> add(int energy, IIngredient input, ItemStack outputItem, ItemStack secondaryOutput, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -133,16 +137,16 @@ public class Sawmill extends VirtualizedRegistry<SawmillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SawmillRecipe register() {
-            if (!validate()) return null;
-            SawmillRecipe recipe = null;
+        public @NotNull List<SawmillRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<SawmillRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                SawmillRecipe recipe1 = SawmillRecipeAccessor.createSawmillRecipe(itemStack, output.get(0), output.getOrEmpty(1), chance, energy);
-                ModSupport.THERMAL_EXPANSION.get().sawmill.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                SawmillRecipe recipe = SawmillRecipeAccessor.createSawmillRecipe(itemStack, output.get(0), output.getOrEmpty(1), chance, energy);
+                ModSupport.THERMAL_EXPANSION.get().sawmill.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

@@ -13,10 +13,12 @@ import knightminer.tcomplement.library.steelworks.*;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 import java.util.Map;
 
@@ -236,14 +238,14 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
             }
 
             @Override
-            public @Nullable MixRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<MixRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 MixRecipe recipe = new MixRecipe(fluidInput.get(0), fluidOutput.get(0), temp);
                 if (oxidizer != null) recipe.addAdditive(MixAdditive.OXIDIZER, oxidizer);
                 if (reducer != null) recipe.addAdditive(MixAdditive.REDUCER, reducer);
                 if (purifier != null) recipe.addAdditive(MixAdditive.PURIFIER, purifier);
                 add(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }
@@ -333,11 +335,11 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
             }
 
             @Override
-            public @Nullable IHeatRecipe register() {
-                if (!validate()) return null;
+            public @NotNull List<IHeatRecipe> register() {
+                if (!validate()) return Collections.emptyList();
                 HeatRecipe recipe = new HeatRecipe(fluidInput.get(0), fluidOutput.get(0), temp);
                 add(recipe);
-                return recipe;
+                return Collections.singletonList(recipe);
             }
         }
     }
@@ -399,11 +401,11 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
             }
 
             @Override
-            public @Nullable HighOvenFuel register() {
-                if (!validate()) return null;
+            public @NotNull List<HighOvenFuel> register() {
+                if (!validate()) return Collections.emptyList();
                 HighOvenFuel fuel = new HighOvenFuel(MeltingRecipeBuilder.recipeMatchFromIngredient(input.get(0)), time, rate);
                 add(fuel);
-                return fuel;
+                return Collections.singletonList(fuel);
             }
         }
     }

@@ -8,13 +8,15 @@ import com.cleanroommc.groovyscript.helper.Alias;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.AnalysingChamberRecipes;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 
 
@@ -121,14 +123,14 @@ public class AnalysingChamber extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CalculatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CalculatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = AnalysingChamberRecipes.instance()
                     .buildDefaultRecipe(Arrays.asList(slot, location), output, new ArrayList<>(), false);
 
             ModSupport.CALCULATOR.get().analysingChamber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

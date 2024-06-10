@@ -15,9 +15,10 @@ import org.cyclops.integrateddynamics.Configs;
 import org.cyclops.integrateddynamics.block.BlockMechanicalSqueezer;
 import org.cyclops.integrateddynamics.block.BlockSqueezer;
 import org.cyclops.integrateddynamics.block.BlockSqueezerConfig;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -140,8 +141,8 @@ public class Squeezer extends StandardListRegistry<IRecipe<IngredientRecipeCompo
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe<IngredientRecipeComponent, IngredientsAndFluidStackRecipeComponent, DummyPropertiesComponent> register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe<IngredientRecipeComponent, IngredientsAndFluidStackRecipeComponent, DummyPropertiesComponent>> register() {
+            if (!validate()) return Collections.emptyList();
 
             if (basic) {
                 ModSupport.INTEGRATED_DYNAMICS.get().squeezer.addScripted(

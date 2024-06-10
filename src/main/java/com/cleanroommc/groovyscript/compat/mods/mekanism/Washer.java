@@ -10,7 +10,10 @@ import mekanism.api.gas.GasStack;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.WasherRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
@@ -62,11 +65,11 @@ public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WasherRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<WasherRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             WasherRecipe recipe = new WasherRecipe(gasInput.get(0), gasOutput.get(0));
             ModSupport.MEKANISM.get().washer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

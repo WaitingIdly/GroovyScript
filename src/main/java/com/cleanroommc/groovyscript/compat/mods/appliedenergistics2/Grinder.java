@@ -10,10 +10,11 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,8 +127,8 @@ public class Grinder extends VirtualizedRegistry<IGrinderRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IGrinderRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IGrinderRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IGrinderRecipeBuilder builder = AEApi.instance()
                     .registries()
                     .grinder()
@@ -139,7 +140,7 @@ public class Grinder extends VirtualizedRegistry<IGrinderRecipe> {
             if (output.size() > 2 && !IngredientHelper.isEmpty(output.get(2))) builder.withSecondOptional(output.get(2), chance2);
             IGrinderRecipe recipe = builder.build();
             ModSupport.APPLIED_ENERGISTICS_2.get().grinder.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

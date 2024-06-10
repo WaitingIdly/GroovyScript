@@ -13,7 +13,7 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.Optional;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -107,11 +107,11 @@ public class Burning extends StandardListRegistry<Burning.BurningRecipe> {
         }
 
         @Override
-        public @Nullable Burning.BurningRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Burning.BurningRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             BurningRecipe burningRecipe = new BurningRecipe(this.input.get(0), this.output.get(0), this.ticks, this.startCondition);
             VanillaModule.inWorldCrafting.burning.add(burningRecipe);
-            return burningRecipe;
+            return Collections.singletonList(burningRecipe);
         }
     }
 

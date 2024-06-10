@@ -10,11 +10,9 @@ import forestry.api.recipes.ICentrifugeRecipe;
 import forestry.factory.recipes.CentrifugeRecipe;
 import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Centrifuge extends ForestryRegistry<ICentrifugeRecipe> {
@@ -123,11 +121,11 @@ public class Centrifuge extends ForestryRegistry<ICentrifugeRecipe> {
         }
 
         @Override
-        public @Nullable ICentrifugeRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICentrifugeRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ICentrifugeRecipe recipe = new CentrifugeRecipe(time, input.get(0).getMatchingStacks()[0], outputs);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

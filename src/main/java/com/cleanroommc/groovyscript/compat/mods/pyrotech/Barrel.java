@@ -10,7 +10,10 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.BarrelRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Barrel extends ForgeRegistryWrapper<BarrelRecipe> {
@@ -28,7 +31,7 @@ public class Barrel extends ForgeRegistryWrapper<BarrelRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_dirt_water_to_lava', ore('ingotIron'), ore('ingotIron'), item('minecraft:dirt'), item('minecraft:dirt'), fluid('water'), fluid('lava'), 1000"))
-    public BarrelRecipe add(String name, IIngredient input1, IIngredient input2, IIngredient input3, IIngredient input4, FluidStack fInput, FluidStack fOutput, int duration) {
+    public List<BarrelRecipe> add(String name, IIngredient input1, IIngredient input2, IIngredient input3, IIngredient input4, FluidStack fInput, FluidStack fOutput, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)
@@ -90,8 +93,8 @@ public class Barrel extends ForgeRegistryWrapper<BarrelRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable BarrelRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BarrelRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             // Because you need Ingredient[] to register a recipe
             Ingredient[] inputIngredient = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
@@ -99,7 +102,7 @@ public class Barrel extends ForgeRegistryWrapper<BarrelRecipe> {
             BarrelRecipe recipe = new BarrelRecipe(fluidOutput.get(0), inputIngredient, fluidInput.get(0), duration).setRegistryName(super.name);
             PyroTech.barrel.add(recipe);
 
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

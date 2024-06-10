@@ -9,7 +9,10 @@ import mekanism.api.gas.GasStack;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ChemicalPairInput;
 import mekanism.common.recipe.machines.ChemicalInfuserRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuserRecipe> {
@@ -62,11 +65,11 @@ public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuser
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ChemicalInfuserRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ChemicalInfuserRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ChemicalInfuserRecipe recipe = new ChemicalInfuserRecipe(gasInput.get(0), gasInput.get(1), gasOutput.get(0));
             ModSupport.MEKANISM.get().chemicalInfuser.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

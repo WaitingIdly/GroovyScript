@@ -12,7 +12,10 @@ import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.SawmillRecipe;
 import mekanism.common.recipe.outputs.ChanceOutput;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
@@ -96,8 +99,8 @@ public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SawmillRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SawmillRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ChanceOutput chanceOutput = IngredientHelper.isEmpty(extra)
                     ? new ChanceOutput(output.get(0))
                     : new ChanceOutput(output.get(0), extra, chance);
@@ -107,7 +110,7 @@ public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().sawmill.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

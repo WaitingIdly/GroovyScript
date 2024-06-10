@@ -12,8 +12,10 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -119,15 +121,15 @@ public class MillStone extends StandardListRegistry<MillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MillRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MillRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             MillRecipe recipe = new MillRecipe(input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList()), output);
             recipe.setSound(soundEvent);
             recipe.setTicks(ticks);
             recipe.setPriority(priority);
             ModSupport.BETTER_WITH_MODS.get().millStone.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

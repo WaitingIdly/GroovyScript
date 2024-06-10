@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import forestry.api.recipes.IMoistenerRecipe;
 import forestry.factory.recipes.MoistenerRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
 
@@ -104,11 +107,11 @@ public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
         }
 
         @Override
-        public @Nullable IMoistenerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IMoistenerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IMoistenerRecipe recipe = new MoistenerRecipe(input.get(0).getMatchingStacks()[0], output.get(0), time);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

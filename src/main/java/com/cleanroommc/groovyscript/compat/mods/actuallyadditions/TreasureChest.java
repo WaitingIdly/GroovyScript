@@ -8,7 +8,10 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.TreasureChestLoot;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -87,11 +90,11 @@ public class TreasureChest extends StandardListRegistry<TreasureChestLoot> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TreasureChestLoot register() {
-            if (!validate()) return null;
+        public @NotNull List<TreasureChestLoot> register() {
+            if (!validate()) return Collections.emptyList();
             TreasureChestLoot recipe = new TreasureChestLoot(output.get(0), weight, min, max);
             ModSupport.ACTUALLY_ADDITIONS.get().treasureChest.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

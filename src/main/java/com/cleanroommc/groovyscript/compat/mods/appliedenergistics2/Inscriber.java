@@ -11,7 +11,7 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -131,8 +131,8 @@ public class Inscriber extends VirtualizedRegistry<IInscriberRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IInscriberRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IInscriberRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IInscriberRecipeBuilder builder = AEApi.instance()
                     .registries()
                     .inscriber()
@@ -144,7 +144,7 @@ public class Inscriber extends VirtualizedRegistry<IInscriberRecipe> {
             if (!IngredientHelper.isEmpty(bottom)) builder.withBottomOptional(bottom);
             IInscriberRecipe recipe = builder.build();
             ModSupport.APPLIED_ENERGISTICS_2.get().inscriber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

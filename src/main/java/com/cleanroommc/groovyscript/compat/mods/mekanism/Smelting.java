@@ -12,7 +12,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.SmeltingRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(
@@ -73,15 +76,15 @@ public class Smelting extends VirtualizedMekanismRegistry<SmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SmeltingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SmeltingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SmeltingRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 SmeltingRecipe r = new SmeltingRecipe(itemStack, output.get(0));
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().smelting.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

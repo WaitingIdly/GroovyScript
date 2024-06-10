@@ -16,11 +16,9 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -58,7 +56,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, compactorMode('plate'), item('minecraft:obsidian') * 2, item('minecraft:gold_ingot')", commented = true))
-    public CompactorRecipe add(int energy, CompactorManager.Mode mode, IIngredient input, ItemStack output) {
+    public List<CompactorRecipe> add(int energy, CompactorManager.Mode mode, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .mode(mode)
@@ -180,16 +178,16 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CompactorRecipe register() {
-            if (!validate()) return null;
-            CompactorRecipe recipe = null;
+        public @NotNull List<CompactorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<CompactorRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                CompactorRecipe recipe1 = CompactorRecipeAccessor.createCompactorRecipe(itemStack, output.get(0), energy);
-                ModSupport.THERMAL_EXPANSION.get().compactor.add(mode, recipe1);
-                if (recipe == null) recipe = recipe1;
+                CompactorRecipe recipe = CompactorRecipeAccessor.createCompactorRecipe(itemStack, output.get(0), energy);
+                ModSupport.THERMAL_EXPANSION.get().compactor.add(mode, recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

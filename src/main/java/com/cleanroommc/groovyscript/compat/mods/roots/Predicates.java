@@ -8,7 +8,7 @@ import epicsquid.roots.recipe.transmutation.*;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -124,17 +124,17 @@ public class Predicates extends NamedRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MatchingStates register() {
-            if (!validate()) return null;
+        public @NotNull List<MatchingStates> register() {
+            if (!validate()) return Collections.emptyList();
             BlockStateContainer container = blockstate.getBlock().getBlockState();
 
             BlockStatePredicate predicate = properties.isEmpty()
                     ? new StatePredicate(blockstate)
                     : new PropertyPredicate(blockstate, properties.stream().map(container::getProperty).collect(Collectors.toList()));
 
-            if (above) return new BlockStateAbove(predicate);
-            if (below) return new BlockStateBelow(predicate);
-            return predicate;
+            if (above) return Collections.singletonList(new BlockStateAbove(predicate));
+            if (below) return Collections.singletonList(new BlockStateBelow(predicate));
+            return Collections.singletonList(predicate);
         }
     }
 }

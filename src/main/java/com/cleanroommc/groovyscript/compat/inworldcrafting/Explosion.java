@@ -14,7 +14,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.common.Optional;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -130,11 +133,11 @@ public class Explosion extends StandardListRegistry<Explosion.ExplosionRecipe> {
         }
 
         @Override
-        public @Nullable Explosion.ExplosionRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Explosion.ExplosionRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ExplosionRecipe explosionRecipe = new ExplosionRecipe(this.input.get(0), this.output.get(0), this.chance, this.startCondition);
             VanillaModule.inWorldCrafting.explosion.add(explosionRecipe);
-            return explosionRecipe;
+            return Collections.singletonList(explosionRecipe);
         }
     }
 

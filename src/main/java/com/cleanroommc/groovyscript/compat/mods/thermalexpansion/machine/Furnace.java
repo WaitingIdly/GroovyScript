@@ -15,7 +15,11 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
@@ -56,7 +60,7 @@ public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian') * 2, item('minecraft:clay')"))
-    public FurnaceRecipe add(int energy, IIngredient input, ItemStack output) {
+    public List<FurnaceRecipe> add(int energy, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -140,16 +144,16 @@ public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FurnaceRecipe register() {
-            if (!validate()) return null;
-            FurnaceRecipe recipe = null;
+        public @NotNull List<FurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<FurnaceRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                FurnaceRecipe recipe1 = FurnaceRecipeAccessor.createFurnaceRecipe(itemStack, output.get(0), energy);
-                ModSupport.THERMAL_EXPANSION.get().furnace.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                FurnaceRecipe recipe = FurnaceRecipeAccessor.createFurnaceRecipe(itemStack, output.get(0), energy);
+                ModSupport.THERMAL_EXPANSION.get().furnace.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

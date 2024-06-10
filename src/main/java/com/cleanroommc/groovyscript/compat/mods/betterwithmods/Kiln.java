@@ -10,9 +10,10 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -135,13 +136,13 @@ public class Kiln extends StandardListRegistry<KilnRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable KilnRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<KilnRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             KilnRecipe recipe = new KilnRecipe(input, output, heat);
             recipe.setIgnoreHeat(ignoreHeat);
             ModSupport.BETTER_WITH_MODS.get().kiln.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

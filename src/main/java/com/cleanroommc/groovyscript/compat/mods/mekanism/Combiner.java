@@ -11,7 +11,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.DoubleMachineInput;
 import mekanism.common.recipe.machines.CombinerRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
@@ -77,15 +80,15 @@ public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CombinerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CombinerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CombinerRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 CombinerRecipe r = new CombinerRecipe(itemStack, extra, output.get(0));
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().combiner.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

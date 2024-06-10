@@ -10,7 +10,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.CrystallizerRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe> {
@@ -62,11 +65,11 @@ public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrystallizerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CrystallizerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CrystallizerRecipe recipe = new CrystallizerRecipe(gasInput.get(0), output.get(0));
             ModSupport.MEKANISM.get().crystallizer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

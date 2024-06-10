@@ -8,7 +8,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import forestry.api.recipes.IStillRecipe;
 import forestry.factory.recipes.StillRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 public class Still extends ForestryRegistry<IStillRecipe> {
 
@@ -98,11 +101,11 @@ public class Still extends ForestryRegistry<IStillRecipe> {
         }
 
         @Override
-        public @Nullable IStillRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IStillRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IStillRecipe recipe = new StillRecipe(time, fluidInput.get(0), fluidOutput.get(0));
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

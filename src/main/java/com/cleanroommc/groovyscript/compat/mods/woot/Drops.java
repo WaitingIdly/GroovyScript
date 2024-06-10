@@ -12,12 +12,9 @@ import ipsis.Woot;
 import ipsis.woot.util.WootMobName;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RegistryDescription
 public class Drops extends VirtualizedRegistry<Object> {
@@ -213,10 +210,10 @@ public class Drops extends VirtualizedRegistry<Object> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ItemStack register() {
-            if (!validate()) return null;
+        public @NotNull List<ItemStack> register() {
+            if (!validate()) return Collections.emptyList();
             ModSupport.WOOT.get().drops.add(name, output.get(0), chance, size);
-            return null;
+            return Collections.singletonList(output.get(0));
         }
     }
 }

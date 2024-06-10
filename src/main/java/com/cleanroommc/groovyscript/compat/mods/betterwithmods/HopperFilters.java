@@ -14,8 +14,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -130,12 +132,12 @@ public class HopperFilters extends VirtualizedRegistry<IHopperFilter> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IHopperFilter register() {
-            if (!validate()) return null;
+        public @NotNull List<IHopperFilter> register() {
+            if (!validate()) return Collections.emptyList();
 
             IHopperFilter recipe = new HopperFilter(super.name.toString(), filter.toMcIngredient(), input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList()));
             ModSupport.BETTER_WITH_MODS.get().hopperFilters.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

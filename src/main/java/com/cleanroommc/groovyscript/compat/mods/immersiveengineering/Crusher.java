@@ -10,8 +10,9 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -126,8 +127,8 @@ public class Crusher extends StandardListRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrusherRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CrusherRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CrusherRecipe recipe = new CrusherRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy);
             if (!secondaryOutputItems.isEmpty()) {
                 recipe.secondaryOutput = secondaryOutputItems.toArray(new ItemStack[0]);
@@ -135,7 +136,7 @@ public class Crusher extends StandardListRegistry<CrusherRecipe> {
                 recipe.getItemOutputs().addAll(secondaryOutputItems);
             }
             ModSupport.IMMERSIVE_ENGINEERING.get().crusher.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -20,10 +20,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.oredict.OreDictionary;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -192,8 +193,8 @@ public class SoulBinder extends VirtualizedRegistry<ISoulBinderRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BasicSoulBinderRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BasicSoulBinderRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             BasicSoulBinderRecipe recipe = new BasicSoulBinderRecipe(
                     input.get(0).getMatchingStacks()[0],
                     output.get(0),
@@ -205,7 +206,7 @@ public class SoulBinder extends VirtualizedRegistry<ISoulBinderRecipe> {
                     new BasicSoulBinderRecipe.OutputFilter() {
                     });
             ModSupport.ENDER_IO.get().soulBinder.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

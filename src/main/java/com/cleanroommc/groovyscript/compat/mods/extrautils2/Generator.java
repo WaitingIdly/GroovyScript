@@ -15,9 +15,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -307,8 +309,8 @@ public class Generator extends VirtualizedRegistry<Pair<Machine, IMachineRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public IMachineRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IMachineRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             com.rwtema.extrautils2.api.machine.RecipeBuilder builder = com.rwtema.extrautils2.api.machine.RecipeBuilder.newbuilder(generator);
             builder.setRFRate(energy, energyPerTick);
@@ -324,7 +326,7 @@ public class Generator extends VirtualizedRegistry<Pair<Machine, IMachineRecipe>
             }
             IMachineRecipe recipe = builder.build();
             ModSupport.EXTRA_UTILITIES_2.get().generator.add(generator, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

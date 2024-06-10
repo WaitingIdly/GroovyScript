@@ -11,7 +11,10 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.CrusherRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -95,11 +98,11 @@ public class Crusher extends StandardListRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrusherRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CrusherRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CrusherRecipe recipe = new CrusherRecipe(input.get(0).toMcIngredient(), output.get(0), output.size() < 2 ? ItemStack.EMPTY : output.get(1), chance);
             ModSupport.ACTUALLY_ADDITIONS.get().crusher.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -12,12 +12,9 @@ import com.codetaylor.mc.advancedmortars.modules.mortar.api.MortarAPI;
 import com.codetaylor.mc.advancedmortars.modules.mortar.recipe.RecipeMortar;
 import com.codetaylor.mc.advancedmortars.modules.mortar.reference.EnumMortarType;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -202,11 +199,11 @@ public class Mortar extends VirtualizedRegistry<RecipeMortar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeMortar register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeMortar> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeMortar recipe = new RecipeMortar(output.get(0), duration, secondaryOutput, secondaryOutputChance, IngredientHelper.toIngredientNonNullList(input));
             types.stream().map(EnumMortarType::fromName).forEach(enumMortarType -> add(enumMortarType, recipe));
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

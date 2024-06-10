@@ -14,8 +14,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription(
@@ -60,7 +63,7 @@ public class TransposerExtract extends VirtualizedRegistry<TransposerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), fluid('water') * 50, item('minecraft:diamond') * 2, 100"))
-    public TransposerRecipe add(int energy, IIngredient input, FluidStack outputFluid, ItemStack outputItem, int chance) {
+    public List<TransposerRecipe> add(int energy, IIngredient input, FluidStack outputFluid, ItemStack outputItem, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -152,15 +155,15 @@ public class TransposerExtract extends VirtualizedRegistry<TransposerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TransposerRecipe register() {
-            if (!validate()) return null;
-            TransposerRecipe recipe = null;
+        public @NotNull List<TransposerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<TransposerRecipe> recipes = new ArrayList<>();
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {
-                TransposerRecipe recipe1 = new TransposerRecipe(input0, output.getOrEmpty(0), fluidOutput.get(0), energy, chance);
-                ModSupport.THERMAL_EXPANSION.get().transposerExtract.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                TransposerRecipe recipe = new TransposerRecipe(input0, output.getOrEmpty(0), fluidOutput.get(0), energy, chance);
+                ModSupport.THERMAL_EXPANSION.get().transposerExtract.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

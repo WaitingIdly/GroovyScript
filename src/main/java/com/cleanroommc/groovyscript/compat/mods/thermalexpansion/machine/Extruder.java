@@ -19,9 +19,11 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -70,7 +72,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:gold_block'), 100, 1000, false"))
-    public ExtruderRecipe add(int energy, ItemStack output, int fluidHot, int fluidCold, boolean sedimentary) {
+    public List<ExtruderRecipe> add(int energy, ItemStack output, int fluidHot, int fluidCold, boolean sedimentary) {
         return recipeBuilder()
                 .energy(energy)
                 .fluidCold(fluidCold)
@@ -212,11 +214,11 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ExtruderRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ExtruderRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ExtruderRecipe recipe = ExtruderRecipeAccessor.createExtruderRecipe(output.get(0), new FluidStack(FluidRegistry.LAVA, fluidHot), new FluidStack(FluidRegistry.WATER, fluidCold), energy);
             ModSupport.THERMAL_EXPANSION.get().extruder.add(sedimentary, recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

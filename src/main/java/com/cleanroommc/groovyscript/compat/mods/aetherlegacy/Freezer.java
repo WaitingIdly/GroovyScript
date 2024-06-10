@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.gildedgames.the_aether.api.freezables.AetherFreezable;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Freezer extends ForgeRegistryWrapper<AetherFreezable> {
@@ -70,11 +73,11 @@ public class Freezer extends ForgeRegistryWrapper<AetherFreezable> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable AetherFreezable register() {
-            if (!validate()) return null;
+        public @NotNull List<AetherFreezable> register() {
+            if (!validate()) return Collections.emptyList();
             AetherFreezable freezable = new AetherFreezable(input.get(0).getMatchingStacks()[0], output.get(0), time);
             ModSupport.AETHER.get().freezer.add(freezable);
-            return freezable;
+            return Collections.singletonList(freezable);
         }
     }
 }

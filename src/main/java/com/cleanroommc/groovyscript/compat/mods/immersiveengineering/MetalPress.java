@@ -12,9 +12,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -215,11 +216,11 @@ public class MetalPress extends VirtualizedRegistry<MetalPressRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MetalPressRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MetalPressRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             MetalPressRecipe recipe = new MetalPressRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), ApiUtils.createComparableItemStack(mold, true), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().metalPress.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -14,7 +14,7 @@ import it.unimi.dsi.fastutil.chars.Char2ObjectOpenHashMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -202,11 +202,11 @@ public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
         }
 
         @Override
-        public @Nullable ICarpenterRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICarpenterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ICarpenterRecipe recipe = new CarpenterRecipe(time, fluidInput.getOrEmpty(0), box.getMatchingStacks()[0], convertPatternToInternal(output.get(0), pattern, keys));
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -17,8 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -62,7 +65,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), fluid('water') * 1000"))
-    public CrucibleRecipe add(int energy, IIngredient input, FluidStack fluidOutput) {
+    public List<CrucibleRecipe> add(int energy, IIngredient input, FluidStack fluidOutput) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -140,16 +143,16 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrucibleRecipe register() {
-            if (!validate()) return null;
-            CrucibleRecipe recipe = null;
+        public @NotNull List<CrucibleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<CrucibleRecipe> recipes = new ArrayList<>();
 
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                CrucibleRecipe recipe1 = CrucibleRecipeAccessor.createCrucibleRecipe(itemStack, fluidOutput.get(0), energy);
-                ModSupport.THERMAL_EXPANSION.get().crucible.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                CrucibleRecipe recipe = CrucibleRecipeAccessor.createCrucibleRecipe(itemStack, fluidOutput.get(0), energy);
+                ModSupport.THERMAL_EXPANSION.get().crucible.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

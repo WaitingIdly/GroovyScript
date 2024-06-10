@@ -11,9 +11,10 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -153,11 +154,11 @@ public class Squeezer extends StandardListRegistry<SqueezerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SqueezerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SqueezerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SqueezerRecipe recipe = new SqueezerRecipe(fluidOutput.getOrEmpty(0), output.getOrEmpty(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().squeezer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

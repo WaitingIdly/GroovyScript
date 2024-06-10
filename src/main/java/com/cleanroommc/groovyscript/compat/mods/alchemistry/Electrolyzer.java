@@ -12,9 +12,11 @@ import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Electrolyzer extends StandardListRegistry<ElectrolyzerRecipe> {
@@ -129,20 +131,15 @@ public class Electrolyzer extends StandardListRegistry<ElectrolyzerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ElectrolyzerRecipe register() {
-            if (!validate()) return null;
-            ElectrolyzerRecipe recipe = new ElectrolyzerRecipe(
-                    fluidInput.get(0),
-                    input.size() >= 1 ? input.get(0).toMcIngredient() : Ingredient.EMPTY,
-                    consumptionChance,
-                    output.get(0),
-                    output.getOrEmpty(1),
-                    output.getOrEmpty(2),
-                    chance.size() >= 1 ? chance.getInt(0) : 0,
-                    output.getOrEmpty(3),
-                    chance.size() >= 2 ? chance.getInt(1) : 0);
+        public @NotNull List<ElectrolyzerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            ElectrolyzerRecipe recipe = new ElectrolyzerRecipe(fluidInput.get(0),
+                                                               input.size() >= 1 ? input.get(0).toMcIngredient() : Ingredient.EMPTY, consumptionChance,
+                                                               output.get(0), output.getOrEmpty(1),
+                                                               output.getOrEmpty(2), chance.size() >= 1 ? chance.getInt(0) : 0,
+                                                               output.getOrEmpty(3), chance.size() >= 2 ? chance.getInt(1) : 0);
             ModSupport.ALCHEMISTRY.get().electrolyzer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

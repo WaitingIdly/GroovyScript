@@ -10,7 +10,10 @@ import mekanism.api.gas.GasStack;
 import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.SolarNeutronRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeutronRecipe> {
@@ -62,11 +65,11 @@ public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeut
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SolarNeutronRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SolarNeutronRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SolarNeutronRecipe recipe = new SolarNeutronRecipe(gasInput.get(0), gasOutput.get(0));
             ModSupport.MEKANISM.get().solarNeutronActivator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -7,12 +7,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import sonar.calculator.mod.common.recipes.RedstoneExtractorRecipes;
 import sonar.core.recipes.DefaultSonarRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 
 @RegistryDescription
@@ -74,14 +76,14 @@ public class RedstoneExtractor extends StandardListRegistry<DefaultSonarRecipe.V
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DefaultSonarRecipe.Value register() {
-            if (!validate()) return null;
+        public @NotNull List<DefaultSonarRecipe.Value> register() {
+            if (!validate()) return Collections.emptyList();
 
             DefaultSonarRecipe.Value recipe = RedstoneExtractorRecipes.instance()
                     .buildDefaultRecipe(Calculator.toSonarRecipeObjectList(input), output, Arrays.asList(value), false);
 
             ModSupport.CALCULATOR.get().redstoneExtractor.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.ModuleTechBasic;
 import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.AnvilRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
@@ -31,7 +33,7 @@ public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay', ore('ingotIron'), item('minecraft:clay_ball'), 9, 'granite', 'hammer'"))
-    public AnvilRecipe add(String name, IIngredient input, ItemStack output, int hits, String tier, String type) {
+    public List<AnvilRecipe> add(String name, IIngredient input, ItemStack output, int hits, String tier, String type) {
         AnvilRecipe.EnumTier enumTier = EnumHelper.valueOfNullable(AnvilRecipe.EnumTier.class, tier, false);
         AnvilRecipe.EnumType enumType = EnumHelper.valueOfNullable(AnvilRecipe.EnumType.class, type, false);
         if (enumTier == null || enumType == null) {
@@ -148,12 +150,12 @@ public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AnvilRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AnvilRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             AnvilRecipe recipe = new AnvilRecipe(output.get(0), input.get(0).toMcIngredient(), hits, type, tier).setRegistryName(super.name);
             PyroTech.anvil.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

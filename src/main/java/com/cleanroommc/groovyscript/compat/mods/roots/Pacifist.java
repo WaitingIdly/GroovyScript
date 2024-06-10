@@ -12,8 +12,10 @@ import epicsquid.roots.recipe.PacifistEntry;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(
@@ -117,12 +119,12 @@ public class Pacifist extends VirtualizedRegistry<PacifistEntry> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PacifistEntry register() {
-            if (!validate()) return null;
+        public @NotNull List<PacifistEntry> register() {
+            if (!validate()) return Collections.emptyList();
             PacifistEntry recipe = new PacifistEntry(entity, super.name.toString());
             ((PacifistEntryAccessor) recipe).setName(super.name);
             ModSupport.ROOTS.get().pacifist.add(recipe.getRegistryName(), recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -11,7 +11,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -32,7 +35,7 @@ public class Atomizer extends StandardListRegistry<AtomizerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public AtomizerRecipe add(FluidStack input, ItemStack output) {
+    public List<AtomizerRecipe> add(FluidStack input, ItemStack output) {
         return recipeBuilder().fluidInput(input).output(output).register();
     }
 
@@ -90,13 +93,13 @@ public class Atomizer extends StandardListRegistry<AtomizerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AtomizerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AtomizerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             AtomizerRecipe recipe = new AtomizerRecipe(false, fluidInput.get(0), output.get(0));
             if (reversible) ModSupport.ALCHEMISTRY.get().liquifier.add(new LiquifierRecipe(output.get(0), fluidInput.get(0)));
             ModSupport.ALCHEMISTRY.get().atomizer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

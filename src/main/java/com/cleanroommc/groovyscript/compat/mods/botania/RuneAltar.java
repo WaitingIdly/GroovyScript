@@ -8,12 +8,13 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModBlocks;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,8 +115,8 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeRuneAltar register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeRuneAltar> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeRuneAltar recipe = new RecipeRuneAltar(
                     output.get(0),
                     mana,
@@ -126,7 +127,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
                                             : i.getMatchingStacks()[0])
                             .toArray());
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

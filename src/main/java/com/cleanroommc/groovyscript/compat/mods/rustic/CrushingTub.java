@@ -7,10 +7,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import rustic.common.crafting.CrushingTubRecipe;
 import rustic.common.crafting.ICrushingTubRecipe;
 import rustic.common.crafting.Recipes;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -85,15 +89,15 @@ public class CrushingTub extends StandardListRegistry<ICrushingTubRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICrushingTubRecipe register() {
-            if (!validate()) return null;
-            ICrushingTubRecipe recipe = null;
+        public @NotNull List<ICrushingTubRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ICrushingTubRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                ICrushingTubRecipe recipe1 = new CrushingTubRecipe(fluidOutput.get(0), itemStack, byproduct);
-                ModSupport.RUSTIC.get().crushingTub.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                ICrushingTubRecipe recipe = new CrushingTubRecipe(fluidOutput.get(0), itemStack, byproduct);
+                ModSupport.RUSTIC.get().crushingTub.add(recipe);
+                recipes.add(recipe);
             }
-            return recipe;
+            return recipes;
         }
     }
 }

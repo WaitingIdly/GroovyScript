@@ -16,7 +16,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Collections;
+import java.util.List;
 
 public class FluidToItem extends VirtualizedRegistry<FluidToItem.Recipe> {
 
@@ -148,7 +152,7 @@ public class FluidToItem extends VirtualizedRegistry<FluidToItem.Recipe> {
         }
 
         @Override
-        public @Nullable FluidToItem.Recipe register() {
+        public @NotNull List<Recipe> register() {
             Recipe recipe = new Recipe(
                     this.fluidInput.get(0).getFluid(),
                     this.input.toArray(new IIngredient[0]),
@@ -158,7 +162,7 @@ public class FluidToItem extends VirtualizedRegistry<FluidToItem.Recipe> {
                     this.output.get(0),
                     this.fluidConsumptionChance);
             VanillaModule.inWorldCrafting.fluidToItem.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

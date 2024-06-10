@@ -7,11 +7,12 @@ import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeElvenTrade;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Collection;
 import java.util.List;
 
@@ -111,11 +112,11 @@ public class ElvenTrade extends StandardListRegistry<RecipeElvenTrade> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeElvenTrade register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeElvenTrade> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeElvenTrade recipe = new RecipeElvenTrade(output.toArray(new ItemStack[0]), convertIngredients(input.toArray(new IIngredient[0])));
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

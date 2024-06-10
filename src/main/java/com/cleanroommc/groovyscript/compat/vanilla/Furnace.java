@@ -10,9 +10,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -221,14 +222,14 @@ public class Furnace extends VirtualizedRegistry<Furnace.Recipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Recipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Recipe> register() {
+            if (!validate()) return Collections.emptyList();
             Recipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 recipe = new Recipe(itemStack, output.get(0), exp);
                 VanillaModule.furnace.add(recipe);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 

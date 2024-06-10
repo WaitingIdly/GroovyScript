@@ -11,7 +11,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.FluidInput;
 import mekanism.common.recipe.machines.ThermalEvaporationRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<ThermalEvaporationRecipe> {
@@ -62,11 +65,11 @@ public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<Thermal
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ThermalEvaporationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ThermalEvaporationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ThermalEvaporationRecipe recipe = new ThermalEvaporationRecipe(fluidInput.get(0), fluidOutput.get(0));
             ModSupport.MEKANISM.get().thermalEvaporationPlant.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -11,9 +11,11 @@ import de.ellpeck.actuallyadditions.api.ActuallyAdditionsAPI;
 import de.ellpeck.actuallyadditions.api.recipe.EmpowererRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Collections;
+import java.util.List;
 import java.util.Collection;
 
 @RegistryDescription
@@ -192,8 +194,8 @@ public class Empowerer extends StandardListRegistry<EmpowererRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable EmpowererRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<EmpowererRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             EmpowererRecipe recipe = new EmpowererRecipe(
                     mainInput.toMcIngredient(),
                     output.get(0),
@@ -208,7 +210,7 @@ public class Empowerer extends StandardListRegistry<EmpowererRecipe> {
                     }
             );
             ModSupport.ACTUALLY_ADDITIONS.get().empowerer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

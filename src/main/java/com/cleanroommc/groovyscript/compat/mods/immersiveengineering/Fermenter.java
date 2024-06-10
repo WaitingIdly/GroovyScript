@@ -11,9 +11,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Fermenter extends StandardListRegistry<FermenterRecipe> {
@@ -104,11 +106,11 @@ public class Fermenter extends StandardListRegistry<FermenterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FermenterRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<FermenterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             FermenterRecipe recipe = new FermenterRecipe(fluidOutput.get(0), output.getOrEmpty(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().fermenter.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

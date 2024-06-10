@@ -11,7 +11,10 @@ import mekanism.common.recipe.RecipeHandler;
 import mekanism.common.recipe.inputs.ItemStackInput;
 import mekanism.common.recipe.machines.CrusherRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
@@ -67,15 +70,15 @@ public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CrusherRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CrusherRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CrusherRecipe recipe = null;
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 CrusherRecipe r = new CrusherRecipe(itemStack, output.get(0));
                 if (recipe == null) recipe = r;
                 ModSupport.MEKANISM.get().crusher.add(r);
             }
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

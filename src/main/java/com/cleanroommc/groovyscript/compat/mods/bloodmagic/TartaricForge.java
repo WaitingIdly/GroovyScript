@@ -13,10 +13,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.bloodmagic.tartaric_forge.note", type = Admonition.Type.WARNING))
 public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
@@ -144,11 +145,11 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeTartaricForge register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeTartaricForge> register() {
+            if (!validate()) return Collections.emptyList();
             RecipeTartaricForge recipe = new RecipeTartaricForge(IngredientHelper.toIngredientNonNullList(input), output.get(0), minimumSouls, soulDrain);
             ModSupport.BLOOD_MAGIC.get().tartaricForge.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

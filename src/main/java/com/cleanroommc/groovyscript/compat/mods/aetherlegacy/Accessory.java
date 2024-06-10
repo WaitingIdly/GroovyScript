@@ -11,9 +11,11 @@ import com.gildedgames.the_aether.api.accessories.AccessoryType;
 import com.gildedgames.the_aether.api.accessories.AetherAccessory;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.GameRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Accessory extends ForgeRegistryWrapper<AetherAccessory> {
@@ -82,12 +84,12 @@ public class Accessory extends ForgeRegistryWrapper<AetherAccessory> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable AetherAccessory register() {
-            if (!validate()) return null;
+        public @NotNull List<AetherAccessory> register() {
+            if (!validate()) return Collections.emptyList();
 
             AetherAccessory accessory = new AetherAccessory(input.get(0).getMatchingStacks()[0], accessoryType);
             ModSupport.AETHER.get().accessory.add(accessory);
-            return accessory;
+            return Collections.singletonList(accessory);
         }
     }
 }

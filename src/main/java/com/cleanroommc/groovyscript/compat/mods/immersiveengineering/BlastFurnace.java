@@ -10,9 +10,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -111,9 +112,11 @@ public class BlastFurnace extends StandardListRegistry<BlastFurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BlastFurnaceRecipe register() {
-            if (!validate()) return null;
-            return ModSupport.IMMERSIVE_ENGINEERING.get().blastFurnace.add(output.get(0), input.get(0), time, slag);
+        public @NotNull List<BlastFurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            BlastFurnaceRecipe recipe = new BlastFurnaceRecipe(output.get(0), ImmersiveEngineering.toIEInput(input.get(0)), time, IngredientHelper.copy(slag));
+            ModSupport.IMMERSIVE_ENGINEERING.get().blastFurnace.add(recipe);
+            return Collections.singletonList(recipe);
         }
     }
 }

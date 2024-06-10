@@ -10,7 +10,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 import java.util.Collection;
 
@@ -31,7 +34,7 @@ public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public LiquifierRecipe add(IIngredient input, FluidStack output) {
+    public List<LiquifierRecipe> add(IIngredient input, FluidStack output) {
         return recipeBuilder().input(input).fluidOutput(output).register();
     }
 
@@ -74,11 +77,11 @@ public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable LiquifierRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<LiquifierRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             LiquifierRecipe recipe = new LiquifierRecipe(IngredientHelper.toItemStack(input.get(0)), fluidOutput.get(0));
             ModSupport.ALCHEMISTRY.get().liquifier.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

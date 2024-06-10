@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import com.rwtema.extrautils2.api.machine.IMachineRecipe;
 import com.rwtema.extrautils2.api.machine.XUMachineFurnace;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription(
@@ -122,8 +124,8 @@ public class Furnace extends VirtualizedRegistry<IMachineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public IMachineRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IMachineRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             com.rwtema.extrautils2.api.machine.RecipeBuilder builder = com.rwtema.extrautils2.api.machine.RecipeBuilder.newbuilder(XUMachineFurnace.INSTANCE);
             builder.setItemInput(XUMachineFurnace.INPUT, Arrays.asList(input.get(0).getMatchingStacks()), input.get(0).getAmount());
             builder.setItemOutput(XUMachineFurnace.OUTPUT, output.get(0));
@@ -133,7 +135,7 @@ public class Furnace extends VirtualizedRegistry<IMachineRecipe> {
             IMachineRecipe recipe = builder.build();
 
             ModSupport.EXTRA_UTILITIES_2.get().furnace.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

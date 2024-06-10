@@ -14,6 +14,7 @@ import mekanism.common.recipe.outputs.ChanceOutput;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -104,13 +105,13 @@ public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
             ChanceOutput chanceOutput = IngredientHelper.isEmpty(extra)
                     ? new ChanceOutput(output.get(0))
                     : new ChanceOutput(output.get(0), extra, chance);
-            SawmillRecipe recipe = null;
+            List<SawmillRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 SawmillRecipe r = new SawmillRecipe(new ItemStackInput(itemStack), chanceOutput);
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().sawmill.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

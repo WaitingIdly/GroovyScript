@@ -15,6 +15,7 @@ import mekanism.common.recipe.machines.OxidationRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,13 +76,13 @@ public class ChemicalOxidizer extends VirtualizedMekanismRegistry<OxidationRecip
         @RecipeBuilderRegistrationMethod
         public @NotNull List<OxidationRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            OxidationRecipe recipe = null;
+            List<OxidationRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 OxidationRecipe r = new OxidationRecipe(itemStack, gasOutput.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().chemicalOxidizer.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

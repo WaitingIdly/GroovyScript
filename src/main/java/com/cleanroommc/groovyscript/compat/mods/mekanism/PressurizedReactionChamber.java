@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -105,18 +106,18 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
         public @NotNull List<PressurizedRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PressurizedOutput pressurizedOutput = new PressurizedOutput(output.getOrEmpty(0), gasOutput.get(0));
-            PressurizedRecipe recipe = null;
             if (input.isEmpty()) {
-                recipe = new PressurizedRecipe(new PressurizedInput(ItemStack.EMPTY, fluidInput.get(0), gasInput.get(0)), pressurizedOutput, energy, duration);
+                PressurizedRecipe recipe = new PressurizedRecipe(new PressurizedInput(ItemStack.EMPTY, fluidInput.get(0), gasInput.get(0)), pressurizedOutput, energy, duration);
                 ModSupport.MEKANISM.get().pressurizedReactionChamber.add(recipe);
-            } else {
-                for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
-                    PressurizedRecipe r = new PressurizedRecipe(new PressurizedInput(itemStack, fluidInput.get(0), gasInput.get(0)), pressurizedOutput, energy, duration);
-                    if (recipe == null) recipe = r;
-                    ModSupport.MEKANISM.get().pressurizedReactionChamber.add(r);
-                }
+                return Collections.singletonList(recipe);
             }
-            return Collections.singletonList(recipe);
+            List<PressurizedRecipe> recipes = new ArrayList<>();
+            for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
+                PressurizedRecipe r = new PressurizedRecipe(new PressurizedInput(itemStack, fluidInput.get(0), gasInput.get(0)), pressurizedOutput, energy, duration);
+                recipes.add(r);
+                ModSupport.MEKANISM.get().pressurizedReactionChamber.add(r);
+            }
+            return recipes;
         }
     }
 }

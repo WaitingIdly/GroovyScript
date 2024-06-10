@@ -14,6 +14,7 @@ import mekanism.common.recipe.machines.EnrichmentRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -73,13 +74,13 @@ public class EnrichmentChamber extends VirtualizedMekanismRegistry<EnrichmentRec
         @RecipeBuilderRegistrationMethod
         public @NotNull List<EnrichmentRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            EnrichmentRecipe recipe = null;
+            List<EnrichmentRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 EnrichmentRecipe r = new EnrichmentRecipe(itemStack, output.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().enrichmentChamber.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

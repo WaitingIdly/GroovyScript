@@ -13,6 +13,7 @@ import mekanism.common.recipe.machines.CrusherRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,13 +73,13 @@ public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
         @RecipeBuilderRegistrationMethod
         public @NotNull List<CrusherRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            CrusherRecipe recipe = null;
+            List<CrusherRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 CrusherRecipe r = new CrusherRecipe(itemStack, output.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().crusher.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

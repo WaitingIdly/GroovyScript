@@ -17,6 +17,7 @@ import mekanism.common.recipe.outputs.ItemStackOutput;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -80,13 +81,13 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
         public @NotNull List<OsmiumCompressorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Gas gas = gasInput.isEmpty() ? MekanismFluids.LiquidOsmium : gasInput.get(0).getGas();
-            OsmiumCompressorRecipe recipe = null;
+            List<OsmiumCompressorRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 OsmiumCompressorRecipe r = new OsmiumCompressorRecipe(new AdvancedMachineInput(itemStack, gas), new ItemStackOutput(output.get(0)));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().osmiumCompressor.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

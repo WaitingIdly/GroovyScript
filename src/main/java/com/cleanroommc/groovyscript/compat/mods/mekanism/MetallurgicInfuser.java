@@ -15,6 +15,7 @@ import mekanism.common.recipe.machines.MetallurgicInfuserRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -110,13 +111,13 @@ public class MetallurgicInfuser extends VirtualizedMekanismRegistry<MetallurgicI
         @RecipeBuilderRegistrationMethod
         public @NotNull List<MetallurgicInfuserRecipe> register() {
             if (!validate()) return Collections.emptyList();
-            MetallurgicInfuserRecipe recipe = null;
+            List<MetallurgicInfuserRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {
                 MetallurgicInfuserRecipe r = new MetallurgicInfuserRecipe(new InfusionInput(infuse, amount, itemStack), output.get(0));
-                if (recipe == null) recipe = r;
+                recipes.add(r);
                 ModSupport.MEKANISM.get().metallurgicInfuser.add(r);
             }
-            return Collections.singletonList(recipe);
+            return recipes;
         }
     }
 }

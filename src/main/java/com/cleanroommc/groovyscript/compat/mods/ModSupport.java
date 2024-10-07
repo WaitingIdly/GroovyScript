@@ -65,6 +65,8 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.discovery.ASMDataTable;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.*;
 
@@ -200,6 +202,19 @@ public class ModSupport {
                 throw new IllegalArgumentException("Alias already exists for: " + container.getModId() + " mod.");
             }
         }
+    }
+
+    @Deprecated
+    @Nullable
+    public Object getProperty(String name) {
+        GroovyContainer<?> container = containers.get(name);
+        return container != null ? container.get() : null;
+    }
+
+
+    @Deprecated
+    public @UnmodifiableView Map<String, ? extends GroovyContainer<?>> getProperties() {
+        return containersView;
     }
 
     @GroovyBlacklist

@@ -46,13 +46,7 @@ public class Mixer extends StandardListRegistry<MixerRecipe> {
                 .postIfNotEmpty()) {
             return;
         }
-        if (!getRecipes().removeIf(recipe -> {
-            if (recipe.fluidOutput.isFluidEqual(fluidOutput)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!getRecipes().removeIf(recipe -> recipe.fluidOutput.isFluidEqual(fluidOutput) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Mixer recipe")
                     .add("no recipes found for {}", fluidOutput)
                     .error()

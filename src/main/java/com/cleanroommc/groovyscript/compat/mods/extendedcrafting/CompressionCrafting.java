@@ -43,35 +43,17 @@ public class CompressionCrafting extends StandardListRegistry<CompressorRecipe> 
 
     @MethodDescription(example = @Example("item('extendedcrafting:singularity:6')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(r -> {
-            if (r.getOutput().equals(output)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().equals(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('extendedcrafting:material:11')"))
     public boolean removeByCatalyst(IIngredient catalyst) {
-        return getRecipes().removeIf(r -> {
-            if (r.getCatalyst().equals(catalyst.toMcIngredient())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getCatalyst().equals(catalyst.toMcIngredient()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:gold_ingot')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().equals(input.toMcIngredient())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().equals(input.toMcIngredient()) && doAddBackup(r));
     }
 
     @RecipeBuilderDescription(example = {

@@ -43,24 +43,12 @@ public class BloodInfuser extends StandardListRegistry<IRecipe<IngredientFluidSt
 
     @MethodDescription(example = @Example("item('evilcraft:dark_gem')"))
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:leather')"))
     public boolean removeByOutput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getOutput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

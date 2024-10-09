@@ -66,10 +66,7 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
                 }
                 removeRecipe = foundInputMatch;
             }
-            if (removeRecipe) {
-                addBackup(recipe);
-            }
-            return removeRecipe;
+            return removeRecipe && doAddBackup(recipe);
         })) {
             return true;
         }
@@ -83,13 +80,7 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
 
     @MethodDescription(example = @Example("item('bloodmagic:demon_crystal')"))
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean matches = ItemStack.areItemStacksEqual(recipe.getOutput(), output);
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        })) {
+        if (getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.getOutput(), output) && doAddBackup(recipe))) {
             return true;
         }
         GroovyLog.msg("Error removing Blood Magic Tartaric Forge recipe")

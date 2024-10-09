@@ -1,6 +1,5 @@
 package com.cleanroommc.groovyscript.compat.mods.immersivetechnology;
 
-import blusunrize.immersiveengineering.api.crafting.IngredientStack;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
@@ -37,27 +36,13 @@ public class MeltingCrucible extends StandardListRegistry<MeltingCrucibleRecipe>
 
     @MethodDescription(example = @Example("item('minecraft:cobblestone')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (IngredientStack ingredientStack : r.getItemInputs()) {
-                if (ImmersiveEngineering.areIngredientsEquals(ingredientStack, input)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getItemInputs().stream().anyMatch(ingredientStack -> ImmersiveEngineering.areIngredientsEquals(ingredientStack, input)) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('moltensalt')"))
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(r -> {
-            // would iterate through r.getFluidOutputs() as with the other IE compats, but they forgot to define it so its null.
-            if (output.test(r.fluidOutput)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        // would iterate through r.getFluidOutputs() as with the other IE compats, but they forgot to define it so its null.
+        getRecipes().removeIf(r -> output.test(r.fluidOutput) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

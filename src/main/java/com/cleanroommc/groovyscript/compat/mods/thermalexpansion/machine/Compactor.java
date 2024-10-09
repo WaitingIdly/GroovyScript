@@ -68,13 +68,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
     }
 
     public boolean remove(CompactorManager.Mode mode, CompactorRecipe recipe) {
-        return map(mode).values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(Pair.of(mode, recipe));
-                return true;
-            }
-            return false;
-        });
+        return map(mode).values().removeIf(r -> r == recipe && doAddBackup(Pair.of(mode, r)));
     }
 
     public boolean remove(CompactorRecipe recipe) {
@@ -87,13 +81,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
 
     @MethodDescription(example = @Example("compactorMode('coin'), item('thermalfoundation:material:130')"))
     public boolean removeByInput(CompactorManager.Mode mode, IIngredient input) {
-        return map(mode).values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(Pair.of(mode, r));
-                return true;
-            }
-            return false;
-        });
+        return map(mode).values().removeIf(r -> input.test(r.getInput()) && doAddBackup(Pair.of(mode, r)));
     }
 
     @MethodDescription(example = @Example("item('minecraft:iron_ingot')"))
@@ -107,13 +95,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
 
     @MethodDescription(example = @Example("compactorMode('coin'), item('thermalfoundation:coin:102')"))
     public boolean removeByOutput(CompactorManager.Mode mode, IIngredient output) {
-        return map(mode).values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(Pair.of(mode, r));
-                return true;
-            }
-            return false;
-        });
+        return map(mode).values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(Pair.of(mode, r)));
     }
 
     @MethodDescription(example = {

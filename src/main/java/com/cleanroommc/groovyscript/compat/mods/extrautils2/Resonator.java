@@ -33,24 +33,12 @@ public class Resonator extends StandardListRegistry<IResonatorRecipe> {
 
     @MethodDescription(example = @Example("item('extrautils2:ingredients:4')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(r -> {
-            if (ItemHandlerHelper.canItemStacksStack(r.getOutput(), output)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> ItemHandlerHelper.canItemStacksStack(r.getOutput(), output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:quartz_block')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            if (input.test(r.getInputs().get(0))) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> input.test(r.getInputs().get(0)) && doAddBackup(r));
     }
 
     @RecipeBuilderDescription(example = {

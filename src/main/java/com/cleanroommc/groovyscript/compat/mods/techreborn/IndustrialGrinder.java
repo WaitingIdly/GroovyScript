@@ -34,15 +34,7 @@ public class IndustrialGrinder extends AbstractGenericTechRebornRegistry {
     })
     public void removeByInput(IIngredient input) {
         super.removeByInput(input);
-        RecipeHandler.recipeList.removeIf(recipe -> {
-            if (recipe.getRecipeName().equals(reference()) && recipe instanceof IndustrialGrinderRecipe grinderRecipe) {
-                if (input.test(grinderRecipe.fluidStack)) {
-                    addBackup(recipe);
-                    return true;
-                }
-            }
-            return false;
-        });
+        RecipeHandler.recipeList.removeIf(recipe -> recipe.getRecipeName().equals(reference()) && recipe instanceof IndustrialGrinderRecipe grinderRecipe && input.test(grinderRecipe.fluidStack) && doAddBackup(recipe));
     }
 
     @Override

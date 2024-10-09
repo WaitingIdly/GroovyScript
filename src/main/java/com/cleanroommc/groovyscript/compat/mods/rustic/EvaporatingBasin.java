@@ -41,24 +41,12 @@ public class EvaporatingBasin extends StandardListRegistry<IEvaporatingBasinReci
 
     @MethodDescription(example = @Example(value = "item('rustic:dust_tiny_iron')", commented = true))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (output.test(entry.getOutput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> output.test(entry.getOutput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("fluid('ironberryjuice')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (input.test(entry.getInput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> input.test(entry.getInput()) && doAddBackup(entry));
     }
 
     @Property(property = "output", comp = @Comp(eq = 1))

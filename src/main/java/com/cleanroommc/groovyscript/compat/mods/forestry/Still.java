@@ -41,11 +41,7 @@ public class Still extends ForestryRegistry<IStillRecipe> {
     }
 
     public boolean removeByInput(FluidStack input) {
-        if (StillRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getInput().isFluidEqual(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (StillRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getInput().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Still recipe")
                 .add("could not find recipe with input {}", input)
@@ -55,11 +51,7 @@ public class Still extends ForestryRegistry<IStillRecipe> {
     }
 
     public boolean removeByOutput(FluidStack output) {
-        if (StillRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getOutput().isFluidEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (StillRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getOutput().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Still recipe")
                 .add("could not find recipe with output {}", output)

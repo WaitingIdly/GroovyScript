@@ -50,13 +50,7 @@ public class Squeezer extends StandardListRegistry<SqueezerRecipe> {
                     .post();
             return;
         }
-        if (!getRecipes().removeIf(recipe -> {
-            if (fluidOutput.isFluidEqual(recipe.fluidOutput)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!getRecipes().removeIf(recipe -> fluidOutput.isFluidEqual(recipe.fluidOutput) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Squeezer recipe")
                     .add("no recipes found for {}", fluidOutput)
                     .error()

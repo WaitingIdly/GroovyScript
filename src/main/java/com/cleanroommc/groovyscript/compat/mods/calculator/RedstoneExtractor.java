@@ -6,11 +6,9 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import sonar.calculator.mod.common.recipes.RedstoneExtractorRecipes;
 import sonar.core.recipes.DefaultSonarRecipe;
-import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -30,17 +28,7 @@ public class RedstoneExtractor extends StandardListRegistry<DefaultSonarRecipe.V
 
     @MethodDescription(example = @Example("item('minecraft:redstone_block')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeInput : r.recipeInputs) {
-                for (ItemStack itemStack : recipeInput.getJEIValue()) {
-                    if (input.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeInputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

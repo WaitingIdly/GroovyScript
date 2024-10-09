@@ -36,24 +36,12 @@ public class Pedestal extends StandardListRegistry<RecipePedestal> {
 
     @MethodDescription(example = @Example("item('minecraft:cobblestone')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:flint')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

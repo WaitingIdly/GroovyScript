@@ -48,11 +48,7 @@ public class Squeezer extends ForestryRegistry<ISqueezerRecipe> {
     }
 
     public boolean removeByOutput(FluidStack output) {
-        if (SqueezerRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getFluidOutput().isFluidEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (SqueezerRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getFluidOutput().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Squeezer recipe")
                 .add("could not find recipe with output {}", output)
@@ -63,11 +59,7 @@ public class Squeezer extends ForestryRegistry<ISqueezerRecipe> {
 
     public boolean removeByInputs(IIngredient... input) {
         Set<ItemStack> inputs = Arrays.stream(input).map(i -> i.getMatchingStacks()[0]).collect(Collectors.toSet());
-        if (SqueezerRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = inputs.containsAll(recipe.getResources());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (SqueezerRecipeManagerAccessor.getRecipes().removeIf(recipe -> inputs.containsAll(recipe.getResources()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Squeezer recipe")
                 .add("could not find recipe with inputs {}", inputs)

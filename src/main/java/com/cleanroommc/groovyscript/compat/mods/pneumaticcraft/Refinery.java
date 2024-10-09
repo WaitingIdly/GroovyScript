@@ -31,24 +31,12 @@ public class Refinery extends StandardListRegistry<RefineryRecipe> {
 
     @MethodDescription(example = @Example("fluid('kerosene')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (Arrays.stream(entry.outputs).anyMatch(output::test)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> Arrays.stream(entry.outputs).anyMatch(output::test) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example(value = "fluid('oil')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (input.test(entry.input)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> input.test(entry.input) && doAddBackup(entry));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

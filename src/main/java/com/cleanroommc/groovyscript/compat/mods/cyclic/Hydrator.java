@@ -1,7 +1,6 @@
 package com.cleanroommc.groovyscript.compat.mods.cyclic;
 
 
-import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
@@ -42,24 +41,12 @@ public class Hydrator extends StandardListRegistry<RecipeHydrate> {
 
     @MethodDescription(example = @Example("item('minecraft:dirt')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (recipe.getRecipeInput().stream().anyMatch(input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> recipe.getRecipeInput().stream().anyMatch(input) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:clay_ball')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getRecipeOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getRecipeOutput()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1, lte = 6))

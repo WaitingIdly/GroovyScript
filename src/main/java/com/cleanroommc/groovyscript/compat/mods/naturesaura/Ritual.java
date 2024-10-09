@@ -14,6 +14,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.naturesaura.ritual.note0", type = Admonition.Type.WARNING))
@@ -57,41 +58,17 @@ public class Ritual extends VirtualizedRegistry<TreeRitualRecipe> {
 
     @MethodDescription( example = @Example("item('naturesaura:infused_stone')"))
     public boolean removeByInput(IIngredient input) {
-        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> {
-            for (var ingredient : r.getValue().ingredients) {
-                for (var item : ingredient.getMatchingStacks()) {
-                    if (input.test(item)) {
-                        addBackup(r.getValue());
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().ingredients).map(Ingredient::getMatchingStacks).flatMap(Arrays::stream).anyMatch(input) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("item('minecraft:sapling:3')"))
     public boolean removeBySapling(IIngredient catalyst) {
-        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> {
-            for (var x : r.getValue().saplingType.getMatchingStacks()) {
-                if (catalyst.test(x)) {
-                    addBackup(r.getValue());
-                    return true;
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().saplingType.getMatchingStacks()).anyMatch(catalyst) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription( example = @Example("item('naturesaura:eye')"))
     public boolean removeByOutput(IIngredient output) {
-        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> {
-            if (output.test(r.getValue().result)) {
-                addBackup(r.getValue());
-                return true;
-            }
-            return false;
-        });
+        return NaturesAuraAPI.TREE_RITUAL_RECIPES.entrySet().removeIf(r -> output.test(r.getValue().result) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

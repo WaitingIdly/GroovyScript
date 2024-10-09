@@ -36,24 +36,12 @@ public class TapperFertilizer extends VirtualizedRegistry<TapperFertilizer.Tappe
     }
 
     public boolean remove(ComparableItemStack stack) {
-        return TapperManagerAccessor.getFertilizerMap().keySet().removeIf(r -> {
-            if (stack.isItemEqual(r)) {
-                addBackup(new TapperRecipe(r, TapperManagerAccessor.getFertilizerMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getFertilizerMap().keySet().removeIf(r -> stack.isItemEqual(r) && doAddBackup(new TapperRecipe(r, TapperManagerAccessor.getFertilizerMap().get(r))));
     }
 
     @MethodDescription(example = @Example("item('thermalfoundation:fertilizer:2')"))
     public boolean remove(IIngredient input) {
-        return TapperManagerAccessor.getFertilizerMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new TapperRecipe(r, TapperManagerAccessor.getFertilizerMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getFertilizerMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new TapperRecipe(r, TapperManagerAccessor.getFertilizerMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

@@ -76,13 +76,7 @@ public class AssemblyController extends VirtualizedRegistry<AssemblyRecipe> {
 
     @MethodDescription
     public boolean removeByOutput(AssemblyType type, IIngredient output) {
-        return map(type).removeIf(entry -> {
-            if (output.test(entry.getOutput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return map(type).removeIf(entry -> output.test(entry.getOutput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('pneumaticcraft:pressure_chamber_valve')"))
@@ -92,13 +86,7 @@ public class AssemblyController extends VirtualizedRegistry<AssemblyRecipe> {
 
     @MethodDescription
     public boolean removeByInput(AssemblyType type, IIngredient input) {
-        return map(type).removeIf(entry -> {
-            if (input.test(entry.getInput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return map(type).removeIf(entry -> input.test(entry.getInput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('minecraft:redstone')"))

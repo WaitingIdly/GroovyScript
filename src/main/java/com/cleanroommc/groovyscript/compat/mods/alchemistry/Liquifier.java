@@ -37,24 +37,12 @@ public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
 
     @MethodDescription(example = @Example(value = "fluid('water')", commented = true))
     public boolean removeByOutput(FluidStack output) {
-        return getRecipes().removeIf(r -> {
-            if (r.getOutput().isFluidEqual(output)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().isFluidEqual(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("element('water')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

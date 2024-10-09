@@ -64,13 +64,7 @@ public class Pacifist extends VirtualizedRegistry<PacifistEntry> {
 
     @MethodDescription
     public boolean removeByClass(Class<? extends Entity> clazz) {
-        return ModRecipes.getPacifistEntities().entrySet().removeIf(x -> {
-            if (x.getValue().getEntityClass().equals(clazz)) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        return ModRecipes.getPacifistEntities().entrySet().removeIf(x -> x.getValue().getEntityClass().equals(clazz) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

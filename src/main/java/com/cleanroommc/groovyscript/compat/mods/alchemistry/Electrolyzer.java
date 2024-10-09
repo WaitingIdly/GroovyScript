@@ -9,7 +9,6 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
@@ -34,39 +33,17 @@ public class Electrolyzer extends StandardListRegistry<ElectrolyzerRecipe> {
 
     @MethodDescription(example = @Example("element('chlorine')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example(value = "fluid('water')", commented = true))
     public boolean removeByInput(FluidStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().isFluidEqual(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().isFluidEqual(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("element('calcium_carbonate')"))
     public boolean removeByInput(IIngredient input) {
-        return ModRecipes.INSTANCE.getElectrolyzerRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getElectrolytes()) {
-                if (input.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return ModRecipes.INSTANCE.getElectrolyzerRecipes().removeIf(r -> r.getElectrolytes().stream().anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(gte = 0, lte = 1))

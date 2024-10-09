@@ -36,24 +36,12 @@ public class Dehydrator extends StandardListRegistry<RecipeDeHydrate> {
 
     @MethodDescription(example = @Example("item('minecraft:clay')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getRecipeInput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getRecipeInput()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:deadbush')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getRecipeOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getRecipeOutput()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

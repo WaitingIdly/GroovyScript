@@ -22,18 +22,12 @@ public abstract class AbstractGeneratorRegistry extends StandardListRegistry<Fue
 
     @MethodDescription
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.getInputIngredients().stream().map(x -> x.ingredient).anyMatch(x -> {
-                if (x instanceof ItemStack itemStack) return input.test(itemStack);
-                if (x instanceof FluidStack fluidStack) return input.test(fluidStack);
-                if (x instanceof String s && input instanceof OreDictIngredient ore) return ore.getOreDict().equals(s);
-                return false;
-            })) {
-                addBackup(recipe);
-                return true;
-            }
+        getRecipes().removeIf(recipe -> recipe.getInputIngredients().stream().map(x -> x.ingredient).anyMatch(x -> {
+            if (x instanceof ItemStack itemStack) return input.test(itemStack);
+            if (x instanceof FluidStack fluidStack) return input.test(fluidStack);
+            if (x instanceof String s && input instanceof OreDictIngredient ore) return ore.getOreDict().equals(s);
             return false;
-        });
+        }) && doAddBackup(recipe));
     }
 
 }

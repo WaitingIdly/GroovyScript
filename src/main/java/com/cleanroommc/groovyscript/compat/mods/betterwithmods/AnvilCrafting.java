@@ -8,10 +8,10 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderD
 import com.cleanroommc.groovyscript.api.documentation.annotations.RegistryDescription;
 import com.cleanroommc.groovyscript.helper.Alias;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 @RegistryDescription
@@ -41,28 +41,12 @@ public class AnvilCrafting extends StandardListRegistry<IRecipe> {
 
     @MethodDescription(example = @Example("item('betterwithmods:steel_block')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            if (output.test(r.getRecipeOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.test(r.getRecipeOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:redstone')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (Ingredient ingredient : r.getIngredients()) {
-                for (ItemStack item : ingredient.getMatchingStacks()) {
-                    if (input.test(item)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getIngredients().stream().map(Ingredient::getMatchingStacks).flatMap(Arrays::stream).anyMatch(input) && doAddBackup(r));
     }
 
 }

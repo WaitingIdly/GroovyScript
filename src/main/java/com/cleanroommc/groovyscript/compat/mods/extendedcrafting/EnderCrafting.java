@@ -68,13 +68,7 @@ public class EnderCrafting extends StandardListRegistry<IRecipe> {
 
     @MethodDescription(example = @Example("item('extendedcrafting:material:40')"))
     public boolean removeByOutput(ItemStack stack) {
-        return getRecipes().removeIf(recipe -> {
-            if (recipe != null && recipe.getRecipeOutput().isItemEqual(stack)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> recipe != null && recipe.getRecipeOutput().isItemEqual(stack) && doAddBackup(recipe));
     }
 
 }

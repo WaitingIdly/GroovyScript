@@ -32,24 +32,12 @@ public class Transmutation extends StandardListRegistry<WorldTransmutations.Entr
 
     @MethodDescription(example = @Example("blockstate('minecraft:wool')"))
     public boolean removeByInput(IBlockState input) {
-        return getRecipes().removeIf(r -> {
-            if (input.equals(r.input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> input.equals(r.input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("blockstate('minecraft:dirt')"))
     public boolean removeByOutput(IBlockState output) {
-        return getRecipes().removeIf(r -> {
-            if (output.equals(r.outputs.getKey()) || output.equals(r.outputs.getValue())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.equals(r.outputs.getKey()) || output.equals(r.outputs.getValue()) && doAddBackup(r));
     }
 
     public static class RecipeBuilder extends AbstractRecipeBuilder<WorldTransmutations.Entry> {

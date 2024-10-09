@@ -44,24 +44,12 @@ public class Alchemy extends StandardListRegistry<ICondenserRecipe> {
 
     @MethodDescription(example = @Example("item('rustic:elixir').withNbt(['ElixirEffects': [['Effect': 'minecraft:night_vision', 'Duration': 3600, 'Amplifier': 0]]])"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (output.test(entry.getResult())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> output.test(entry.getResult()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('minecraft:sugar')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (entry.getInputs().stream().flatMap(Collection::stream).anyMatch(input)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> entry.getInputs().stream().flatMap(Collection::stream).anyMatch(input) && doAddBackup(entry));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1, unique = "groovyscript.wiki.rustic.alchemy.input.required"))

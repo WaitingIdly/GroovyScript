@@ -13,6 +13,7 @@ import de.ellpeck.naturesaura.api.recipes.OfferingRecipe;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @RegistryDescription(admonition = @Admonition("groovyscript.wiki.naturesaura.offering.note0"))
@@ -56,39 +57,17 @@ public class Offering extends VirtualizedRegistry<OfferingRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:nether_star')"))
     public boolean removeByInput(IIngredient input) {
-        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> {
-            for (var item : r.getValue().input.getMatchingStacks()) {
-                if (input.test(item)) {
-                    addBackup(r.getValue());
-                    return true;
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().input.getMatchingStacks()).anyMatch(input) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example(value = "item('naturesaura:calling_spirit')", commented = true))
     public boolean removeByCatalyst(IIngredient catalyst) {
-        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> {
-            for (var x : r.getValue().startItem.getMatchingStacks()) {
-                if (catalyst.test(x)) {
-                    addBackup(r.getValue());
-                    return true;
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().startItem.getMatchingStacks()).anyMatch(catalyst) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("item('naturesaura:sky_ingot')"))
     public boolean removeByOutput(IIngredient output) {
-        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> {
-            if (output.test(r.getValue().output)) {
-                addBackup(r.getValue());
-                return true;
-            }
-            return false;
-        });
+        return NaturesAuraAPI.OFFERING_RECIPES.entrySet().removeIf(r -> output.test(r.getValue().output) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

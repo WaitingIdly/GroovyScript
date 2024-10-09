@@ -14,6 +14,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -36,28 +37,12 @@ public class Turntable extends StandardListRegistry<TurntableRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:clay_ball')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('betterwithmods:unfired_pottery')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getInput().getMatchingStacks()) {
-                if (input.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> Arrays.stream(r.getInput().getMatchingStacks()).anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "output", comp = @Comp(gte = 0, lte = 2))

@@ -36,34 +36,16 @@ public class Steam extends VirtualizedRegistry<Steam.SteamRecipe> {
     }
 
     public boolean remove(ComparableItemStack recipe) {
-        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe)) {
-                addBackup(new SteamRecipe(r, SteamManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe) && doAddBackup(new SteamRecipe(r, SteamManagerAccessor.getFuelMap().get(r))));
     }
 
     public boolean remove(SteamRecipe recipe) {
-        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.comparableItemStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe.comparableItemStack()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:coal:1')"))
     public boolean removeByInput(IIngredient input) {
-        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new SteamRecipe(r, SteamManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return SteamManagerAccessor.getFuelMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new SteamRecipe(r, SteamManagerAccessor.getFuelMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

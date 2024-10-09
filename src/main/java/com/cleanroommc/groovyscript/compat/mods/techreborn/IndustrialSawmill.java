@@ -34,15 +34,7 @@ public class IndustrialSawmill extends AbstractGenericTechRebornRegistry {
     })
     public void removeByInput(IIngredient input) {
         super.removeByInput(input);
-        RecipeHandler.recipeList.removeIf(recipe -> {
-            if (recipe.getRecipeName().equals(reference()) && recipe instanceof IndustrialSawmillRecipe sawmillRecipe) {
-                if (input.test(sawmillRecipe.fluidStack)) {
-                    addBackup(recipe);
-                    return true;
-                }
-            }
-            return false;
-        });
+        RecipeHandler.recipeList.removeIf(recipe -> recipe.getRecipeName().equals(reference()) && recipe instanceof IndustrialSawmillRecipe sawmillRecipe && input.test(sawmillRecipe.fluidStack) && doAddBackup(recipe));
     }
 
     @Override

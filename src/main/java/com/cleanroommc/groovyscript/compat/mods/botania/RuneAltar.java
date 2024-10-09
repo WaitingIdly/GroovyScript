@@ -38,11 +38,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
 
     @MethodDescription(example = @Example("item('botania:rune:1')"))
     public boolean removeByOutput(IIngredient output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = output.test(recipe.getOutput());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> output.test(recipe.getOutput()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Rune Altar recipe")
                 .add("could not find recipe with output {}", output)
@@ -59,8 +55,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
             boolean found = converted.stream().allMatch(o -> recipe.getInputs().stream().anyMatch(i -> (i instanceof String || o instanceof String)
                                                                                                        ? i.equals(o)
                                                                                                        : ItemStack.areItemStacksEqual((ItemStack) i, (ItemStack) o)));
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Botania Rune Altar recipe")

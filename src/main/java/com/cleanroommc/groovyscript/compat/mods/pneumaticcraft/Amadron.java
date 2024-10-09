@@ -78,36 +78,14 @@ public class Amadron extends VirtualizedRegistry<AmadronOffer> {
 
     @MethodDescription(example = @Example("item('minecraft:emerald')"))
     public boolean removeByOutput(IIngredient output) {
-        return AmadronOfferManager.getInstance().getStaticOffers().removeIf(entry -> {
-            if (entry.getOutput() instanceof FluidStack fluid && output.test(fluid) || entry.getOutput() instanceof ItemStack item && output.test(item)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        }) | AmadronOfferManager.getInstance().getPeriodicOffers().removeIf(entry -> {
-            if (entry.getOutput() instanceof FluidStack fluid && output.test(fluid) || entry.getOutput() instanceof ItemStack item && output.test(item)) {
-                periodicStorage.addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return AmadronOfferManager.getInstance().getStaticOffers().removeIf(entry -> (entry.getOutput() instanceof FluidStack fluid && output.test(fluid) || entry.getOutput() instanceof ItemStack item && output.test(item)) && doAddBackup(entry)) |
+               AmadronOfferManager.getInstance().getPeriodicOffers().removeIf(entry -> (entry.getOutput() instanceof FluidStack fluid && output.test(fluid) || entry.getOutput() instanceof ItemStack item && output.test(item)) && periodicStorage.addBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('minecraft:rotten_flesh')"))
     public boolean removeByInput(IIngredient input) {
-        return AmadronOfferManager.getInstance().getStaticOffers().removeIf(entry -> {
-            if (entry.getInput() instanceof FluidStack fluid && input.test(fluid) || entry.getInput() instanceof ItemStack item && input.test(item)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        }) | AmadronOfferManager.getInstance().getPeriodicOffers().removeIf(entry -> {
-            if (entry.getInput() instanceof FluidStack fluid && input.test(fluid) || entry.getInput() instanceof ItemStack item && input.test(item)) {
-                periodicStorage.addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return AmadronOfferManager.getInstance().getStaticOffers().removeIf(entry -> (entry.getInput() instanceof FluidStack fluid && input.test(fluid) || entry.getInput() instanceof ItemStack item && input.test(item)) && doAddBackup(entry)) |
+               AmadronOfferManager.getInstance().getPeriodicOffers().removeIf(entry -> (entry.getInput() instanceof FluidStack fluid && input.test(fluid) || entry.getInput() instanceof ItemStack item && input.test(item)) && periodicStorage.addBackup(entry));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

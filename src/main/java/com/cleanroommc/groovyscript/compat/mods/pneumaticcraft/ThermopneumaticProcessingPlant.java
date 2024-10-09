@@ -31,24 +31,12 @@ public class ThermopneumaticProcessingPlant extends StandardListRegistry<IThermo
 
     @MethodDescription(example = @Example("fluid('lpg')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (entry instanceof BasicThermopneumaticProcessingPlantRecipe recipe && output.test(recipe.getOutputLiquid())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> entry instanceof BasicThermopneumaticProcessingPlantRecipe recipe && output.test(recipe.getOutputLiquid()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {@Example("item('minecraft:coal')"), @Example("fluid('diesel')")})
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (entry instanceof BasicThermopneumaticProcessingPlantRecipe recipe && (input.test(recipe.getInputLiquid()) || input.test(recipe.getInputItem()))) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> (entry instanceof BasicThermopneumaticProcessingPlantRecipe recipe && (input.test(recipe.getInputLiquid()) || input.test(recipe.getInputItem()))) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(gte = 0, lte = 1))

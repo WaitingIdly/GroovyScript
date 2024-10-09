@@ -50,11 +50,7 @@ public class SmelteryFuel extends VirtualizedRegistry<SmelteryFuelRecipe> {
 
     @MethodDescription
     public boolean removeFuel(FluidStack fluid) {
-        if (TinkerRegistryAccessor.getSmelteryFuels().entrySet().removeIf(entry -> {
-            boolean found = entry.getKey().isFluidEqual(fluid);
-            if (found) addBackup(SmelteryFuelRecipe.fromMapEntry(entry));
-            return found;
-        })) return true;
+        if (TinkerRegistryAccessor.getSmelteryFuels().entrySet().removeIf(entry -> entry.getKey().isFluidEqual(fluid) && doAddBackup(SmelteryFuelRecipe.fromMapEntry(entry)))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Smeltery Fuel")
                 .add("could not find smeltery fuel entry for {}", fluid)

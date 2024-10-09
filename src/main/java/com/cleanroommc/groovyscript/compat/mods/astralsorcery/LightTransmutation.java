@@ -68,13 +68,7 @@ public class LightTransmutation extends StandardListRegistry<LightOreTransmutati
 
     @MethodDescription(example = @Example("blockstate('minecraft:sandstone')"))
     public void removeByInput(IBlockState block) {
-        getRecipes().removeIf(rec -> {
-            if (rec.matchesInput(block)) {
-                addBackup(rec);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(rec -> rec.matchesInput(block) && doAddBackup(rec));
     }
 
     @MethodDescription(example = @Example("block('minecraft:netherrack')"))
@@ -84,13 +78,7 @@ public class LightTransmutation extends StandardListRegistry<LightOreTransmutati
 
     @MethodDescription(example = @Example("blockstate('minecraft:cake')"))
     public void removeByOutput(IBlockState block) {
-        getRecipes().removeIf(rec -> {
-            if (rec.matchesOutput(block)) {
-                addBackup(rec);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(rec -> rec.matchesOutput(block) && doAddBackup(rec));
     }
 
     @MethodDescription(example = @Example("block('minecraft:lapis_block')"))

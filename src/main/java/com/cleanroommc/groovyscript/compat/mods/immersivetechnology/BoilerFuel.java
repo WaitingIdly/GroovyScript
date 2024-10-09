@@ -8,7 +8,6 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.BoilerRecipe;
 import mctmods.immersivetechnology.common.Config;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -36,15 +35,7 @@ public class BoilerFuel extends StandardListRegistry<BoilerRecipe.BoilerFuelReci
 
     @MethodDescription(example = @Example("fluid('biodiesel')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidInputs()) {
-                if (input.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidInputs().stream().anyMatch(input::test) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

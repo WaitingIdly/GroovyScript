@@ -44,35 +44,17 @@ public class Solderer extends VirtualizedRegistry<SoldererManager.SoldererRecipe
 
     @MethodDescription(example = @Example("item('prodigytech:pattern_circuit_refined')"))
     public boolean removeByPattern(IIngredient pattern) {
-        return SoldererManager.RECIPES.removeIf(r -> {
-            if (pattern.test(r.getPattern())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SoldererManager.RECIPES.removeIf(r -> pattern.test(r.getPattern()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:iron_ingot')"))
     public boolean removeByAdditive(IIngredient additive) {
-        return SoldererManager.RECIPES.removeIf(r -> {
-            if (r.requiresAdditive() && additive.test(r.getPattern())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SoldererManager.RECIPES.removeIf(r -> r.requiresAdditive() && additive.test(r.getPattern()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('prodigytech:circuit_refined')"))
     public boolean removeByOutput(IIngredient output) {
-        return SoldererManager.RECIPES.removeIf(r -> {
-            if (output.test(r.getPattern())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SoldererManager.RECIPES.removeIf(r -> output.test(r.getPattern()) && doAddBackup(r));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))
@@ -83,11 +65,7 @@ public class Solderer extends VirtualizedRegistry<SoldererManager.SoldererRecipe
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))
     public void removeWithoutAdditive() {
-        SoldererManager.RECIPES.removeIf(r -> {
-            if (r.requiresAdditive()) return false;
-            addBackup(r);
-            return true;
-        });
+        SoldererManager.RECIPES.removeIf(r -> !r.requiresAdditive() && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

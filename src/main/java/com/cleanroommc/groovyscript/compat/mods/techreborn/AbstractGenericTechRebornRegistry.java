@@ -18,23 +18,11 @@ public abstract class AbstractGenericTechRebornRegistry extends StandardListRegi
     }
 
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.getInputs().stream().map(RecipeTranslator::getStackFromObject).anyMatch(input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> recipe.getInputs().stream().map(RecipeTranslator::getStackFromObject).anyMatch(input) && doAddBackup(recipe));
     }
 
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.getOutputs().stream().anyMatch(output)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> recipe.getOutputs().stream().anyMatch(output) && doAddBackup(recipe));
     }
 
 }

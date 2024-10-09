@@ -51,37 +51,19 @@ public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
     }
 
     public boolean remove(PulverizerRecipe recipe) {
-        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:emerald_ore')"))
     public boolean removeByInput(IIngredient input) {
-        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {
             @Example("item('thermalfoundation:material:772')"), @Example("item('minecraft:diamond')")
     })
     public boolean removeByOutput(IIngredient output) {
-        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return PulverizerManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

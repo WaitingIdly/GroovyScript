@@ -10,7 +10,6 @@ import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.items.ItemHandlerHelper;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,28 +35,12 @@ public class Crucible extends StandardListRegistry<CookingPotRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (ItemHandlerHelper.canItemStacksStack(itemstack, output)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(itemstack -> ItemHandlerHelper.canItemStacksStack(itemstack, output)) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            for (Ingredient ingredient : r.getInputs()) {
-                if (ingredient.test(input)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInputs().stream().anyMatch(ingredient -> ingredient.test(input)) && doAddBackup(r));
     }
 
     @MethodDescription

@@ -36,34 +36,16 @@ public class Numismatic extends VirtualizedRegistry<Numismatic.NumismaticRecipe>
     }
 
     public boolean remove(ComparableItemStack recipe) {
-        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe)) {
-                addBackup(new NumismaticRecipe(r, NumismaticManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe) && doAddBackup(new NumismaticRecipe(r, NumismaticManagerAccessor.getFuelMap().get(r))));
     }
 
     public boolean remove(NumismaticRecipe recipe) {
-        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.comparableItemStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe.comparableItemStack()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('thermalfoundation:coin:69')"))
     public boolean removeByInput(IIngredient input) {
-        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new NumismaticRecipe(r, NumismaticManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getFuelMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new NumismaticRecipe(r, NumismaticManagerAccessor.getFuelMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

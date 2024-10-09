@@ -44,13 +44,7 @@ public class ProteinReactor extends StandardListRegistry<IReactorEntry> {
 
     @MethodDescription(example = @Example("item('minecraft:porkchop')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getStack()) && doAddBackup(recipe));
     }
 
 }

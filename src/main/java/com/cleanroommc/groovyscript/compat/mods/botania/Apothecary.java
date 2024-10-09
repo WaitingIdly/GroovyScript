@@ -44,11 +44,7 @@ public class Apothecary extends StandardListRegistry<RecipePetals> {
 
     @MethodDescription(example = @Example("item('botania:specialflower').withNbt(['type': 'puredaisy'])"))
     public boolean removeByOutput(IIngredient output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = output.test(recipe.getOutput());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> output.test(recipe.getOutput()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Apothecary recipe")
                 .add("could not find recipe with output {}", output)
@@ -64,8 +60,7 @@ public class Apothecary extends StandardListRegistry<RecipePetals> {
         if (getRecipes().removeIf(recipe -> {
             boolean found = converted.stream().allMatch(o -> recipe.getInputs().stream().anyMatch(i -> o instanceof String || i instanceof String ? o.equals(i)
                                                                                                                                                   : ItemStack.areItemStacksEqual((ItemStack) i, (ItemStack) o)));
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Botania Apothecary recipe")

@@ -41,24 +41,12 @@ public class FusionReactor extends VirtualizedRegistry<FusionReactorRecipe> {
 
     @MethodDescription(example = @Example("item('techreborn:part:17')"))
     public boolean removeByInput(IIngredient input) {
-        return FusionReactorRecipeHelper.reactorRecipes.removeIf(entry -> {
-            if (input.test(entry.getTopInput()) || input.test(entry.getBottomInput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return FusionReactorRecipeHelper.reactorRecipes.removeIf(entry -> input.test(entry.getTopInput()) || input.test(entry.getBottomInput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('techreborn:ore:1')"))
     public boolean removeByOutput(IIngredient output) {
-        return FusionReactorRecipeHelper.reactorRecipes.removeIf(entry -> {
-            if (output.test(entry.getOutput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return FusionReactorRecipeHelper.reactorRecipes.removeIf(entry -> output.test(entry.getOutput()) && doAddBackup(entry));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

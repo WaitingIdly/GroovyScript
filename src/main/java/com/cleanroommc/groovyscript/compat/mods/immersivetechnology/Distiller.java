@@ -8,8 +8,6 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.DistillerRecipe;
 import mctmods.immersivetechnology.common.Config;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -37,34 +35,12 @@ public class Distiller extends StandardListRegistry<DistillerRecipe> {
 
     @MethodDescription(example = @Example(value = "fluid('water')", commented = true))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidInputs()) {
-                if (input.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidInputs().stream().anyMatch(input::test) && doAddBackup(r));
     }
 
     @MethodDescription(example = {@Example("fluid('distwater')"), @Example(value = "item('immersivetech:material')", commented = true)})
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidOutputs()) {
-                if (output.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            for (ItemStack itemStack : r.getItemOutputs()) {
-                if (output.test(itemStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> (r.getFluidOutputs().stream().anyMatch(output::test) || r.getItemOutputs().stream().anyMatch(output)) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

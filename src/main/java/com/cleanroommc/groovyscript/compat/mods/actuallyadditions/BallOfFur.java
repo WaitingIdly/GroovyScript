@@ -33,13 +33,7 @@ public class BallOfFur extends StandardListRegistry<BallOfFurReturn> {
 
     @MethodDescription(example = @Example("item('minecraft:feather')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(recipe -> {
-            boolean found = ItemStack.areItemStacksEqual(recipe.returnItem, output);
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        });
+        return getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.returnItem, output) && doAddBackup(recipe));
     }
 
     @Property(property = "output", comp = @Comp(eq = 1))

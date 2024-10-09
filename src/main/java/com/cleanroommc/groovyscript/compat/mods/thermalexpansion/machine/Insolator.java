@@ -94,39 +94,21 @@ public class Insolator extends VirtualizedRegistry<InsolatorRecipe> {
     }
 
     public boolean remove(InsolatorRecipe recipe) {
-        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {
             @Example("item('thermalfoundation:fertilizer')"), @Example("item('minecraft:double_plant:4')")
     })
     public boolean removeByInput(IIngredient input) {
-        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {
             @Example("item('minecraft:red_flower:6')"), @Example("item('minecraft:melon_seeds')")
     })
     public boolean removeByOutput(IIngredient output) {
-        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return InsolatorManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

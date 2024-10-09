@@ -42,11 +42,7 @@ public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
     }
 
     public boolean removeByInput(IIngredient input) {
-        if (MoistenerRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = input.test(recipe.getResource());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (MoistenerRecipeManagerAccessor.getRecipes().removeIf(recipe -> input.test(recipe.getResource()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Moistener recipe")
                 .add("could not find recipe with input {}", input)
@@ -56,11 +52,7 @@ public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
     }
 
     public boolean removeByOutput(IIngredient output) {
-        if (MoistenerRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = output.test(recipe.getProduct());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (MoistenerRecipeManagerAccessor.getRecipes().removeIf(recipe -> output.test(recipe.getProduct()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Moistener recipe")
                 .add("could not find recipe with output {}", output)

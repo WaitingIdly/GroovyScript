@@ -42,13 +42,7 @@ public class Compressor extends VirtualizedRegistry<ICompressorRecipe> {
                     .post();
             return false;
         }
-        return AvaritiaRecipeManager.COMPRESSOR_RECIPES.values().removeIf(recipe -> {
-            if (recipe != null && recipe.getResult().isItemEqual(output)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return AvaritiaRecipeManager.COMPRESSOR_RECIPES.values().removeIf(recipe -> recipe != null && recipe.getResult().isItemEqual(output) && doAddBackup(recipe));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

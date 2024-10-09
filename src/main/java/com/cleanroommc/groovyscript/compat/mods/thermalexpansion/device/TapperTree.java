@@ -36,13 +36,7 @@ public class TapperTree extends VirtualizedRegistry<TapperTree.TapperTreeEntry> 
     }
 
     public boolean remove(TapperTreeEntry entry) {
-        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> {
-            if (entry.log().equals(r.getKey()) && entry.leaf().equals(r.getValue())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> entry.log().equals(r.getKey()) && entry.leaf().equals(r.getValue()) && doAddBackup(entry));
     }
 
     public boolean remove(BlockWrapper input, BlockWrapper output) {
@@ -51,13 +45,7 @@ public class TapperTree extends VirtualizedRegistry<TapperTree.TapperTreeEntry> 
 
     @MethodDescription
     public boolean removeByLog(BlockWrapper input) {
-        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> {
-            if (input.equals(r.getKey())) {
-                addBackup(new TapperTreeEntry(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> input.equals(r.getKey()) && doAddBackup(new TapperTreeEntry(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(example = @Example("blockstate('minecraft:log', 'variant=spruce')"))
@@ -67,13 +55,7 @@ public class TapperTree extends VirtualizedRegistry<TapperTree.TapperTreeEntry> 
 
     @MethodDescription
     public boolean removeByLeaf(BlockWrapper output) {
-        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> {
-            if (output.equals(r.getValue())) {
-                addBackup(new TapperTreeEntry(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getLeafMap().entries().removeIf(r -> output.equals(r.getValue()) && doAddBackup(new TapperTreeEntry(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(example = @Example("blockstate('minecraft:leaves', 'variant=birch')"))

@@ -64,13 +64,7 @@ public class CokeOven extends StandardListRegistry<CokeOvenRecipe> {
                     .post();
             return;
         }
-        if (!getRecipes().removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(input, recipe.input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!getRecipes().removeIf(recipe -> ApiUtils.stackMatchesObject(input, recipe.input) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Crusher recipe")
                     .add("no recipes found for {}", input)
                     .error()

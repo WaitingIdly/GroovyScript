@@ -12,6 +12,7 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -31,28 +32,12 @@ public class Saw extends StandardListRegistry<SawRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:pumpkin')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:vine')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getInput().getMatchingStacks()) {
-                if (input.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> Arrays.stream(r.getInput().getMatchingStacks()).anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "output", comp = @Comp(gte = 1, lte = 9))

@@ -36,34 +36,16 @@ public class Enervation extends VirtualizedRegistry<Enervation.EnervationRecipe>
     }
 
     public boolean remove(ComparableItemStack recipe) {
-        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe)) {
-                addBackup(new EnervationRecipe(r, EnervationManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe) && doAddBackup(new EnervationRecipe(r, EnervationManagerAccessor.getFuelMap().get(r))));
     }
 
     public boolean remove(EnervationRecipe recipe) {
-        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.comparableItemStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe.comparableItemStack()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:redstone')"))
     public boolean removeByInput(IIngredient input) {
-        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new EnervationRecipe(r, EnervationManagerAccessor.getFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return EnervationManagerAccessor.getFuelMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new EnervationRecipe(r, EnervationManagerAccessor.getFuelMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

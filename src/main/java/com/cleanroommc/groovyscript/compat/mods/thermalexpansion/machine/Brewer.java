@@ -84,13 +84,7 @@ public class Brewer extends VirtualizedRegistry<BrewerRecipe> {
     }
 
     public boolean remove(BrewerRecipe recipe) {
-        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {
@@ -98,24 +92,12 @@ public class Brewer extends VirtualizedRegistry<BrewerRecipe> {
             @Example("item('minecraft:glowstone_dust')")
     })
     public boolean removeByInput(IIngredient input) {
-        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput()) || input.test(r.getInputFluid())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) || input.test(r.getInputFluid()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('potion_splash').withNbt(['Potion': 'cofhcore:luck2'])"))
     public boolean removeByOutput(IIngredient output) {
-        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutputFluid())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return BrewerManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutputFluid()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

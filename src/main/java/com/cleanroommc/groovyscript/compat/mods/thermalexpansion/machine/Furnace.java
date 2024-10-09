@@ -65,35 +65,17 @@ public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
     }
 
     public boolean remove(FurnaceRecipe recipe) {
-        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:cactus:*')"))
     public boolean removeByInput(IIngredient input) {
-        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:cooked_porkchop')"))
     public boolean removeByOutput(IIngredient output) {
-        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return FurnaceManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

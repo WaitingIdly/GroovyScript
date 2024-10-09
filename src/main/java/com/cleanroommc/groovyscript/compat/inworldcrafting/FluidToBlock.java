@@ -32,11 +32,7 @@ public class FluidToBlock extends VirtualizedRegistry<FluidToBlock.Recipe> {
     }
 
     public boolean remove(Recipe recipe) {
-        if (FluidRecipe.remove(recipe)) {
-            addBackup(recipe);
-            return true;
-        }
-        return false;
+        return FluidRecipe.remove(recipe) && doAddBackup(recipe);
     }
 
     public boolean removeByInput(FluidStack fluid) {

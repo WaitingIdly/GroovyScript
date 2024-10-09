@@ -48,13 +48,7 @@ public class DemonTradeManager extends VirtualizedRegistry<DemonTrade> {
 
     @MethodDescription(example = @Example("item('minecraft:nether_star')"))
     public boolean remove(IIngredient x) {
-        return DemonTrade.TRADES.removeIf(r -> {
-            if (!r.desiredItem.isEmpty() && x.test(r.desiredItem)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return DemonTrade.TRADES.removeIf(r -> !r.desiredItem.isEmpty() && x.test(r.desiredItem) && doAddBackup(r));
     }
 
     @MethodDescription(description = "groovyscript.wiki.essentialcraft.demon_trade.removeEntity", example = @Example("entity('minecraft:enderman')"))

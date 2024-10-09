@@ -62,17 +62,7 @@ public class AnalysingChamber extends StandardListRegistry<CalculatorRecipe> {
 
     @MethodDescription(example = @Example("item('sonarcore:reinforceddirtblock')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeOutput : r.recipeOutputs) {
-                for (ItemStack itemStack : recipeOutput.getJEIValue()) {
-                    if (output.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeOutputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(output) && doAddBackup(r));
     }
 
     @Property(property = "output", comp = @Comp(eq = 1))

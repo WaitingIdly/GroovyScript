@@ -45,13 +45,7 @@ public class Squeezer extends StandardListRegistry<IRecipe<IngredientRecipeCompo
 
     @MethodDescription
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

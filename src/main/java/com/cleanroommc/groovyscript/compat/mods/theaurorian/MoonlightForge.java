@@ -28,24 +28,12 @@ public class MoonlightForge extends StandardListRegistry<MoonlightForgeRecipe> {
 
     @MethodDescription(example = @Example("item('theaurorian:moonstonesword'), item('theaurorian:aurorianiteingot')"))
     public boolean removeByInput(IIngredient input, IIngredient catalyst) {
-        return getRecipes().removeIf(r -> {
-            if (input.test(r.getInput1()) && catalyst.test(r.getInput2())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> input.test(r.getInput1()) && catalyst.test(r.getInput2()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('theaurorian:queenschipper')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 2))

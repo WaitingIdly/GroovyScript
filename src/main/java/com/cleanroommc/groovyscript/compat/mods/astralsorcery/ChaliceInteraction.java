@@ -42,14 +42,9 @@ public class ChaliceInteraction extends StandardListRegistry<LiquidInteraction> 
 
     @MethodDescription
     public void removeByInput(Fluid fluid1, Fluid fluid2) {
-        getRecipes().removeIf(rec -> {
-            if ((rec.getComponent1().getFluid().equals(fluid1) && rec.getComponent2().getFluid().equals(fluid2)) ||
-                (rec.getComponent1().getFluid().equals(fluid2) && rec.getComponent2().getFluid().equals(fluid1))) {
-                addBackup(rec);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(rec -> ((rec.getComponent1().getFluid().equals(fluid1) && rec.getComponent2().getFluid().equals(fluid2)) ||
+                                      (rec.getComponent1().getFluid().equals(fluid2) && rec.getComponent2().getFluid().equals(fluid1)))
+                                     && doAddBackup(rec));
     }
 
     @MethodDescription(example = @Example("fluid('water'), fluid('lava')"))
@@ -59,13 +54,7 @@ public class ChaliceInteraction extends StandardListRegistry<LiquidInteraction> 
 
     @MethodDescription
     public void removeByInput(Fluid fluid) {
-        getRecipes().removeIf(rec -> {
-            if ((rec.getComponent1().getFluid().equals(fluid) || rec.getComponent2().getFluid().equals(fluid))) {
-                addBackup(rec);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(rec -> (rec.getComponent1().getFluid().equals(fluid) || rec.getComponent2().getFluid().equals(fluid)) && doAddBackup(rec));
     }
 
     @MethodDescription(example = @Example(value = "fluid('astralsorcery.liquidstarlight')", commented = true))
@@ -75,13 +64,7 @@ public class ChaliceInteraction extends StandardListRegistry<LiquidInteraction> 
 
     @MethodDescription(example = @Example("item('minecraft:ice')"))
     public void removeByOutput(ItemStack output) {
-        getRecipes().removeIf(rec -> {
-            if (((LiquidInteractionAccessor) rec).getFluidInteractionAction().getOutputForMatching().isItemEqual(output)) {
-                addBackup(rec);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(rec -> ((LiquidInteractionAccessor) rec).getFluidInteractionAction().getOutputForMatching().isItemEqual(output) && doAddBackup(rec));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 2))

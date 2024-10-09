@@ -43,13 +43,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:redstone_ore')"))
     public void removeByInput(ItemStack item) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.isValid() && recipe.matches(item)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> recipe.isValid() && recipe.matches(item) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("ore('dustIron')"))
@@ -60,13 +54,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
 
     @MethodDescription
     public void removeByOutput(ItemStack item) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.isValid() && recipe.getOutputForMatching().isItemEqual(item)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> recipe.isValid() && recipe.getOutputForMatching().isItemEqual(item) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

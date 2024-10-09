@@ -37,11 +37,7 @@ public class MoistenerFuel extends ForestryRegistry<forestry.api.fuels.Moistener
     }
 
     public boolean removeByInput(IIngredient input) {
-        if (FuelManager.moistenerResource.values().removeIf(fuel -> {
-            boolean found = input.test(fuel.getItem());
-            if (found) addBackup(fuel);
-            return found;
-        })) return true;
+        if (FuelManager.moistenerResource.values().removeIf(fuel -> input.test(fuel.getItem()) && doAddBackup(fuel))) return true;
 
         GroovyLog.msg("Error removing Forestry Moistener fuel")
                 .add("Could not find fuel with input {}", input)
@@ -51,11 +47,7 @@ public class MoistenerFuel extends ForestryRegistry<forestry.api.fuels.Moistener
     }
 
     public boolean removeByOutput(ItemStack output) {
-        if (FuelManager.moistenerResource.values().removeIf(fuel -> {
-            boolean found = fuel.getProduct().isItemEqual(output);
-            if (found) addBackup(fuel);
-            return found;
-        })) return true;
+        if (FuelManager.moistenerResource.values().removeIf(fuel -> fuel.getProduct().isItemEqual(output) && doAddBackup(fuel))) return true;
 
         GroovyLog.msg("Error removing Forestry Moistener fuel")
                 .add("Could not find fuel with output {}", output)

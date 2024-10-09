@@ -47,24 +47,12 @@ public class OreSieve extends StandardListRegistry<OreFluidEntrySieve> {
             @Example("fluid('if.pink_slime')")
     })
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getInput()) || input.test(recipe.getSieveItem())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getInput()) || input.test(recipe.getSieveItem()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example(value = "item('industrialforegoing:pink_slime_ingot", commented = true))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getOutput()) && doAddBackup(recipe));
     }
 
 }

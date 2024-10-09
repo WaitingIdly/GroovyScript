@@ -44,13 +44,7 @@ public class BioReactor extends StandardListRegistry<IReactorEntry> {
 
     @MethodDescription(example = @Example("item('minecraft:wheat_seeds')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getStack()) && doAddBackup(recipe));
     }
 
 }

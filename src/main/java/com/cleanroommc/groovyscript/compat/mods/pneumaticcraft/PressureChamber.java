@@ -32,24 +32,12 @@ public class PressureChamber extends StandardListRegistry<IPressureChamberRecipe
 
     @MethodDescription(example = @Example("item('minecraft:diamond')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (entry.getResult().stream().anyMatch(output)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> entry.getResult().stream().anyMatch(output) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("item('minecraft:iron_block')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (entry.getInput().stream().map(ItemIngredient::getStacks).flatMap(Collection::stream).anyMatch(input)) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> entry.getInput().stream().map(ItemIngredient::getStacks).flatMap(Collection::stream).anyMatch(input) && doAddBackup(entry));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1))

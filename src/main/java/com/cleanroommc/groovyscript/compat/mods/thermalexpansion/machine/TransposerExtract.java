@@ -69,37 +69,19 @@ public class TransposerExtract extends VirtualizedRegistry<TransposerRecipe> {
     }
 
     public boolean remove(TransposerRecipe recipe) {
-        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:sponge:1')"))
     public boolean removeByInput(IIngredient input) {
-        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {
             @Example("fluid('seed_oil')"), @Example("item('minecraft:bowl')")
     })
     public boolean removeByOutput(IIngredient output) {
-        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> {
-            if (output.test(r.getOutput()) || output.test(r.getFluid())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return TransposerManagerAccessor.getRecipeMapExtract().values().removeIf(r -> output.test(r.getOutput()) || output.test(r.getFluid()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

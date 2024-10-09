@@ -79,13 +79,7 @@ public class StarlightAltar extends VirtualizedRegistry<AbstractAltarRecipe> {
 
     @MethodDescription(description = "groovyscript.wiki.astralsorcery.starlight_altar.removeByOutput1")
     public void removeByOutput(ItemStack output, TileAltar.AltarLevel altarLevel) {
-        AltarRecipeRegistry.recipes.get(altarLevel).removeIf(recipe -> {
-            if (recipe.getOutputForMatching().isItemEqual(output)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        AltarRecipeRegistry.recipes.get(altarLevel).removeIf(recipe -> recipe.getOutputForMatching().isItemEqual(output) && doAddBackup(recipe));
     }
 
     private boolean remove(AbstractAltarRecipe recipe) {

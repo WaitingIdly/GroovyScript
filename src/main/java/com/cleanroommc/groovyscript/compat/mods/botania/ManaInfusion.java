@@ -36,11 +36,7 @@ public class ManaInfusion extends StandardListRegistry<RecipeManaInfusion> {
 
     @MethodDescription(example = @Example("item('botania:managlass')"))
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = ItemStack.areItemStacksEqual(recipe.getOutput(), output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.getOutput(), output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Mana Infusion recipe")
                 .add("could not find recipe with output {}", output)
@@ -54,8 +50,7 @@ public class ManaInfusion extends StandardListRegistry<RecipeManaInfusion> {
         if (getRecipes().removeIf(recipe -> {
             boolean found = recipe.getInput() instanceof ItemStack ? input.test((ItemStack) recipe.getInput())
                                                                    : (input instanceof OreDictIngredient && ((OreDictIngredient) input).getOreDict().equals(recipe.getInput()));
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Botania Mana Infusion recipe")
@@ -67,12 +62,7 @@ public class ManaInfusion extends StandardListRegistry<RecipeManaInfusion> {
 
     @MethodDescription(example = @Example("blockstate('botania:alchemycatalyst')"))
     public boolean removeByCatalyst(IBlockState catalyst) {
-        if (getRecipes().removeIf(recipe -> {
-            if (recipe.getCatalyst() == null) return false;
-            boolean found = recipe.getCatalyst().equals(catalyst);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getCatalyst() != null && recipe.getCatalyst().equals(catalyst) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Mana Infusion recipe")
                 .add("could not find recipe with catalyst {}", catalyst)

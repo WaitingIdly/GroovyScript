@@ -40,13 +40,7 @@ public class FluidReplicator extends VirtualizedRegistry<FluidReplicatorRecipe> 
 
     @MethodDescription(example = @Example("fluid('water')"))
     public boolean removeByOutput(FluidStack output) {
-        return FluidReplicatorRecipeList.recipes.removeIf(entry -> {
-            if (output.getFluid().equals(entry.getFluid())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return FluidReplicatorRecipeList.recipes.removeIf(entry -> output.getFluid().equals(entry.getFluid()) && doAddBackup(entry));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

@@ -35,34 +35,12 @@ public class Distillation extends StandardListRegistry<DistillationRecipe> {
             @Example(value = "fluid('lubricant')", commented = true)
     })
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getItemOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            for (FluidStack fluidStack : r.getFluidOutputs()) {
-                if (output.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> (r.getItemOutputs().stream().anyMatch(output) || r.getFluidOutputs().stream().anyMatch(output::test)) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('oil')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidInputs()) {
-                if (input.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidInputs().stream().anyMatch(input::test) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

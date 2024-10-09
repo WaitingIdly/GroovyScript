@@ -56,11 +56,7 @@ public class Vat extends VirtualizedRegistry<VatRecipe> {
             return;
         }
         int oldSize = VatRecipeManager.getInstance().getRecipes().size();
-        VatRecipeManager.getInstance().getRecipes().removeIf(recipe -> {
-            FluidStack recipeOutput = recipe.getOutputs()[0].getFluidOutput();
-            if (output.isFluidEqual(recipeOutput)) addBackup((VatRecipe) recipe);
-            return output.isFluidEqual(recipeOutput);
-        });
+        VatRecipeManager.getInstance().getRecipes().removeIf(recipe -> output.isFluidEqual(recipe.getOutputs()[0].getFluidOutput()) && doAddBackup((VatRecipe) recipe));
         if (oldSize == VatRecipeManager.getInstance().getRecipes().size()) {
             GroovyLog.get().error("Could not find EnderIO Vat recipes with fluid output {}", output.getFluid().getName());
         }

@@ -58,24 +58,12 @@ public class Reservoir extends VirtualizedRegistry<Pair<PumpjackHandler.Reservoi
 
     @MethodDescription(example = @Example("'aquifer'"))
     public void removeByName(String name) {
-        PumpjackHandler.reservoirList.entrySet().removeIf(r -> {
-            if (name.equals(r.getKey().name)) {
-                addBackup(Pair.of(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        PumpjackHandler.reservoirList.entrySet().removeIf(r -> name.equals(r.getKey().name) && doAddBackup(Pair.of(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(example = @Example("fluid('oil')"))
     public void removeByOutput(FluidStack output) {
-        PumpjackHandler.reservoirList.entrySet().removeIf(r -> {
-            if (output.getFluid().getName().equals(r.getKey().fluid)) {
-                addBackup(Pair.of(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        PumpjackHandler.reservoirList.entrySet().removeIf(r -> output.getFluid().getName().equals(r.getKey().fluid) && doAddBackup(Pair.of(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

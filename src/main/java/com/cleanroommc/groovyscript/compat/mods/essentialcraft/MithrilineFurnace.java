@@ -30,24 +30,12 @@ public class MithrilineFurnace extends VirtualizedRegistry<MithrilineFurnaceReci
 
     @MethodDescription(example = @Example("ore('dustGlowstone')"))
     public boolean removeByInput(IIngredient x) {
-        return MithrilineFurnaceRecipes.RECIPES.removeIf(r -> {
-            if (Arrays.stream(x.getMatchingStacks()).anyMatch(r.input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return MithrilineFurnaceRecipes.RECIPES.removeIf(r -> Arrays.stream(x.getMatchingStacks()).anyMatch(r.input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:emerald')"))
     public boolean removeByOutput(IIngredient x) {
-        return MithrilineFurnaceRecipes.RECIPES.removeIf(r -> {
-            if (x.test(r.result)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return MithrilineFurnaceRecipes.RECIPES.removeIf(r -> x.test(r.result) && doAddBackup(r));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

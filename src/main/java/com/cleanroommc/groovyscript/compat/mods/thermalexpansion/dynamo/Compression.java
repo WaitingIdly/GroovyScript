@@ -34,34 +34,16 @@ public class Compression extends VirtualizedRegistry<Compression.CompressionReci
     }
 
     public boolean remove(String fluid) {
-        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(fluid)) {
-                addBackup(new CompressionRecipe(r, CompressionManagerAccessor.getFuelMap().getInt(r)));
-                return true;
-            }
-            return false;
-        });
+        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(fluid) && doAddBackup(new CompressionRecipe(r, CompressionManagerAccessor.getFuelMap().getInt(r))));
     }
 
     public boolean remove(CompressionRecipe recipe) {
-        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.fluid())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe.fluid()) && doAddBackup(recipe));
     }
 
     @MethodDescription
     public boolean removeByInput(String input) {
-        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (input.equals(r)) {
-                addBackup(new CompressionRecipe(r, CompressionManagerAccessor.getFuelMap().getInt(r)));
-                return true;
-            }
-            return false;
-        });
+        return CompressionManagerAccessor.getFuelMap().keySet().removeIf(r -> input.equals(r) && doAddBackup(new CompressionRecipe(r, CompressionManagerAccessor.getFuelMap().getInt(r))));
     }
 
     @MethodDescription(example = @Example("fluid('seed_oil')"))

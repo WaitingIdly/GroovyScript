@@ -36,24 +36,12 @@ public class FisherBait extends VirtualizedRegistry<FisherBait.FisherRecipe> {
     }
 
     public boolean remove(ComparableItemStack stack) {
-        return FisherManagerAccessor.getBaitMap().keySet().removeIf(r -> {
-            if (stack.isItemEqual(r)) {
-                addBackup(new FisherRecipe(r, FisherManagerAccessor.getBaitMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return FisherManagerAccessor.getBaitMap().keySet().removeIf(r -> stack.isItemEqual(r) && doAddBackup(new FisherRecipe(r, FisherManagerAccessor.getBaitMap().get(r))));
     }
 
     @MethodDescription(example = @Example("item('thermalfoundation:bait:2')"))
     public boolean remove(IIngredient input) {
-        return FisherManagerAccessor.getBaitMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new FisherRecipe(r, FisherManagerAccessor.getBaitMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return FisherManagerAccessor.getBaitMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new FisherRecipe(r, FisherManagerAccessor.getBaitMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

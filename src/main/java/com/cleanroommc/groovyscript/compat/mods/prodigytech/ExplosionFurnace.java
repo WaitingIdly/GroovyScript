@@ -34,11 +34,7 @@ public class ExplosionFurnace extends StandardListRegistry<ExplosionFurnaceManag
 
     @MethodDescription(example = @Example("item('prodigytech:ferramic_ingot')"))
     public void removeByOutput(ItemStack output) {
-        getRecipes().removeIf(r -> {
-            if (!r.getOutput().isItemEqual(output)) return false;
-            addBackup(r);
-            return true;
-        });
+        getRecipes().removeIf(r -> r.getOutput().isItemEqual(output) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1, lte = 2))

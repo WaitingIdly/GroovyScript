@@ -54,11 +54,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
     }
 
     public boolean removeByFluid(FluidStack input) {
-        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getLiquid().isFluidEqual(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getLiquid().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Thermionic Fabricator recipe")
                 .add("could not find recipe with fluid input {}", input)
@@ -68,11 +64,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
     }
 
     public boolean removeByCatalyst(IIngredient catalyst) {
-        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = catalyst.test(recipe.getPlan());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> catalyst.test(recipe.getPlan()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Thermionic Fabricator recipe")
                 .add("could not find recipe with catalyst {}", catalyst)
@@ -82,11 +74,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
     }
 
     public boolean removeByOutput(IIngredient output) {
-        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = output.test(recipe.getRecipeOutput());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (FabricatorRecipeManagerAccessor.getRecipes().removeIf(recipe -> output.test(recipe.getRecipeOutput()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Thermionic Fabricator recipe")
                 .add("could not find recipe with output {}", output)
@@ -111,8 +99,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
                 }
                 return matches;
             });
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Forestry Thermionic Fabricator recipe")
@@ -207,11 +194,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
         }
 
         public boolean removeByInput(IIngredient input) {
-            if (FabricatorSmeltingRecipeManager.recipes.removeIf(recipe -> {
-                boolean found = input.test(recipe.getResource());
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (FabricatorSmeltingRecipeManager.recipes.removeIf(recipe -> input.test(recipe.getResource()) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Forestry Thermionic Fabricator Smelting recipe")
                     .add("Could not find recipe with input {}", input)
@@ -221,11 +204,7 @@ public class ThermionicFabricator extends ForestryRegistry<IFabricatorRecipe> {
         }
 
         public boolean removeByOutput(FluidStack output) {
-            if (FabricatorSmeltingRecipeManager.recipes.removeIf(recipe -> {
-                boolean found = recipe.getProduct().isFluidEqual(output);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (FabricatorSmeltingRecipeManager.recipes.removeIf(recipe -> recipe.getProduct().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Forestry Thermionic Fabricator Smelting recipe")
                     .add("Could not find recipe with output {}", output)

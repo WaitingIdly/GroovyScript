@@ -1,10 +1,8 @@
 package com.cleanroommc.groovyscript.compat.mods.forestry;
 
-import com.cleanroommc.groovyscript.GroovyScriptConfig;
 import com.cleanroommc.groovyscript.api.GroovyBlacklist;
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
-import com.cleanroommc.groovyscript.api.IResourceStack;
 import com.cleanroommc.groovyscript.core.mixin.forestry.CarpenterRecipeManagerAccessor;
 import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
@@ -19,7 +17,10 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
 
@@ -48,11 +49,7 @@ public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
     }
 
     public boolean removeByOutput(IIngredient output) {
-        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = output.test(recipe.getCraftingGridRecipe().getOutput());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> output.test(recipe.getCraftingGridRecipe().getOutput()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Carpenter recipe")
                 .add("could not find recipe with output {}", output)
@@ -62,11 +59,7 @@ public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
     }
 
     public boolean removeByFluidInput(FluidStack input) {
-        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getFluidResource().isFluidEqual(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getFluidResource().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Carpenter recipe")
                 .add("could not find recipe with fluid input {}", input)
@@ -76,11 +69,7 @@ public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
     }
 
     public boolean removeByBox(IIngredient box) {
-        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = box.test(recipe.getBox());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (CarpenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> box.test(recipe.getBox()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Carpenter recipe")
                 .add("could not find recipe with box {}", box)
@@ -105,8 +94,7 @@ public class Carpenter extends ForestryRegistry<ICarpenterRecipe> {
                 }
                 return matches;
             });
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Forestry Carpenter recipe")

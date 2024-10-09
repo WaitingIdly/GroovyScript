@@ -58,13 +58,7 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
 
     @MethodDescription(example = @Example("item('bloodmagic:component:13')"))
     public boolean removeByInput(IIngredient input) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getInput().test(IngredientHelper.toItemStack(input));
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        })) {
+        if (getRecipes().removeIf(recipe -> recipe.getInput().test(IngredientHelper.toItemStack(input)) && doAddBackup(recipe))) {
             return true;
         }
 
@@ -77,13 +71,7 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
 
     @MethodDescription(example = @Example("item('bloodmagic:slate:2')"))
     public boolean removeByCatalyst(IIngredient catalyst) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getCatalyst().test(IngredientHelper.toItemStack(catalyst));
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        })) {
+        if (getRecipes().removeIf(recipe -> recipe.getCatalyst().test(IngredientHelper.toItemStack(catalyst)) && doAddBackup(recipe))) {
             return true;
         }
 
@@ -96,13 +84,7 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
 
     @MethodDescription(example = @Example("item('bloodmagic:component:7'), item('bloodmagic:slate:1')"))
     public boolean removeByInputAndCatalyst(IIngredient input, IIngredient catalyst) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean removeRecipe = recipe.getInput().test(IngredientHelper.toItemStack(input)) && recipe.getCatalyst().test(IngredientHelper.toItemStack(catalyst));
-            if (removeRecipe) {
-                addBackup(recipe);
-            }
-            return removeRecipe;
-        })) {
+        if (getRecipes().removeIf(recipe -> recipe.getInput().test(IngredientHelper.toItemStack(input)) && recipe.getCatalyst().test(IngredientHelper.toItemStack(catalyst)) && doAddBackup(recipe))) {
             return true;
         }
 
@@ -115,13 +97,7 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
 
     @MethodDescription(example = @Example("item('bloodmagic:sigil_void')"))
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean matches = recipe.getOutput().isItemEqual(output);
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        })) {
+        if (getRecipes().removeIf(recipe -> recipe.getOutput().isItemEqual(output) && doAddBackup(recipe))) {
             return true;
         }
 

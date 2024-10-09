@@ -86,13 +86,7 @@ public class MetalPress extends VirtualizedRegistry<MetalPressRecipe> {
         ComparableItemStack comparable = ApiUtils.createComparableItemStack(mold, false);
         msg.add(!MetalPressRecipe.recipeList.containsKey(comparable), () -> mold + " is not a valid mold");
         if (msg.postIfNotEmpty()) return;
-        if (!MetalPressRecipe.recipeList.get(comparable).removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(output, recipe.output)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!MetalPressRecipe.recipeList.get(comparable).removeIf(recipe -> ApiUtils.stackMatchesObject(output, recipe.output) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Metal Press recipe")
                     .add("no recipes found for {} and {}", mold, output)
                     .error()
@@ -115,13 +109,7 @@ public class MetalPress extends VirtualizedRegistry<MetalPressRecipe> {
         msg.add(!MetalPressRecipe.recipeList.containsKey(comparable), () -> mold + " is not a valid mold");
         if (msg.postIfNotEmpty()) return;
 
-        if (!MetalPressRecipe.recipeList.get(comparable).removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(input, recipe.input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!MetalPressRecipe.recipeList.get(comparable).removeIf(recipe -> ApiUtils.stackMatchesObject(input, recipe.input) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Metal Press recipe")
                     .add("no recipes found for {} and {}", mold, input)
                     .error()
@@ -137,13 +125,7 @@ public class MetalPress extends VirtualizedRegistry<MetalPressRecipe> {
                     .error()
                     .post();
         }
-        if (!MetalPressRecipe.recipeList.values().removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(input, recipe.input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!MetalPressRecipe.recipeList.values().removeIf(recipe -> ApiUtils.stackMatchesObject(input, recipe.input) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Metal Press recipe")
                     .add("no recipes found for {}", input)
                     .error()

@@ -41,24 +41,12 @@ public class EnvironmentalAccumulator extends StandardListRegistry<IRecipe<Envir
 
     @MethodDescription(example = @Example("item('evilcraft:exalted_crafter:1')"))
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('evilcraft:exalted_crafter:2')"))
     public boolean removeByOutput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getOutput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

@@ -57,35 +57,17 @@ public class Centrifuge extends VirtualizedRegistry<CentrifugeRecipe> {
     }
 
     public boolean remove(CentrifugeRecipe recipe) {
-        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:reeds')"))
     public boolean removeByInput(IIngredient input) {
-        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {@Example("fluid('redstone')"), @Example("item('minecraft:redstone')")})
     public boolean removeByOutput(IIngredient output) {
-        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getFluid()) || r.getOutput().stream().anyMatch(output)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return CentrifugeManagerAccessor.getRecipeMap().values().removeIf(r -> (output.test(r.getFluid()) || r.getOutput().stream().anyMatch(output)) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

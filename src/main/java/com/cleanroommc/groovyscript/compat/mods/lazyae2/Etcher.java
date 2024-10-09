@@ -31,24 +31,12 @@ public class Etcher extends StandardListRegistry<EtchRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:diamond')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.input().getInputs().stream().anyMatch(x -> Arrays.stream(input.getMatchingStacks()).anyMatch(x))) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> recipe.input().getInputs().stream().anyMatch(x -> Arrays.stream(input.getMatchingStacks()).anyMatch(x)) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('appliedenergistics2:material:22')"))
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutput().getOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> output.test(recipe.getOutput().getOutput()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

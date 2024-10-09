@@ -33,13 +33,7 @@ public class TreasureChest extends StandardListRegistry<TreasureChestLoot> {
 
     @MethodDescription(example = @Example("item('minecraft:iron_ingot')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(recipe -> {
-            boolean matches = ItemStack.areItemStacksEqual(recipe.returnItem, output);
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        });
+        return getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.returnItem, output) && doAddBackup(recipe));
     }
 
     @Property(property = "output", comp = @Comp(eq = 1))

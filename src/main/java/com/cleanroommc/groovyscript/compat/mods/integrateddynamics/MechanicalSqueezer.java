@@ -33,12 +33,6 @@ public class MechanicalSqueezer extends StandardListRegistry<IRecipe<IngredientR
 
     @MethodDescription
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().getIngredient().test(input) && doAddBackup(r));
     }
 }

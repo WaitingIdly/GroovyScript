@@ -67,13 +67,7 @@ public class RollingMachine extends VirtualizedRegistry<Pair<ResourceLocation, I
 
     @MethodDescription(example = @Example("item('minecraft:tripwire_hook')"))
     public boolean removeByOutput(IIngredient output) {
-        return RollingMachineRecipe.instance.getRecipeList().entrySet().removeIf(r -> {
-            if (output.test(r.getValue().getRecipeOutput())) {
-                addBackup(Pair.of(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return RollingMachineRecipe.instance.getRecipeList().entrySet().removeIf(r -> output.test(r.getValue().getRecipeOutput()) && doAddBackup(Pair.of(r.getKey(), r.getValue())));
     }
 
     public boolean remove(ResourceLocation key) {
@@ -81,13 +75,7 @@ public class RollingMachine extends VirtualizedRegistry<Pair<ResourceLocation, I
     }
 
     public boolean remove(IRecipe recipe) {
-        return RollingMachineRecipe.instance.getRecipeList().entrySet().removeIf(r -> {
-            if (r.getValue() == recipe) {
-                addBackup(Pair.of(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return RollingMachineRecipe.instance.getRecipeList().entrySet().removeIf(r -> r.getValue() == recipe && doAddBackup(Pair.of(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

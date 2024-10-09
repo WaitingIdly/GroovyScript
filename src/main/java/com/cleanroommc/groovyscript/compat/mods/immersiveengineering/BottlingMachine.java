@@ -51,13 +51,7 @@ public class BottlingMachine extends StandardListRegistry<BottlingMachineRecipe>
                     .post();
             return;
         }
-        if (!getRecipes().removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(output, recipe.output, true)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!getRecipes().removeIf(recipe -> ApiUtils.stackMatchesObject(output, recipe.output, true) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Bottling Machine recipe")
                     .add("no recipes found for {}", output)
                     .error()

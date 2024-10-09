@@ -67,35 +67,17 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
     }
 
     public boolean remove(CrucibleRecipe recipe) {
-        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:glowstone_dust')"))
     public boolean removeByInput(IIngredient input) {
-        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('lava')"))
     public boolean removeByOutput(IIngredient output) {
-        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return CrucibleManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

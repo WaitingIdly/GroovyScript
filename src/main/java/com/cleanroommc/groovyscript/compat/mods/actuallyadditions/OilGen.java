@@ -51,13 +51,7 @@ public class OilGen extends StandardListRegistry<OilGenRecipe> {
 
     @MethodDescription(example = @Example("'refinedcanolaoil'"))
     public boolean removeByInput(String fluid) {
-        return getRecipes().removeIf(recipe -> {
-            boolean found = fluid.equals(recipe.fluidName);
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        });
+        return getRecipes().removeIf(recipe -> fluid.equals(recipe.fluidName) && doAddBackup(recipe));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

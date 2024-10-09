@@ -55,11 +55,7 @@ public class ElvenTrade extends StandardListRegistry<RecipeElvenTrade> {
 
     @MethodDescription(description = "groovyscript.wiki.removeByOutput", example = @Example("item('botania:dreamwood')"))
     public boolean removeByOutputs(ItemStack... outputs) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = Arrays.stream(outputs).allMatch(output -> recipe.getOutputs().stream().anyMatch(o -> ItemStack.areItemStacksEqual(o, output)));
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> Arrays.stream(outputs).allMatch(output -> recipe.getOutputs().stream().anyMatch(o -> ItemStack.areItemStacksEqual(o, output))) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Elven Trade recipe")
                 .add("could not find recipe with outputs {}", Arrays.toString(outputs))
@@ -75,8 +71,7 @@ public class ElvenTrade extends StandardListRegistry<RecipeElvenTrade> {
         if (getRecipes().removeIf(recipe -> {
             boolean found = recipe.getInputs().stream().allMatch(input -> input instanceof String ? converted.contains(input)
                                                                                                   : list.stream().anyMatch(i -> i.test((ItemStack) input)));
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Botania Elven Trade recipe")

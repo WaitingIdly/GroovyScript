@@ -8,7 +8,6 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.HeatExchangerRecipe;
 import mctmods.immersivetechnology.common.Config;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -36,27 +35,13 @@ public class HeatExchanger extends StandardListRegistry<HeatExchangerRecipe> {
 
     @MethodDescription(example = @Example("fluid('fluegas')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidInputs()) {
-                if (input.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidInputs().stream().anyMatch(input::test) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('hot_spring_water')"))
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(r -> {
-            // would iterate through r.getFluidOutputs() as with the other IE compats, but they forgot to define it so its null.
-            if (output.test(r.fluidOutput0) || output.test(r.fluidOutput1)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        // would iterate through r.getFluidOutputs() as with the other IE compats, but they forgot to define it so its null.
+        getRecipes().removeIf(r -> output.test(r.fluidOutput0) || output.test(r.fluidOutput1) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 2))

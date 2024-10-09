@@ -23,29 +23,17 @@ public abstract class AbstractPraescriptumRegistry extends StandardListRegistry<
 
     @MethodDescription
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(recipe -> {
-            if (recipe.getInputIngredients().stream().map(x -> x.ingredient).anyMatch(x -> {
-                if (x instanceof ItemStack itemStack) return input.test(itemStack);
-                if (x instanceof FluidStack fluidStack) return input.test(fluidStack);
-                if (x instanceof String s) return Arrays.stream(new OreDictIngredient(s).getMatchingStacks()).anyMatch(input);
-                return false;
-            })) {
-                addBackup(recipe);
-                return true;
-            }
+        getRecipes().removeIf(recipe -> recipe.getInputIngredients().stream().map(x -> x.ingredient).anyMatch(x -> {
+            if (x instanceof ItemStack itemStack) return input.test(itemStack);
+            if (x instanceof FluidStack fluidStack) return input.test(fluidStack);
+            if (x instanceof String s) return Arrays.stream(new OreDictIngredient(s).getMatchingStacks()).anyMatch(input);
             return false;
-        });
+        }) && doAddBackup(recipe));
     }
 
     @MethodDescription
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(recipe -> {
-            if (Arrays.stream(recipe.getItemOutputs()).anyMatch(output) || Arrays.stream(recipe.getFluidOutputs()).anyMatch(output::test)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> (Arrays.stream(recipe.getItemOutputs()).anyMatch(output) || Arrays.stream(recipe.getFluidOutputs()).anyMatch(output::test)) && doAddBackup(recipe));
     }
 
 }

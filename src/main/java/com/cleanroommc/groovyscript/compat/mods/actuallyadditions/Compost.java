@@ -42,24 +42,12 @@ public class Compost extends StandardListRegistry<CompostRecipe> {
 
     @MethodDescription(example = @Example("item('actuallyadditions:item_canola_seed')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getInput().test(IngredientHelper.toItemStack(input));
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        });
+        return getRecipes().removeIf(recipe -> recipe.getInput().test(IngredientHelper.toItemStack(input)) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('actuallyadditions:item_fertilizer')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(recipe -> {
-            boolean matches = ItemStack.areItemStacksEqual(recipe.getOutput(), output);
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        });
+        return getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.getOutput(), output) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

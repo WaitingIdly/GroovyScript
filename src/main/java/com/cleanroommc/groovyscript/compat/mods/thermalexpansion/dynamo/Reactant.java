@@ -113,26 +113,14 @@ public class Reactant extends VirtualizedRegistry<ReactantManager.Reaction> {
     }
 
     public boolean remove(ReactantManager.Reaction recipe) {
-        return ReactantManagerAccessor.getReactionMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return ReactantManagerAccessor.getReactionMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {
             @Example("item('minecraft:blaze_powder')"), @Example("fluid('redstone')")
     })
     public boolean removeByInput(IIngredient input) {
-        return ReactantManagerAccessor.getReactionMap().values().removeIf(r -> {
-            if (input.test(r.getReactant()) || (input instanceof FluidStack && IngredientHelper.toFluidStack(input).getFluid().getName().equals(r.getFluidName()))) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return ReactantManagerAccessor.getReactionMap().values().removeIf(r -> (input.test(r.getReactant()) || (input instanceof FluidStack && IngredientHelper.toFluidStack(input).getFluid().getName().equals(r.getFluidName()))) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

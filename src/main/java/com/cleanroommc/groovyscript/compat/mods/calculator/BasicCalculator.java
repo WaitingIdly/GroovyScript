@@ -7,7 +7,6 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.Alias;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.calculator.mod.common.recipes.CalculatorRecipes;
@@ -35,32 +34,12 @@ public class BasicCalculator extends StandardListRegistry<CalculatorRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:cobblestone')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeInput : r.recipeInputs) {
-                for (ItemStack itemStack : recipeInput.getJEIValue()) {
-                    if (input.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeInputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('calculator:reinforcedironingot')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeOutput : r.recipeOutputs) {
-                for (ItemStack itemStack : recipeOutput.getJEIValue()) {
-                    if (output.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeOutputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(output) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 2))

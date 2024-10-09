@@ -1,6 +1,5 @@
 package com.cleanroommc.groovyscript.compat.mods.bloodmagic;
 
-import WayofTime.bloodmagic.altar.AltarTier;
 import WayofTime.bloodmagic.api.impl.BloodMagicAPI;
 import WayofTime.bloodmagic.api.impl.recipe.RecipeAlchemyTable;
 import com.cleanroommc.groovyscript.api.GroovyLog;
@@ -66,10 +65,7 @@ public class AlchemyTable extends StandardListRegistry<RecipeAlchemyTable> {
                 }
                 removeRecipe = foundInputMatch;
             }
-            if (removeRecipe) {
-                addBackup(recipe);
-            }
-            return removeRecipe;
+            return removeRecipe && doAddBackup(recipe);
         })) {
             return true;
         }
@@ -83,13 +79,7 @@ public class AlchemyTable extends StandardListRegistry<RecipeAlchemyTable> {
 
     @MethodDescription(example = @Example("item('minecraft:sand')"))
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean matches = ItemStack.areItemStacksEqual(recipe.getOutput(), output);
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        })) {
+        if (getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.getOutput(), output) && doAddBackup(recipe))) {
             return true;
         }
         GroovyLog.msg("Error removing Blood Magic Alchemy Table recipe")

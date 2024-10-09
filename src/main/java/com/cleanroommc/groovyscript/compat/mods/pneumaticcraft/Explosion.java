@@ -33,24 +33,12 @@ public class Explosion extends StandardListRegistry<ExplosionCraftingRecipe> {
 
     @MethodDescription(example = @Example("item('pneumaticcraft:compressed_iron_block')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (output.test(entry.getOutput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> output.test(entry.getOutput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example(value = "item('minecraft:iron_block')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (input.test(entry.getInput()) || input instanceof OreDictIngredient oreDictIngredient && oreDictIngredient.getOreDict().equals(entry.getOreDictKey())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> (input.test(entry.getInput()) || input instanceof OreDictIngredient oreDictIngredient && oreDictIngredient.getOreDict().equals(entry.getOreDictKey())) && doAddBackup(entry));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

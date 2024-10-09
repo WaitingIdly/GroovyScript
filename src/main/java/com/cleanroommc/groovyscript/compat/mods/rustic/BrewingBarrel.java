@@ -31,24 +31,12 @@ public class BrewingBarrel extends StandardListRegistry<IBrewingBarrelRecipe> {
 
     @MethodDescription(example = @Example("fluid('ale')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(entry -> {
-            if (output.test(entry.getOuput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> output.test(entry.getOuput()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example("fluid('ironberryjuice')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(entry -> {
-            if (input.test(entry.getInput())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> input.test(entry.getInput()) && doAddBackup(entry));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

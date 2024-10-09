@@ -6,7 +6,6 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import sonar.calculator.mod.common.recipes.AlgorithmSeparatorRecipes;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
@@ -30,32 +29,12 @@ public class AlgorithmSeparator extends StandardListRegistry<CalculatorRecipe> {
 
     @MethodDescription(example = @Example("item('calculator:tanzaniteleaves')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            for (ISonarRecipeObject recipeInput : recipe.inputs()) {
-                for (ItemStack itemStack : recipeInput.getJEIValue()) {
-                    if (input.test(itemStack)) {
-                        addBackup(recipe);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeInputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('calculator:weakeneddiamond')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeOutput : r.recipeOutputs) {
-                for (ItemStack itemStack : recipeOutput.getJEIValue()) {
-                    if (output.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeOutputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(output) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

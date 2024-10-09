@@ -54,24 +54,12 @@ public class StygianIronAnvil extends StandardListRegistry<IAnvilRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:iron_bars')"))
     public boolean removeByBase(ItemStack base) {
-        return getRecipes().removeIf(x -> {
-            if (ItemStack.areItemsEqual(x.getBaseItem(), base)) {
-                addBackup(x);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(x -> ItemStack.areItemsEqual(x.getBaseItem(), base) && doAddBackup(x));
     }
 
     @MethodDescription(example = @Example("item('woot:stygianironplate')"))
     public boolean removeByOutput(ItemStack output) {
-        return getRecipes().removeIf(x -> {
-            if (ItemStack.areItemsEqual(x.getCopyOutput(), output)) {
-                addBackup(x);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(x -> ItemStack.areItemsEqual(x.getCopyOutput(), output) && doAddBackup(x));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1))

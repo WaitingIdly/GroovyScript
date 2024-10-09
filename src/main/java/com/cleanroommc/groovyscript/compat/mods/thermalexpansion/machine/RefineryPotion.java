@@ -54,35 +54,17 @@ public class RefineryPotion extends VirtualizedRegistry<RefineryRecipe> {
     }
 
     public boolean remove(RefineryRecipe recipe) {
-        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("fluid('potion_lingering').withNbt(['Potion': 'cofhcore:healing3'])"))
     public boolean removeByInput(IIngredient input) {
-        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('potion_splash').withNbt(['Potion': 'cofhcore:leaping4'])"))
     public boolean removeByOutput(IIngredient output) {
-        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> {
-            if (output.test(r.getOutputFluid()) || output.test(r.getOutputItem())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMapPotion().values().removeIf(r -> output.test(r.getOutputFluid()) || output.test(r.getOutputItem()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

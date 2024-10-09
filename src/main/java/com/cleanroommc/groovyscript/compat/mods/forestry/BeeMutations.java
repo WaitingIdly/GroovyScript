@@ -64,11 +64,7 @@ public class BeeMutations extends ForestryRegistry<IBeeMutation> {
     }
 
     public boolean removeByOutput(AlleleBeeSpecies species) {
-        if (BeeRootAccessor.getBeeMutations().removeIf(mutation -> {
-            boolean found = Arrays.equals(mutation.getTemplate(), Objects.requireNonNull(BeeManager.beeRoot).getTemplate(species));
-            if (found) addBackup(mutation);
-            return found;
-        })) return true;
+        if (BeeRootAccessor.getBeeMutations().removeIf(mutation -> Arrays.equals(mutation.getTemplate(), Objects.requireNonNull(BeeManager.beeRoot).getTemplate(species)) && doAddBackup(mutation))) return true;
 
         GroovyLog.msg("Error removing bee mutation")
                 .add("could not find bee mutation with output {}", species)

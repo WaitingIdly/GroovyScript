@@ -34,34 +34,16 @@ public class Magmatic extends VirtualizedRegistry<Magmatic.MagmaticRecipe> {
     }
 
     public boolean remove(String fluid) {
-        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(fluid)) {
-                addBackup(new MagmaticRecipe(r, MagmaticManagerAccessor.getFuelMap().getInt(r)));
-                return true;
-            }
-            return false;
-        });
+        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(fluid) && doAddBackup(new MagmaticRecipe(r, MagmaticManagerAccessor.getFuelMap().getInt(r))));
     }
 
     public boolean remove(MagmaticRecipe recipe) {
-        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.fluid())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> r.equals(recipe.fluid()) && doAddBackup(recipe));
     }
 
     @MethodDescription
     public boolean removeByInput(String input) {
-        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> {
-            if (input.equals(r)) {
-                addBackup(new MagmaticRecipe(r, MagmaticManagerAccessor.getFuelMap().getInt(r)));
-                return true;
-            }
-            return false;
-        });
+        return MagmaticManagerAccessor.getFuelMap().keySet().removeIf(r -> input.equals(r) && doAddBackup(new MagmaticRecipe(r, MagmaticManagerAccessor.getFuelMap().getInt(r))));
     }
 
     @MethodDescription(example = @Example("fluid('lava')"))

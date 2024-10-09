@@ -98,8 +98,7 @@ public class Furnace extends VirtualizedRegistry<Furnace.Recipe> {
         if (output != null) {
             float exp = FurnaceRecipes.instance().getSmeltingExperience(output);
             Recipe recipe = new Recipe(trueInput, output, exp);
-            if (isScripted) addBackup(recipe);
-            return true;
+            return isScripted && doAddBackup(recipe);
         } else {
             if (log) {
                 GroovyLog.msg("Error removing Minecraft Furnace recipe")
@@ -171,8 +170,7 @@ public class Furnace extends VirtualizedRegistry<Furnace.Recipe> {
         FurnaceRecipes.instance().getSmeltingList().entrySet().removeIf(entry -> {
             float exp = FurnaceRecipes.instance().getSmeltingExperience(entry.getValue());
             Recipe recipe = new Recipe(entry.getKey(), entry.getValue(), exp);
-            addBackup(recipe);
-            return true;
+            return doAddBackup(recipe);
         });
     }
 

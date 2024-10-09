@@ -68,11 +68,7 @@ public class BeeProduce extends ForestryRegistry<BeeProduct> {
     }
 
     public boolean removeProduct(AlleleBeeSpecies species, IIngredient output) {
-        if (species.getProductChances().entrySet().removeIf(entry -> {
-            boolean found = output.test(entry.getKey());
-            if (found) addBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), false));
-            return found;
-        })) return true;
+        if (species.getProductChances().entrySet().removeIf(entry -> output.test(entry.getKey()) && doAddBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), false)))) return true;
 
         GroovyLog.msg("Error removing product for bee")
                 .add("could not find product {} for species {}", output, species)
@@ -82,11 +78,7 @@ public class BeeProduce extends ForestryRegistry<BeeProduct> {
     }
 
     public boolean removeSpecialty(AlleleBeeSpecies species, IIngredient output) {
-        if (species.getSpecialtyChances().entrySet().removeIf(entry -> {
-            boolean found = output.test(entry.getKey());
-            if (found) addBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), true));
-            return found;
-        })) return true;
+        if (species.getSpecialtyChances().entrySet().removeIf(entry -> output.test(entry.getKey()) && doAddBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), true)))) return true;
 
         GroovyLog.msg("Error removing specialty product for bee")
                 .add("could not find specialty product {} for species {}", output, species)
@@ -96,16 +88,8 @@ public class BeeProduce extends ForestryRegistry<BeeProduct> {
     }
 
     public void removeAll(AlleleBeeSpecies species) {
-        species.getProductChances().entrySet().removeIf(entry -> {
-            BeeProduct product = new BeeProduct(species, entry.getKey(), entry.getValue(), false);
-            addBackup(product);
-            return true;
-        });
-        species.getSpecialtyChances().entrySet().removeIf(entry -> {
-            BeeProduct product = new BeeProduct(species, entry.getKey(), entry.getValue(), true);
-            addBackup(product);
-            return true;
-        });
+        species.getProductChances().entrySet().removeIf(entry -> doAddBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), false)));
+        species.getSpecialtyChances().entrySet().removeIf(entry -> doAddBackup(new BeeProduct(species, entry.getKey(), entry.getValue(), true)));
     }
 
     public void removeAll() {

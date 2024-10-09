@@ -64,44 +64,20 @@ public class Tapper extends VirtualizedRegistry<Tapper.TapperItemRecipe> {
     }
 
     public boolean remove(ItemWrapper recipe) {
-        return TapperManagerAccessor.getItemMap().keySet().removeIf(r -> {
-            if (r.equals(recipe)) {
-                addBackup(new TapperItemRecipe(r, TapperManagerAccessor.getItemMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getItemMap().keySet().removeIf(r -> r.equals(recipe) && doAddBackup(new TapperItemRecipe(r, TapperManagerAccessor.getItemMap().get(r))));
     }
 
     public boolean removeItem(TapperItemRecipe recipe) {
-        return TapperManagerAccessor.getItemMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.itemWrapper())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getItemMap().keySet().removeIf(r -> r.equals(recipe.itemWrapper()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:log:1')"))
     public boolean removeItemByInput(IIngredient input) {
-        return TapperManagerAccessor.getItemMap().entrySet().removeIf(r -> {
-            if (input.test(r.getValue()) || input.test(new ItemStack(r.getKey().item, r.getKey().metadata))) {
-                addBackup(new TapperItemRecipe(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getItemMap().entrySet().removeIf(r -> (input.test(r.getValue()) || input.test(new ItemStack(r.getKey().item, r.getKey().metadata))) && doAddBackup(new TapperItemRecipe(r.getKey(), r.getValue())));
     }
 
     public boolean removeBlock(BlockWrapper wrapper) {
-        return TapperManagerAccessor.getBlockMap().entrySet().removeIf(r -> {
-            if (r.getKey().equals(wrapper)) {
-                blockStorage.addBackup(new TapperBlockRecipe(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getBlockMap().entrySet().removeIf(r -> r.getKey().equals(wrapper) && blockStorage.addBackup(new TapperBlockRecipe(r.getKey(), r.getValue())));
     }
 
     public boolean removeBlock(IBlockState state) {
@@ -114,13 +90,7 @@ public class Tapper extends VirtualizedRegistry<Tapper.TapperItemRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:log')"))
     public boolean removeBlockByInput(IIngredient input) {
-        return TapperManagerAccessor.getBlockMap().entrySet().removeIf(r -> {
-            if (input.test(r.getValue())) {
-                blockStorage.addBackup(new TapperBlockRecipe(r.getKey(), r.getValue()));
-                return true;
-            }
-            return false;
-        });
+        return TapperManagerAccessor.getBlockMap().entrySet().removeIf(r -> input.test(r.getValue()) && blockStorage.addBackup(new TapperBlockRecipe(r.getKey(), r.getValue())));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

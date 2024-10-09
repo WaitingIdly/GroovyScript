@@ -43,13 +43,7 @@ public class Refinery extends StandardListRegistry<RefineryRecipe> {
                     .post();
             return;
         }
-        if (!getRecipes().removeIf(recipe -> {
-            if (recipe.output.isFluidEqual(fluidOutput)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!getRecipes().removeIf(recipe -> recipe.output.isFluidEqual(fluidOutput) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Refinery recipe")
                     .add("no recipes found for {}", fluidOutput)
                     .error()

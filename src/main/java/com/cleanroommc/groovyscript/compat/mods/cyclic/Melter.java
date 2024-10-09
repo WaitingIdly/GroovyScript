@@ -40,24 +40,12 @@ public class Melter extends StandardListRegistry<RecipeMelter> {
 
     @MethodDescription(example = @Example("item('minecraft:snow')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (recipe.getRecipeInput().stream().anyMatch(input)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> recipe.getRecipeInput().stream().anyMatch(input) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("fluid('amber')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutputFluid())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getOutputFluid()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1, lte = 4))

@@ -39,53 +39,25 @@ public abstract class BaseRegistry extends StandardListRegistry<IRecipe> {
     }
 
     public boolean removeByFluidInput(FluidStack fluidStack) {
-        return getRecipes().removeIf(r -> {
-            List<FluidStack> inputFluid = r.getFluidIngredients();
-            if (inputFluid.stream().anyMatch(fluidIn -> fluidIn.isFluidEqual(fluidStack))) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getFluidIngredients().stream().anyMatch(fluidIn -> fluidIn.isFluidEqual(fluidStack)) && doAddBackup(r));
     }
 
     public boolean removeByInput(IIngredient inputItem) {
         if (inputItem instanceof FluidStack) {
             return removeByFluidInput((FluidStack) inputItem);
         }
-        return getRecipes().removeIf(r -> {
-            List<List<ItemStack>> input = r.getIngredients();
-            if (input.stream().anyMatch(itemStacks -> itemStacks.stream().anyMatch(inputItem))) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getIngredients().stream().flatMap(Collection::stream).anyMatch(inputItem) && doAddBackup(r));
     }
 
     public boolean removeByFluidOutput(FluidStack fluidStack) {
-        return getRecipes().removeIf(r -> {
-            List<FluidStack> outputFluid = r.getFluidOutputs();
-            if (outputFluid.stream().anyMatch(fluidOut -> fluidOut.isFluidEqual(fluidStack))) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getFluidOutputs().stream().anyMatch(fluidOut -> fluidOut.isFluidEqual(fluidStack)) && doAddBackup(r));
     }
 
     public boolean removeByOutput(IIngredient outputItem) {
         if (outputItem instanceof FluidStack) {
             return removeByFluidInput((FluidStack) outputItem);
         }
-        return getRecipes().removeIf(r -> {
-            List<ItemStack> output = r.getOutput();
-            if (output.stream().anyMatch(outputItem)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().stream().anyMatch(outputItem) && doAddBackup(r));
     }
 
     public abstract static class RecipeBuilder extends AbstractRecipeBuilder<IRecipe> {

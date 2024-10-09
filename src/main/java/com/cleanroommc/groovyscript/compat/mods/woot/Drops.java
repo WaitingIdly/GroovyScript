@@ -51,24 +51,12 @@ public class Drops extends VirtualizedRegistry<Object> {
     }
 
     public boolean remove(Object drop) {
-        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> {
-            if (areCustomDropsEqual((CustomDropAccessor) d, (CustomDropAccessor) drop)) {
-                addBackup(d);
-                return true;
-            }
-            return false;
-        });
+        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> areCustomDropsEqual((CustomDropAccessor) d, (CustomDropAccessor) drop) && doAddBackup(d));
     }
 
     @MethodDescription(example = @Example(value = "new WootMobName('minecraft:ender_dragon')", imports = "ipsis.woot.util.WootMobName"))
     public boolean removeByEntity(WootMobName name) {
-        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> {
-            if (((CustomDropAccessor) d).getWootMobName().equals(name)) {
-                addBackup(d);
-                return true;
-            }
-            return false;
-        });
+        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> ((CustomDropAccessor) d).getWootMobName().equals(name) && doAddBackup(d));
     }
 
     @MethodDescription(example = @Example("entity('minecraft:ender_dragon')"))
@@ -88,13 +76,7 @@ public class Drops extends VirtualizedRegistry<Object> {
 
     @MethodDescription(example = @Example("item('minecraft:dragon_breath')"))
     public boolean removeByOutput(ItemStack output) {
-        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> {
-            if (ItemStack.areItemStacksEqual(((CustomDropAccessor) d).getItemStack(), output)) {
-                addBackup(d);
-                return true;
-            }
-            return false;
-        });
+        return ((CustomDropsRepositoryAccessor) Woot.customDropsRepository).getDrops().removeIf(d -> ItemStack.areItemStacksEqual(((CustomDropAccessor) d).getItemStack(), output) && doAddBackup(d));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

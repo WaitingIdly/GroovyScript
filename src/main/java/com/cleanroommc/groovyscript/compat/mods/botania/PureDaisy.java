@@ -38,11 +38,7 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
 
     @MethodDescription(example = @Example("blockstate('botania:livingrock')"))
     public boolean removeByOutput(IBlockState output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getOutputState().equals(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getOutputState().equals(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Pure Daisy recipe")
                 .add("could not find recipe with output {}", output)
@@ -53,11 +49,7 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
 
     @MethodDescription
     public boolean removeByInput(String input) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getInput() instanceof String && recipe.getInput().equals(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getInput() instanceof String && recipe.getInput().equals(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Pure Daisy recipe")
                 .add("could not find recipe with input {}", input)
@@ -73,11 +65,7 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
 
     @MethodDescription(example = @Example("blockstate('minecraft:water')"))
     public boolean removeByInput(IBlockState input) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = (recipe.getInput() instanceof IBlockState && recipe.getInput().equals(input)) || (recipe.getInput() instanceof Block && recipe.getInput() == input.getBlock());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> (recipe.getInput() instanceof IBlockState && recipe.getInput().equals(input)) || (recipe.getInput() instanceof Block && recipe.getInput() == input.getBlock()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Pure Daisy recipe")
                 .add("could not find recipe with input {}", input)

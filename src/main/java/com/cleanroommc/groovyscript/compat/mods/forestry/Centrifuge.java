@@ -44,11 +44,7 @@ public class Centrifuge extends ForestryRegistry<ICentrifugeRecipe> {
     }
 
     public boolean removeByInput(IIngredient input) {
-        if (CentrifugeRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = input.test(recipe.getInput());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (CentrifugeRecipeManagerAccessor.getRecipes().removeIf(recipe -> input.test(recipe.getInput()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Centrifuge recipe")
                 .add("could not find recipe with input {}", input)
@@ -59,11 +55,7 @@ public class Centrifuge extends ForestryRegistry<ICentrifugeRecipe> {
 
     public boolean removeByOutputs(IIngredient... output) {
         Set<ItemStack> list = Arrays.stream(output).map(i -> i.getMatchingStacks()[0]).collect(Collectors.toSet());
-        if (CentrifugeRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = list.containsAll(recipe.getAllProducts().keySet());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (CentrifugeRecipeManagerAccessor.getRecipes().removeIf(recipe -> list.containsAll(recipe.getAllProducts().keySet()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Centrifuge recipe")
                 .add("could not find recipe with outputs {}", list)

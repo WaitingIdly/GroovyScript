@@ -65,35 +65,17 @@ public class Precipitator extends VirtualizedRegistry<PrecipitatorRecipe> {
     }
 
     public boolean remove(PrecipitatorRecipe recipe) {
-        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example(value = "fluid('water')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:snowball')"))
     public boolean removeByOutput(IIngredient output) {
-        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return PrecipitatorManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

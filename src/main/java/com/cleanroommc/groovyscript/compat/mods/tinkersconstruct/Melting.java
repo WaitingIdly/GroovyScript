@@ -39,11 +39,7 @@ public class Melting extends StandardListRegistry<MeltingRecipe> {
     @MethodDescription
     public boolean removeByInput(IIngredient input) {
         NonNullList<ItemStack> matching = NonNullList.from(ItemStack.EMPTY, input.getMatchingStacks());
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.input.matches(matching).isPresent();
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.input.matches(matching).isPresent() && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Melting recipe")
                 .add("could not find recipe with input {}", input)
@@ -54,11 +50,7 @@ public class Melting extends StandardListRegistry<MeltingRecipe> {
 
     @MethodDescription
     public boolean removeByOutput(FluidStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getResult().isFluidEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getResult().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Melting recipe")
                 .add("could not find recipe with output {}", output)
@@ -70,11 +62,7 @@ public class Melting extends StandardListRegistry<MeltingRecipe> {
     @MethodDescription
     public boolean removeByInputAndOutput(IIngredient input, FluidStack output) {
         NonNullList<ItemStack> matching = NonNullList.from(ItemStack.EMPTY, input.getMatchingStacks());
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.input.matches(matching).isPresent() && recipe.getResult().isFluidEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.input.matches(matching).isPresent() && recipe.getResult().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Melting recipe")
                 .add("could not find recipe with input {} and output {}", input, output)

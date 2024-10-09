@@ -11,6 +11,7 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 @RegistryDescription
@@ -31,28 +32,12 @@ public class Hopper extends StandardListRegistry<HopperInteractions.HopperRecipe
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack item : r.getInputs().getMatchingStacks()) {
-                if (input.test(item)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> Arrays.stream(r.getInputs().getMatchingStacks()).anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "name", value = "groovyscript.wiki.betterwithmods.hopper.name.value", comp = @Comp(not = "null"))

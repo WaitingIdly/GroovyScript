@@ -13,6 +13,7 @@ import de.ellpeck.naturesaura.api.recipes.AltarRecipe;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @RegistryDescription
@@ -60,39 +61,17 @@ public class Altar extends VirtualizedRegistry<AltarRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:rotten_flesh')"))
     public boolean removeByInput(IIngredient input) {
-        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> {
-            for (var item : r.getValue().input.getMatchingStacks()) {
-                if (input.test(item)) {
-                    addBackup(r.getValue());
-                    return true;
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().input.getMatchingStacks()).anyMatch(input) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("item('naturesaura:crushing_catalyst')"))
     public boolean removeByCatalyst(IIngredient catalyst) {
-        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> {
-            for (var item : r.getValue().catalyst.getMatchingStacks()) {
-                if (catalyst.test(item)) {
-                    addBackup(r.getValue());
-                    return true;
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().catalyst.getMatchingStacks()).anyMatch(catalyst) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("item('minecraft:soul_sand')"))
     public boolean removeByOutput(IIngredient output) {
-        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> {
-            if (output.test(r.getValue().output)) {
-                addBackup(r.getValue());
-                return true;
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ALTAR_RECIPES.entrySet().removeIf(r -> output.test(r.getValue().output) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

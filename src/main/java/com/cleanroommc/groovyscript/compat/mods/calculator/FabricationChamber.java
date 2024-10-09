@@ -39,32 +39,12 @@ public class FabricationChamber extends StandardListRegistry<FabricationSonarRec
 
     @MethodDescription(example = @Example("item('calculator:circuitboard:8').withNbt([Stable: 0, Analysed: 1])"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeInput : r.recipeInputs) {
-                for (ItemStack itemStack : recipeInput.getJEIValue()) {
-                    if (input.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeInputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(input) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('calculator:calculatorassembly')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ISonarRecipeObject recipeOutput : r.recipeOutputs) {
-                for (ItemStack itemStack : recipeOutput.getJEIValue()) {
-                    if (output.test(itemStack)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.recipeOutputs.stream().map(ISonarRecipeObject::getJEIValue).flatMap(Collection::stream).anyMatch(output) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1))

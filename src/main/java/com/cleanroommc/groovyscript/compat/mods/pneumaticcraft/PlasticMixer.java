@@ -50,24 +50,12 @@ public class PlasticMixer extends StandardListRegistry<PlasticMixerRegistry.Plas
 
     @MethodDescription(example = @Example(value = "fluid('plastic')", commented = true))
     public boolean removeByFluid(IIngredient fluid) {
-        return getRecipes().removeIf(entry -> {
-            if (fluid.test(entry.getFluidStack())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> fluid.test(entry.getFluidStack()) && doAddBackup(entry));
     }
 
     @MethodDescription(example = @Example(value = "item('pneumaticcraft:plastic')", commented = true))
     public boolean removeByItem(IIngredient item) {
-        return getRecipes().removeIf(entry -> {
-            if (item.test(entry.getItemStack())) {
-                addBackup(entry);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(entry -> item.test(entry.getItemStack()) && doAddBackup(entry));
     }
 
     @Property(property = "output", comp = @Comp(eq = 1))

@@ -31,11 +31,7 @@ public class BrewRecipe extends StandardListRegistry<RecipeBrew> {
 
     @MethodDescription(example = @Example("'speed'"))
     public boolean removeByOutput(String brew) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getBrew().getKey().equals(brew);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getBrew().getKey().equals(brew) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Botania Brew recipe")
                 .add("could not find recipe with input {}", brew)
@@ -57,8 +53,7 @@ public class BrewRecipe extends StandardListRegistry<RecipeBrew> {
             boolean found = converted.stream().allMatch(o -> recipe.getInputs().stream().anyMatch(i -> (i instanceof String || o instanceof String)
                                                                                                        ? i.equals(o)
                                                                                                        : ItemStack.areItemStacksEqual((ItemStack) i, (ItemStack) o)));
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Botania Brew recipe")

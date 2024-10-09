@@ -66,13 +66,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
     }
 
     public boolean remove(boolean isSplit, FactorizerManager.FactorizerRecipe recipe) {
-        return map(isSplit).values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(Pair.of(isSplit, recipe));
-                return true;
-            }
-            return false;
-        });
+        return map(isSplit).values().removeIf(r -> r == recipe && doAddBackup(Pair.of(isSplit, recipe)));
     }
 
     public boolean remove(FactorizerManager.FactorizerRecipe recipe) {
@@ -83,13 +77,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
 
     @MethodDescription(example = @Example("false, item('minecraft:diamond')"))
     public boolean removeByInput(boolean isSplit, IIngredient input) {
-        return map(isSplit).values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(Pair.of(isSplit, r));
-                return true;
-            }
-            return false;
-        });
+        return map(isSplit).values().removeIf(r -> input.test(r.getInput()) && doAddBackup(Pair.of(isSplit, r)));
     }
 
     @MethodDescription(example = @Example("item('minecraft:coal:1')"))
@@ -102,13 +90,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
 
     @MethodDescription(example = @Example(value = "false, item('minecraft:coal:1')", commented = true))
     public boolean removeByOutput(boolean isSplit, IIngredient output) {
-        return map(isSplit).values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(Pair.of(isSplit, r));
-                return true;
-            }
-            return false;
-        });
+        return map(isSplit).values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(Pair.of(isSplit, r)));
     }
 
     @MethodDescription(description = "groovyscript.wiki.removeByOutput", example = @Example("item('minecraft:emerald_block')"))

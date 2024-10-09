@@ -12,10 +12,10 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.ingredient.IngredientHelper;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -58,31 +58,12 @@ public class HopperFilters extends VirtualizedRegistry<IHopperFilter> {
 
     @MethodDescription(example = @Example("item('minecraft:trapdoor')"))
     public boolean removeByFilter(IIngredient input) {
-        return ((HopperFiltersAccessor) BWRegistry.HOPPER_FILTERS).getFILTERS().values().removeIf(r -> {
-            for (ItemStack item : r.getFilter().getMatchingStacks()) {
-                if (input.test(item)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return ((HopperFiltersAccessor) BWRegistry.HOPPER_FILTERS).getFILTERS().values().removeIf(r -> Arrays.stream(r.getFilter().getMatchingStacks()).anyMatch(input) && doAddBackup(r));
     }
 
     @MethodDescription
     public boolean removeByFiltered(IIngredient output) {
-        return ((HopperFiltersAccessor) BWRegistry.HOPPER_FILTERS).getFILTERS().values().removeIf(r -> {
-            if (!(r instanceof HopperFilter)) return false;
-            for (Ingredient ingredient : ((HopperFilter) r).getFiltered()) {
-                for (ItemStack item : ingredient.getMatchingStacks()) {
-                    if (output.test(item)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return ((HopperFiltersAccessor) BWRegistry.HOPPER_FILTERS).getFILTERS().values().removeIf(r -> r instanceof HopperFilter filter && filter.getFiltered().stream().map(Ingredient::getMatchingStacks).flatMap(Arrays::stream).anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

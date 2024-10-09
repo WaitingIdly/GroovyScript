@@ -41,13 +41,7 @@ public class StoneMiningLens extends StandardListRegistry<WeightedOre> {
 
     @MethodDescription(example = @Example("'oreLapis'"))
     public boolean removeByOre(String oreName) {
-        return getRecipes().removeIf(recipe -> {
-            boolean found = oreName.equals(recipe.name);
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
-        });
+        return getRecipes().removeIf(recipe -> oreName.equals(recipe.name) && doAddBackup(recipe));
     }
 
     public static class RecipeBuilder extends AbstractRecipeBuilder<WeightedOre> {

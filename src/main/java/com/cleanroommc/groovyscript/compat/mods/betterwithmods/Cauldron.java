@@ -8,10 +8,10 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -34,30 +34,12 @@ public class Cauldron extends StandardListRegistry<CookingPotRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            for (ItemStack itemstack : r.getOutputs()) {
-                if (output.test(itemstack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutputs().stream().anyMatch(output) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:gunpowder')"))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (Ingredient ingredient : r.getInputs()) {
-                for (ItemStack item : ingredient.getMatchingStacks()) {
-                    if (input.test(item)) {
-                        addBackup(r);
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInputs().stream().map(Ingredient::getMatchingStacks).flatMap(Arrays::stream).anyMatch(input) && doAddBackup(r));
     }
 
     @Property(property = "input", comp = @Comp(gte = 1, lte = 9))

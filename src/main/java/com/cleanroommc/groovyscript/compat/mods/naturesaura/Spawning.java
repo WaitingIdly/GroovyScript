@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.Map;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.naturesaura.spawning.note0", type = Admonition.Type.WARNING))
@@ -57,39 +58,17 @@ public class Spawning extends VirtualizedRegistry<AnimalSpawnerRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:bone')"))
     public boolean removeByInput(IIngredient input) {
-        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> {
-            for (var ingredient : r.getValue().ingredients) {
-                for (var item : ingredient.getMatchingStacks()) {
-                    if (input.test(item)) {
-                        addBackup(r.getValue());
-                        return true;
-                    }
-                }
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> Arrays.stream(r.getValue().ingredients).map(Ingredient::getMatchingStacks).flatMap(Arrays::stream).anyMatch(input) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("resource('minecraft:cave_spider')"))
     public boolean removeByEntity(ResourceLocation resourceLocation) {
-        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> {
-            if (r.getValue().entity.equals(resourceLocation)) {
-                addBackup(r.getValue());
-                return true;
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> r.getValue().entity.equals(resourceLocation) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(example = @Example("entity('minecraft:polar_bear')"))
     public boolean removeByEntity(EntityEntry entity) {
-        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> {
-            if (r.getValue().entity.equals(entity.getRegistryName())) {
-                addBackup(r.getValue());
-                return true;
-            }
-            return false;
-        });
+        return NaturesAuraAPI.ANIMAL_SPAWNER_RECIPES.entrySet().removeIf(r -> r.getValue().entity.equals(entity.getRegistryName()) && doAddBackup(r.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

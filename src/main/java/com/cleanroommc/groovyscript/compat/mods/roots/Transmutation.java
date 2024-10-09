@@ -67,24 +67,12 @@ public class Transmutation extends VirtualizedRegistry<TransmutationRecipe> {
 
     @MethodDescription
     public boolean removeByInput(IBlockState input) {
-        return ModRecipesAccessor.getTransmutationRecipes().entrySet().removeIf(x -> {
-            if (x.getValue().getStartPredicate().test(input)) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        return ModRecipesAccessor.getTransmutationRecipes().entrySet().removeIf(x -> x.getValue().getStartPredicate().test(input) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(description = "groovyscript.wiki.roots.transmutation.removeByOutput0", example = @Example("item('minecraft:dye:3')"))
     public boolean removeByOutput(ItemStack output) {
-        return ModRecipesAccessor.getTransmutationRecipes().entrySet().removeIf(x -> {
-            if (ItemStack.areItemsEqual(x.getValue().getStack(), output)) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        return ModRecipesAccessor.getTransmutationRecipes().entrySet().removeIf(x -> ItemStack.areItemsEqual(x.getValue().getStack(), output) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(description = "groovyscript.wiki.roots.transmutation.removeByOutput1", example = @Example("blockstate('minecraft:log:variant=jungle')"))

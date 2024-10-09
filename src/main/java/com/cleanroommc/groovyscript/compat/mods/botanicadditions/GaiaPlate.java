@@ -32,13 +32,7 @@ public class GaiaPlate extends StandardListRegistry<GaiaPlateRecipes.RecipeGaiaP
 
     @MethodDescription(example = @Example("item('botanicadds:gaiasteel_ingot')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('botania:manaresource')"))

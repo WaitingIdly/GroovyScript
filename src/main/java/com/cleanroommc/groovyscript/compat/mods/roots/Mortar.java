@@ -66,25 +66,13 @@ public class Mortar extends VirtualizedRegistry<MortarRecipe> {
 
     @MethodDescription(example = @Example("resource('roots:wheat_flour')"))
     public boolean removeByName(ResourceLocation name) {
-        return ModRecipesAccessor.getMortarRecipes().entrySet().removeIf(x -> {
-            // Some Mortar recipe names are generated via [base]_x. If we are removing eg "wheat_flour" we should detect and remove all 5 variants
-            if (x.getKey().equals(name) || x.getKey().toString().startsWith(name.toString())) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        // Some Mortar recipe names are generated via [base]_x. If we are removing eg "wheat_flour" we should detect and remove all 5 variants
+        return ModRecipesAccessor.getMortarRecipes().entrySet().removeIf(x -> (x.getKey().equals(name) || x.getKey().toString().startsWith(name.toString())) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(example = @Example("item('minecraft:string')"))
     public boolean removeByOutput(ItemStack output) {
-        return ModRecipesAccessor.getMortarRecipes().entrySet().removeIf(x -> {
-            if (ItemStack.areItemsEqual(x.getValue().getResult(), output)) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        return ModRecipesAccessor.getMortarRecipes().entrySet().removeIf(x -> ItemStack.areItemsEqual(x.getValue().getResult(), output) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(priority = 2000, example = @Example(commented = true))

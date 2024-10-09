@@ -60,22 +60,13 @@ public class GemCuttingTable extends VirtualizedRegistry<IGCTRecipe> {
                     .map(Ingredient::getMatchingStacks)
                     .flatMap(Arrays::stream)
                     .anyMatch(input);
-            if (found) {
-                addBackup(recipe);
-            }
-            return found;
+            return found && doAddBackup(recipe);
         });
     }
 
     @MethodDescription(example = @Example("item('arcanearchives:shaped_quartz')"))
     public boolean removeByOutput(IIngredient output) {
-        return GCTRecipeList.instance.getRecipes().values().removeIf(recipe -> {
-            boolean matches = output.test(recipe.getRecipeOutput());
-            if (matches) {
-                addBackup(recipe);
-            }
-            return matches;
-        });
+        return GCTRecipeList.instance.getRecipes().values().removeIf(recipe -> output.test(recipe.getRecipeOutput()) && doAddBackup(recipe));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

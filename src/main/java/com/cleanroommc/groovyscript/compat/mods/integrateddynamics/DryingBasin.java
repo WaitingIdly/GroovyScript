@@ -41,24 +41,12 @@ public class DryingBasin extends StandardListRegistry<IRecipe<IngredientAndFluid
 
     @MethodDescription
     public boolean removeByInput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().getIngredient().test(input) && doAddBackup(r));
     }
 
     @MethodDescription
     public boolean removeByOutput(ItemStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getOutput().getIngredient().test(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getOutput().getIngredient().test(input) && doAddBackup(r));
     }
 
     public static class RecipeBuilder extends AbstractRecipeBuilder<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> {

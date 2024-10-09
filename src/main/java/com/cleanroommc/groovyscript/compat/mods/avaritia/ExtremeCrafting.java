@@ -61,13 +61,7 @@ public class ExtremeCrafting extends VirtualizedRegistry<IExtremeRecipe> {
 
     @MethodDescription(example = @Example("item('avaritia:resource', 6)"))
     public boolean removeByOutput(ItemStack stack) {
-        return AvaritiaRecipeManager.EXTREME_RECIPES.values().removeIf(recipe -> {
-            if (recipe != null && recipe.getRecipeOutput().isItemEqual(stack)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return AvaritiaRecipeManager.EXTREME_RECIPES.values().removeIf(recipe -> recipe != null && recipe.getRecipeOutput().isItemEqual(stack) && doAddBackup(recipe));
     }
 
     public boolean remove(IExtremeRecipe recipe) {

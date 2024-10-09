@@ -125,37 +125,19 @@ public class Refinery extends VirtualizedRegistry<RefineryRecipe> {
     }
 
     public boolean remove(RefineryRecipe recipe) {
-        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("fluid('resin')"))
     public boolean removeByInput(IIngredient input) {
-        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {
             @Example(value = "item('thermalfoundation:material:771')", commented = true), @Example("fluid('refined_biofuel')")
     })
     public boolean removeByOutput(IIngredient output) {
-        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutputFluid()) || output.test(r.getOutputItem())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return RefineryManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutputFluid()) || output.test(r.getOutputItem()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

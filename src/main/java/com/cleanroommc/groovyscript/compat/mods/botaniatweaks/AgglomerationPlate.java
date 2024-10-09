@@ -10,7 +10,6 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import quaternary.botaniatweaks.modules.botania.recipe.AgglomerationRecipe;
 import quaternary.botaniatweaks.modules.botania.recipe.AgglomerationRecipes;
@@ -44,19 +43,7 @@ public class AgglomerationPlate extends StandardListRegistry<AgglomerationRecipe
 
     @MethodDescription(example = @Example(value = "item('botania:manaresource:2')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(r -> {
-            for (var stack : r.getRecipeStacks()) {
-                if (input.test(stack)) {
-                    return doAddBackup(r);
-                }
-            }
-            for (var string : r.getRecipeOreKeys()) {
-                if (input instanceof OreDictIngredient ore && ore.getOreDict().equals(string)) {
-                    return doAddBackup(r);
-                }
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> (r.getRecipeStacks().stream().anyMatch(input) || r.getRecipeOreKeys().stream().anyMatch(string -> input instanceof OreDictIngredient ore && ore.getOreDict().equals(string))) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example(value = "blockstate('botania:livingrock')", commented = true))

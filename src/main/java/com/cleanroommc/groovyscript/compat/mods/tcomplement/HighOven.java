@@ -51,11 +51,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
     }
 
     public boolean removeByOutput(FluidStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.output.isFluidEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.output.isFluidEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Complement High Oven override")
                 .add("could not find override with output {}", output)
@@ -110,11 +106,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByOutput(FluidStack output) {
-            if (TCompRegistryAccessor.getMixRegistry().removeIf(recipe -> {
-                boolean found = recipe.getOutput().isFluidEqual(output);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (TCompRegistryAccessor.getMixRegistry().removeIf(recipe -> recipe.getOutput().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Mixing recipe")
                     .add("could not find recipe with output {}", output)
@@ -124,12 +116,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByInput(FluidStack input) {
-            if (getRecipes().removeIf(recipe -> {
-                HighOvenFilter recipe1 = (recipe instanceof HighOvenFilter) ? (HighOvenFilter) recipe : null;
-                boolean found = recipe1 != null && recipe1.getInput().isFluidEqual(input);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> recipe instanceof HighOvenFilter highOvenFilter && highOvenFilter.getInput().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Mixing recipe")
                     .add("could not find recipe with input {}", input)
@@ -139,12 +126,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByInputAndOutput(FluidStack input, FluidStack output) {
-            if (getRecipes().removeIf(recipe -> {
-                HighOvenFilter recipe1 = (recipe instanceof HighOvenFilter) ? (HighOvenFilter) recipe : null;
-                boolean found = recipe1 != null && recipe1.getInput().isFluidEqual(input) && recipe1.getOutput().isFluidEqual(output);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> (recipe instanceof HighOvenFilter highOvenFilter && highOvenFilter.getOutput().isFluidEqual(output)) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Mixing recipe")
                     .add("could not find recipe with input {} and output {}", input, output)
@@ -266,11 +248,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByInput(FluidStack input) {
-            if (getRecipes().removeIf(recipe -> {
-                boolean found = recipe.getInput().isFluidEqual(input);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> recipe.getInput().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Heating recipe")
                     .add("could not find recipe with input {}", input)
@@ -280,11 +258,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByOutput(FluidStack output) {
-            if (getRecipes().removeIf(recipe -> {
-                boolean found = recipe.getOutput().isFluidEqual(output);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> recipe.getOutput().isFluidEqual(output) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Heating recipe")
                     .add("could not find recipe with output {}", output)
@@ -294,11 +268,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByInputAndOutput(FluidStack input, FluidStack output) {
-            if (getRecipes().removeIf(recipe -> {
-                boolean found = recipe.getInput().isFluidEqual(input) && recipe.getOutput().isFluidEqual(output);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> (recipe.getInput().isFluidEqual(input) && recipe.getOutput().isFluidEqual(output)) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven Heating recipe")
                     .add("could not find recipe with input {} and output {}", input, output)
@@ -360,11 +330,7 @@ public class HighOven extends StandardListRegistry<MeltingRecipe> {
         }
 
         public boolean removeByItem(IIngredient item) {
-            if (getRecipes().removeIf(recipe -> {
-                boolean found = recipe.matches(item.getMatchingStacks()[0]);
-                if (found) addBackup(recipe);
-                return found;
-            })) return true;
+            if (getRecipes().removeIf(recipe -> recipe.matches(item.getMatchingStacks()[0]) && doAddBackup(recipe))) return true;
 
             GroovyLog.msg("Error removing Tinkers Complement High Oven fuel")
                     .add("could not find override with item {}", item)

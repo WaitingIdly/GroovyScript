@@ -53,37 +53,19 @@ public class Sawmill extends VirtualizedRegistry<SawmillRecipe> {
     }
 
     public boolean remove(SawmillRecipe recipe) {
-        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:pumpkin')"))
     public boolean removeByInput(IIngredient input) {
-        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = {
             @Example("item('thermalfoundation:material:800')"), @Example("item('minecraft:leather')")
     })
     public boolean removeByOutput(IIngredient output) {
-        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SawmillManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

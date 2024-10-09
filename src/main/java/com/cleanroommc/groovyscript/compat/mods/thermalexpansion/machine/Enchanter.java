@@ -93,13 +93,7 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
     }
 
     public boolean remove(EnchanterRecipe recipe) {
-        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {
@@ -107,24 +101,12 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
             @Example(value = "item('minecraft:book')", commented = true)
     })
     public boolean removeByInput(IIngredient input) {
-        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('minecraft:enchanted_book').withNbt(['StoredEnchantments': [['lvl': 1, 'id': 34]]])"))
     public boolean removeByOutput(IIngredient output) {
-        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return EnchanterManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

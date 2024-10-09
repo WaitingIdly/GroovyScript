@@ -78,37 +78,19 @@ public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
     }
 
     public boolean remove(SmelterRecipe recipe) {
-        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> r == recipe && doAddBackup(recipe));
     }
 
     @MethodDescription(example = {
             @Example("ore('sand')"), @Example("item('minecraft:iron_ingot')")
     })
     public boolean removeByInput(IIngredient input) {
-        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> input.test(r.getPrimaryInput()) || input.test(r.getSecondaryInput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("item('thermalfoundation:material:166')"))
     public boolean removeByOutput(IIngredient output) {
-        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> {
-            if (output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return SmelterManagerAccessor.getRecipeMap().values().removeIf(r -> output.test(r.getPrimaryOutput()) || output.test(r.getSecondaryOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

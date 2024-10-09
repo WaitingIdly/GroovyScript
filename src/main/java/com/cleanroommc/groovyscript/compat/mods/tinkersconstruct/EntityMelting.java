@@ -59,11 +59,7 @@ public class EntityMelting extends VirtualizedRegistry<EntityMeltingRecipe> {
     @MethodDescription
     public boolean removeByInput(EntityEntry entity) {
         ResourceLocation name = entity.getRegistryName();
-        if (TinkerRegistryAccessor.getEntityMeltingRegistry().entrySet().removeIf(entry -> {
-            boolean found = entry.getKey().equals(name);
-            if (found) addBackup(new EntityMeltingRecipe(entry.getKey(), entry.getValue()));
-            return found;
-        })) return true;
+        if (TinkerRegistryAccessor.getEntityMeltingRegistry().entrySet().removeIf(entry -> entry.getKey().equals(name) && doAddBackup(new EntityMeltingRecipe(entry.getKey(), entry.getValue())))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Entity Melting recipe")
                 .add("could not find recipe with input {}", name)
@@ -74,11 +70,7 @@ public class EntityMelting extends VirtualizedRegistry<EntityMeltingRecipe> {
 
     @MethodDescription
     public boolean removeByOutput(FluidStack output) {
-        if (TinkerRegistryAccessor.getEntityMeltingRegistry().entrySet().removeIf(entry -> {
-            boolean found = entry.getValue().isFluidEqual(output);
-            if (found) addBackup(new EntityMeltingRecipe(entry.getKey(), entry.getValue()));
-            return found;
-        })) return true;
+        if (TinkerRegistryAccessor.getEntityMeltingRegistry().entrySet().removeIf(entry -> entry.getValue().isFluidEqual(output) && doAddBackup(new EntityMeltingRecipe(entry.getKey(), entry.getValue())))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Entity Melting recipe")
                 .add("could not find recipe with output {}", output)

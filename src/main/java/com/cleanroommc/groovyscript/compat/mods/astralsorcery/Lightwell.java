@@ -82,13 +82,7 @@ public class Lightwell extends VirtualizedRegistry<WellLiquefaction.Liquefaction
 
     @MethodDescription(example = @Example("fluid('lava')"))
     public void removeByOutput(FluidStack fluid) {
-        getRegistry().entrySet().removeIf(entry -> {
-            if (entry.getValue().producing.equals(fluid.getFluid())) {
-                addBackup(entry.getValue());
-                return true;
-            }
-            return false;
-        });
+        getRegistry().entrySet().removeIf(entry -> entry.getValue().producing.equals(fluid.getFluid()) && doAddBackup(entry.getValue()));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

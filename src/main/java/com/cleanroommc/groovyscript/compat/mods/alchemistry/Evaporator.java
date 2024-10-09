@@ -37,24 +37,12 @@ public class Evaporator extends StandardListRegistry<EvaporatorRecipe> {
 
     @MethodDescription(example = @Example("item('alchemistry:mineral_salt')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> output.test(r.getOutput()) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example("fluid('lava')"))
     public boolean removeByInput(FluidStack input) {
-        return getRecipes().removeIf(r -> {
-            if (r.getInput().isFluidEqual(input)) {
-                addBackup(r);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(r -> r.getInput().isFluidEqual(input) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

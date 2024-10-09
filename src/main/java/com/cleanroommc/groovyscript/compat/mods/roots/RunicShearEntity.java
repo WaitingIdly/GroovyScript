@@ -65,13 +65,7 @@ public class RunicShearEntity extends VirtualizedRegistry<RunicShearEntityRecipe
 
     @MethodDescription(example = @Example("item('roots:fey_leather')"))
     public boolean removeByOutput(ItemStack output) {
-        return ModRecipes.getRunicShearEntityRecipes().entrySet().removeIf(x -> {
-            if (ItemStack.areItemsEqual(x.getValue().getDrop(), output)) {
-                addBackup(x.getValue());
-                return true;
-            }
-            return false;
-        });
+        return ModRecipes.getRunicShearEntityRecipes().entrySet().removeIf(x -> ItemStack.areItemsEqual(x.getValue().getDrop(), output) && doAddBackup(x.getValue()));
     }
 
     @MethodDescription(example = @Example("entity('minecraft:chicken')"))

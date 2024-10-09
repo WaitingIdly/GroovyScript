@@ -79,13 +79,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
     }
 
     public boolean remove(boolean isSedimentary, ExtruderRecipe recipe) {
-        return map(isSedimentary).values().removeIf(r -> {
-            if (r == recipe) {
-                addBackup(Pair.of(isSedimentary, recipe));
-                return true;
-            }
-            return false;
-        });
+        return map(isSedimentary).values().removeIf(r -> r == recipe && doAddBackup(Pair.of(isSedimentary, r)));
     }
 
     public boolean remove(ExtruderRecipe recipe) {
@@ -97,13 +91,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
 
     @MethodDescription(example = @Example(value = "false, fluid('lava')", commented = true))
     public boolean removeByInput(boolean isSedimentary, IIngredient input) {
-        return map(isSedimentary).values().removeIf(r -> {
-            if (input.test(r.getInputHot()) || input.test(r.getInputCold())) {
-                addBackup(Pair.of(isSedimentary, r));
-                return true;
-            }
-            return false;
-        });
+        return map(isSedimentary).values().removeIf(r -> (input.test(r.getInputHot()) || input.test(r.getInputCold())) && doAddBackup(Pair.of(isSedimentary, r)));
     }
 
     @MethodDescription(example = @Example(value = "fluid('water')", commented = true))
@@ -116,13 +104,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
 
     @MethodDescription(example = @Example("true, item('minecraft:gravel')"))
     public boolean removeByOutput(boolean isSedimentary, IIngredient output) {
-        return map(isSedimentary).values().removeIf(r -> {
-            if (output.test(r.getOutput())) {
-                addBackup(Pair.of(isSedimentary, r));
-                return true;
-            }
-            return false;
-        });
+        return map(isSedimentary).values().removeIf(r -> output.test(r.getOutput()) && doAddBackup(Pair.of(isSedimentary, r)));
     }
 
     @MethodDescription(example = @Example("item('minecraft:obsidian')"))

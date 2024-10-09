@@ -49,13 +49,7 @@ public class OreRaw extends StandardListRegistry<OreFluidEntryRaw> {
 
     @MethodDescription(example = @Example(value = "'oreRedstone'", commented = true))
     public boolean removeByOre(String ore) {
-        return getRecipes().removeIf(recipe -> {
-            if (ore.equals(recipe.getOre())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> ore.equals(recipe.getOre()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("ore('oreRedstone')"))
@@ -65,24 +59,12 @@ public class OreRaw extends StandardListRegistry<OreFluidEntryRaw> {
 
     @MethodDescription(example = @Example(value = "fluid('meat')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getInput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getInput()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example(value = "fluid('if.ore_fluid_raw').withNbt(['Ore': 'oreRedstone']),", commented = true))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getOutput()) && doAddBackup(recipe));
     }
 
 }

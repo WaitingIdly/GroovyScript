@@ -31,24 +31,12 @@ public class Centrifuge extends StandardListRegistry<PurifyRecipe> {
 
     @MethodDescription(example = @Example("item('appliedenergistics2:material')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(recipe -> {
-            if (Arrays.stream(input.getMatchingStacks()).anyMatch(recipe.input().getMatcher())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> Arrays.stream(input.getMatchingStacks()).anyMatch(recipe.input().getMatcher()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('appliedenergistics2:material:4')"))
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutput().getOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(recipe -> output.test(recipe.getOutput().getOutput()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

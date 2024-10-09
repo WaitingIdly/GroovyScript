@@ -37,11 +37,7 @@ public class Drying extends StandardListRegistry<DryingRecipe> {
     @MethodDescription
     public boolean removeByInput(IIngredient input) {
         NonNullList<ItemStack> matching = NonNullList.from(ItemStack.EMPTY, input.getMatchingStacks());
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.input.matches(matching).isPresent();
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.input.matches(matching).isPresent() && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Drying recipe")
                 .add("could not find recipe with input {}", input)
@@ -52,11 +48,7 @@ public class Drying extends StandardListRegistry<DryingRecipe> {
 
     @MethodDescription
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = ItemStack.areItemStacksEqual(recipe.output, output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> ItemStack.areItemStacksEqual(recipe.output, output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Drying recipe")
                 .add("could not find recipe with output {}", output)
@@ -68,11 +60,7 @@ public class Drying extends StandardListRegistry<DryingRecipe> {
     @MethodDescription
     public boolean removeByInputAndOutput(IIngredient input, ItemStack output) {
         NonNullList<ItemStack> matching = NonNullList.from(ItemStack.EMPTY, input.getMatchingStacks());
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.input.matches(matching).isPresent() && ItemStack.areItemStacksEqual(recipe.output, output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.input.matches(matching).isPresent() && ItemStack.areItemStacksEqual(recipe.output, output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Drying recipe")
                 .add("could not find recipe with input {} and output {}", input, output)

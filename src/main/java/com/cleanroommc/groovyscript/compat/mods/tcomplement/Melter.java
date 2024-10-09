@@ -65,11 +65,7 @@ public class Melter extends StandardListRegistry<MeltingRecipe> {
     }
 
     public boolean removeFromBlacklist(ItemStack item) {
-        if (TCompRegistryAccessor.getMeltingBlacklist().removeIf(b -> {
-            boolean found = b.matches(item);
-            if (found) backupStorage.addBackup(b);
-            return found;
-        })) return true;
+        if (TCompRegistryAccessor.getMeltingBlacklist().removeIf(b -> b.matches(item) && backupStorage.addBackup(b))) return true;
 
         GroovyLog.msg("Error removing Tinkers Complement Melter blacklist")
                 .add("could not find a blacklist for item {}", item)
@@ -83,8 +79,7 @@ public class Melter extends StandardListRegistry<MeltingRecipe> {
         if (getRecipes().removeIf(recipe -> {
             boolean found = recipe.input.matches(list).isPresent();
             list.clear();
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         list.clear();
@@ -96,11 +91,7 @@ public class Melter extends StandardListRegistry<MeltingRecipe> {
     }
 
     public boolean removeByOutput(FluidStack stack) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.output.isFluidEqual(stack);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.output.isFluidEqual(stack) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Complement Melter override")
                 .add("could not find a override for output {}", stack)
@@ -114,8 +105,7 @@ public class Melter extends StandardListRegistry<MeltingRecipe> {
         if (getRecipes().removeIf(recipe -> {
             boolean found = recipe.output.isFluidEqual(output) && recipe.input.matches(list).isPresent();
             list.clear();
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         list.clear();

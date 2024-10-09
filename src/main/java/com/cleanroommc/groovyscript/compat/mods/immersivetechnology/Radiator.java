@@ -8,7 +8,6 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.RadiatorRecipe;
 import mctmods.immersivetechnology.common.Config;
-import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
@@ -36,28 +35,12 @@ public class Radiator extends StandardListRegistry<RadiatorRecipe> {
 
     @MethodDescription(example = @Example("fluid('exhauststeam')"))
     public void removeByInput(IIngredient input) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidInputs()) {
-                if (input.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidInputs().stream().anyMatch(input::test) && doAddBackup(r));
     }
 
     @MethodDescription(example = @Example(value = "fluid('distwater')",commented = true))
     public void removeByOutput(IIngredient output) {
-        getRecipes().removeIf(r -> {
-            for (FluidStack fluidStack : r.getFluidOutputs()) {
-                if (output.test(fluidStack)) {
-                    addBackup(r);
-                    return true;
-                }
-            }
-            return false;
-        });
+        getRecipes().removeIf(r -> r.getFluidOutputs().stream().anyMatch(output::test) && doAddBackup(r));
     }
 
     @Property(property = "fluidInput", comp = @Comp(eq = 1))

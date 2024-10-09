@@ -48,11 +48,7 @@ public class Fermenter extends ForestryRegistry<IFermenterRecipe> {
     }
 
     public boolean removeByInput(FluidStack input) {
-        if (FermenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getFluidResource().isFluidEqual(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (FermenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> recipe.getFluidResource().isFluidEqual(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Fermenter recipe")
                 .add("could not find recipe with input {}", input)
@@ -65,8 +61,7 @@ public class Fermenter extends ForestryRegistry<IFermenterRecipe> {
         if (FermenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
             boolean found = input instanceof OreDictIngredient ? recipe.getResourceOreName().equals(((OreDictIngredient) input).getOreDict())
                                                                : recipe.getResource().isItemEqual(input.getMatchingStacks()[0]);
-            if (found) addBackup(recipe);
-            return found;
+            return found && doAddBackup(recipe);
         })) return true;
 
         GroovyLog.msg("Error removing Forestry Fermenter recipe")
@@ -77,11 +72,7 @@ public class Fermenter extends ForestryRegistry<IFermenterRecipe> {
     }
 
     public boolean removeByOutput(FluidStack output) {
-        if (FermenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> {
-            boolean found = output.getFluid().getUnlocalizedName().equals(recipe.getOutput().getUnlocalizedName());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (FermenterRecipeManagerAccessor.getRecipes().removeIf(recipe -> output.getFluid().getUnlocalizedName().equals(recipe.getOutput().getUnlocalizedName()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Forestry Fermenter recipe")
                 .add("could not find recipe with output {}", output)

@@ -36,34 +36,16 @@ public class Lapidary extends VirtualizedRegistry<Lapidary.LapidaryRecipe> {
     }
 
     public boolean remove(ComparableItemStack recipe) {
-        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe)) {
-                addBackup(new LapidaryRecipe(r, NumismaticManagerAccessor.getGemFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> r.equals(recipe) && doAddBackup(new LapidaryRecipe(r, NumismaticManagerAccessor.getGemFuelMap().get(r))));
     }
 
     public boolean remove(LapidaryRecipe recipe) {
-        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> {
-            if (r.equals(recipe.comparableItemStack())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> r.equals(recipe.comparableItemStack()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:diamond')"))
     public boolean removeByInput(IIngredient input) {
-        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> {
-            if (input.test(r.toItemStack())) {
-                addBackup(new LapidaryRecipe(r, NumismaticManagerAccessor.getGemFuelMap().get(r)));
-                return true;
-            }
-            return false;
-        });
+        return NumismaticManagerAccessor.getGemFuelMap().keySet().removeIf(r -> input.test(r.toItemStack()) && doAddBackup(new LapidaryRecipe(r, NumismaticManagerAccessor.getGemFuelMap().get(r))));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

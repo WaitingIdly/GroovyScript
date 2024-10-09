@@ -39,24 +39,12 @@ public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
 
     @MethodDescription(example = @Example(value = "item('primal_tech:flint_block')", commented = true))
     public boolean removeByInput(IIngredient input) {
-        return getRecipes().removeIf(recipe -> {
-            if (input.test(recipe.getInput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> input.test(recipe.getInput()) && doAddBackup(recipe));
     }
 
     @MethodDescription(example = @Example("item('minecraft:flint')"))
     public boolean removeByOutput(IIngredient output) {
-        return getRecipes().removeIf(recipe -> {
-            if (output.test(recipe.getOutput())) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return getRecipes().removeIf(recipe -> output.test(recipe.getOutput()) && doAddBackup(recipe));
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))

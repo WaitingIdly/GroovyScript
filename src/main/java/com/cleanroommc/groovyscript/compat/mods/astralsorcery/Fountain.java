@@ -55,13 +55,7 @@ public class Fountain extends StandardListRegistry<FluidRarityRegistry.FluidRari
 
     @MethodDescription(description = "groovyscript.wiki.astralsorcery.fountain.remove1")
     public void remove(Fluid entry) {
-        getRecipes().removeIf(fluidRarityEntry -> {
-            if (fluidRarityEntry.fluid != null && fluidRarityEntry.fluid.equals(entry)) {
-                addBackup(fluidRarityEntry);
-                return true;
-            }
-            return false;
-        });
+        getRecipes().removeIf(fluidRarityEntry -> fluidRarityEntry.fluid != null && fluidRarityEntry.fluid.equals(entry) && doAddBackup(fluidRarityEntry));
     }
 
     public static class FountainChanceHelper implements IRecipeBuilder<FluidRarityRegistry.FluidRarityEntry> {

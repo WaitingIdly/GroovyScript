@@ -48,11 +48,7 @@ public class CharcoalPile extends ForestryRegistry<ICharcoalPileWall> {
 
     public boolean removeWall(IBlockState state) {
         if (!isEnabled()) return false;
-        if (((CharcoalManagerAccessor) TreeManager.charcoalManager).getWalls().removeIf(wall -> {
-            boolean found = wall.matches(state);
-            if (found) addBackup(wall);
-            return found;
-        })) return true;
+        if (((CharcoalManagerAccessor) TreeManager.charcoalManager).getWalls().removeIf(wall -> wall.matches(state) && doAddBackup(wall))) return true;
 
         GroovyLog.msg("Error removing Forestry Charcoal Pile wall")
                 .add("could not find wall for block {}", state)

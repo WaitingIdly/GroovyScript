@@ -93,13 +93,7 @@ public class BlueprintCrafting extends VirtualizedRegistry<BlueprintCraftingReci
                 .postIfNotEmpty()) {
             return;
         }
-        if (!BlueprintCraftingRecipe.recipeList.get(blueprintCategory).removeIf(recipe -> {
-            if (ApiUtils.stackMatchesObject(output, recipe.output)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        })) {
+        if (!BlueprintCraftingRecipe.recipeList.get(blueprintCategory).removeIf(recipe -> ApiUtils.stackMatchesObject(output, recipe.output) && doAddBackup(recipe))) {
             GroovyLog.msg("Error removing Immersive Engineering Blueprint Crafting recipe")
                     .add("no recipes found for {}", output)
                     .error()
@@ -143,13 +137,7 @@ public class BlueprintCrafting extends VirtualizedRegistry<BlueprintCraftingReci
     @MethodDescription(type = MethodDescription.Type.QUERY, example = @Example("'molds'"))
     public SimpleObjectStream<BlueprintCraftingRecipe> streamRecipesByCategory(String blueprintCategory) {
         Collection<BlueprintCraftingRecipe> recipes = BlueprintCraftingRecipe.recipeList.get(blueprintCategory);
-        return new SimpleObjectStream<>(recipes).setRemover(recipe -> {
-            if (recipes.removeIf(r -> r == recipe)) {
-                addBackup(recipe);
-                return true;
-            }
-            return false;
-        });
+        return new SimpleObjectStream<>(recipes).setRemover(recipe -> recipes.removeIf(r -> r == recipe) && doAddBackup(recipe));
     }
 
     @MethodDescription(type = MethodDescription.Type.QUERY)

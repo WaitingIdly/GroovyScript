@@ -36,11 +36,7 @@ public class CastingTable extends StandardListRegistry<ICastingRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:gold_ingot')"))
     public boolean removeByOutput(ItemStack output) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getResult(ItemStack.EMPTY, FluidRegistry.WATER).isItemEqual(output);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getResult(ItemStack.EMPTY, FluidRegistry.WATER).isItemEqual(output) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Casting Table recipe")
                 .add("could not find recipe with output {}", output)
@@ -51,11 +47,7 @@ public class CastingTable extends StandardListRegistry<ICastingRecipe> {
 
     @MethodDescription(example = @Example("fluid('iron')"))
     public boolean removeByInput(FluidStack input) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.getFluid(ItemStack.EMPTY, input.getFluid()).isFluidEqual(input);
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.getFluid(ItemStack.EMPTY, input.getFluid()).isFluidEqual(input) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Casting Table recipe")
                 .add("could not find recipe with input {}", input)
@@ -66,11 +58,7 @@ public class CastingTable extends StandardListRegistry<ICastingRecipe> {
 
     @MethodDescription(example = @Example("item('minecraft:bucket')"))
     public boolean removeByCast(IIngredient cast) {
-        if (getRecipes().removeIf(recipe -> {
-            boolean found = recipe.matches(cast.getMatchingStacks()[0], recipe.getFluid(cast.getMatchingStacks()[0], FluidRegistry.WATER).getFluid());
-            if (found) addBackup(recipe);
-            return found;
-        })) return true;
+        if (getRecipes().removeIf(recipe -> recipe.matches(cast.getMatchingStacks()[0], recipe.getFluid(cast.getMatchingStacks()[0], FluidRegistry.WATER).getFluid()) && doAddBackup(recipe))) return true;
 
         GroovyLog.msg("Error removing Tinkers Construct Casting Table recipe")
                 .add("could not find recipe with cast {}", cast)

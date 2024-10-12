@@ -111,6 +111,13 @@ final def mod_dependencies = [
         'woot-244049:2712670'                                 : [project.debug_woot],
 ]
 
+final def runtime_dependencies = [
+        'jei-bees-248370:2490058'             : [project.debug_forestry],
+        'just-enough-petroleum-291727:2549332': [project.debug_immersive_petroleum],
+        'thaumic_jei-285492:2705304'          : [project.debug_thaum],
+        'dropt-284973:3758733'                : [project.debug_pyrotech],
+]
+
 dependencies {
     embed "org.apache.groovy:groovy:${project.groovy_version}"
 
@@ -139,8 +146,11 @@ dependencies {
         }
     }
 
-    if (project.debug_thaum.toBoolean()) {
-        runtimeOnly 'curse.maven:thaumic_jei-285492:2705304'
+    runtime_dependencies.entrySet().forEach {
+        def mod = rfg.deobf('curse.maven:' + it.key)
+        if (it.value.any { it.toBoolean() }) {
+            runtimeOnly mod
+        }
     }
 
     compileOnly 'com.enderio:endercore:0.5.78'
@@ -148,18 +158,6 @@ dependencies {
     if (project.debug_enderio.toBoolean()) {
         runtimeOnly 'com.enderio:endercore:0.5.78'
         runtimeOnly 'crazypants:enderio:5.3.72'
-    }
-
-    if (project.debug_forestry.toBoolean()) {
-        runtimeOnly rfg.deobf('curse.maven:jei-bees-248370:2490058')
-    }
-
-    if (project.debug_immersive_petroleum.toBoolean()) {
-        runtimeOnly rfg.deobf('curse.maven:just-enough-petroleum-291727:2549332')
-    }
-
-    if (project.debug_pyrotech.toBoolean()) {
-        runtimeOnly rfg.deobf("curse.maven:dropt-284973:3758733")
     }
 
     // WARNING: experimental must be placed before classic, otherwise you will crash when debugging either. Check FluidGenerator compat to confirm

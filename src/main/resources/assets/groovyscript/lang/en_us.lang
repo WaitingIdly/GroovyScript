@@ -84,6 +84,7 @@ groovyscript.wiki.remove_from_list=Removes the given recipe from the recipe list
 groovyscript.wiki.requires=Requires %s.
 groovyscript.wiki.default=(Default `%s`).
 
+
 # General
 groovyscript.wiki.name.value=Sets the Resource Location of the recipe
 groovyscript.wiki.input.value=Sets the item inputs of the recipe
@@ -121,6 +122,7 @@ groovyscript.wiki.greater_than=greater than %s
 groovyscript.wiki.not=not %s
 groovyscript.wiki.unique=%s
 groovyscript.wiki.and=and
+
 
 # Actually Additions
 groovyscript.wiki.actuallyadditions.atomic_reconstructor.title=Atomic Reconstructor
@@ -174,6 +176,7 @@ groovyscript.wiki.actuallyadditions.treasure_chest.min.required=less than or equ
 groovyscript.wiki.actuallyadditions.treasure_chest.max.value=Sets the maximum stack size given when rolled
 groovyscript.wiki.actuallyadditions.treasure_chest.max.required=greater than or equal to the size of min
 
+
 # Advanced Mortars
 groovyscript.wiki.advancedmortars.mortar.title=Mortar
 groovyscript.wiki.advancedmortars.mortar.description=Uses any number of specific types of Mortars to convert multiple items into a single output with a possible chance output after a number of player interactions.
@@ -184,6 +187,7 @@ groovyscript.wiki.advancedmortars.mortar.types.required=a list of Strings that a
 groovyscript.wiki.advancedmortars.mortar.duration.value=Sets how many interactions are required to process the recipe
 groovyscript.wiki.advancedmortars.mortar.secondaryOutput.value=Sets the additional output itemstack
 groovyscript.wiki.advancedmortars.mortar.secondaryOutputChance.value=Sets the chance of the additional output itemstack being output
+
 
 # Advanced Rocketry
 groovyscript.wiki.advancedrocketry.admonition.weights=The 'chances' used with the recipe outputs are actually output weights. For example, setting 'chance' to 0.1 will set the output's chance to 1, unless other outputs add up to the weight of 0.9. The output chances will also not do anything unless 'outputSize' is set to a number greater than 0.
@@ -231,6 +235,7 @@ groovyscript.wiki.advancedrocketry.rolling_machine.description=Consumes up to 1 
 
 groovyscript.wiki.advancedrocketry.small_plate_presser.title=Small Plate Presser
 groovyscript.wiki.advancedrocketry.small_plate_presser.description=Converts a block right below it into output items when powered by redstone
+
 
 # Aether Legacy
 groovyscript.wiki.aether_legacy.accessory.title=Accessory
@@ -286,6 +291,7 @@ groovyscript.wiki.alchemistry.evaporator.description=Converts an input fluidstac
 groovyscript.wiki.alchemistry.liquifier.title=Liquifier
 groovyscript.wiki.alchemistry.liquifier.add=Adds recipes in the format `input`, `output`
 groovyscript.wiki.alchemistry.liquifier.description=Converts an input itemstack into an output fluidstack, consuming a set amount of power.
+
 
 # Applied Energistics 2
 groovyscript.wiki.appliedenergistics2.attunement.title=P2P Attunement
@@ -464,17 +470,6 @@ groovyscript.wiki.astralsorcery.treasure_shrine_registry.description=When the bl
 groovyscript.wiki.astralsorcery.treasure_shrine_registry.add=Adds entries in the format `ore`, `weight`
 groovyscript.wiki.astralsorcery.treasure_shrine_registry.remove=Removes entries of the given ore
 
-# Avaritia
-groovyscript.wiki.avaritia.compressor.title=Compressor
-groovyscript.wiki.avaritia.compressor.description=Converts any number of a single item into an output itemstack.
-groovyscript.wiki.avaritia.compressor.add=Adds recipes in the format `output`, `input`, `cost`
-groovyscript.wiki.avaritia.compressor.inputCount.value=Sets the amount of items required to convert
-
-groovyscript.wiki.avaritia.extreme_crafting.title=Extreme Crafting
-groovyscript.wiki.avaritia.extreme_crafting.description=A normal crafting table, by 9x9 instead.
-groovyscript.wiki.avaritia.extreme_crafting.addShaped=Adds a shaped crafting recipe in the format `output`, `input`
-groovyscript.wiki.avaritia.extreme_crafting.addShapeless=Adds a shapeless crafting recipe in the format `output`, `input`
-
 
 # Atum 2
 groovyscript.wiki.atum.kiln.title=Kiln
@@ -488,6 +483,27 @@ groovyscript.wiki.atum.quern.rotations.value=Sets the amount of rotation require
 groovyscript.wiki.atum.spinning_wheel.title=Spinning Wheel
 groovyscript.wiki.atum.spinning_wheel.description=Converts three input items into an output itemstack after a given number of rotations for each input item, items are inserted by interacting with the top, rotations are increased by interacting with the top, and output items are extracted by interacting with the spool side.
 groovyscript.wiki.atum.spinning_wheel.rotations.value=Sets the amount of rotation required to convert the input into the output
+
+
+# The Aurorian
+groovyscript.wiki.theaurorian.moonlight_forge.title=Moonlight Forge
+groovyscript.wiki.theaurorian.moonlight_forge.description=Combines two items to get a third item. Only works at night, and works faster the higher it is placed in the world.
+groovyscript.wiki.theaurorian.moonlight_forge.removeByInput=Removes a recipe by the input item and the catalyst item
+
+groovyscript.wiki.theaurorian.scrapper.title=Scrapper
+groovyscript.wiki.theaurorian.scrapper.description=Turns an input item into an output item. Can be sped up by placing a Crystal on top of it. The crystal has a chance to break every time a recipe is executed.
+
+
+# Avaritia
+groovyscript.wiki.avaritia.compressor.title=Compressor
+groovyscript.wiki.avaritia.compressor.description=Converts any number of a single item into an output itemstack.
+groovyscript.wiki.avaritia.compressor.add=Adds recipes in the format `output`, `input`, `cost`
+groovyscript.wiki.avaritia.compressor.inputCount.value=Sets the amount of items required to convert
+
+groovyscript.wiki.avaritia.extreme_crafting.title=Extreme Crafting
+groovyscript.wiki.avaritia.extreme_crafting.description=A normal crafting table, by 9x9 instead.
+groovyscript.wiki.avaritia.extreme_crafting.addShaped=Adds a shaped crafting recipe in the format `output`, `input`
+groovyscript.wiki.avaritia.extreme_crafting.addShapeless=Adds a shapeless crafting recipe in the format `output`, `input`
 
 
 # Better With Mods
@@ -618,6 +634,7 @@ groovyscript.wiki.bloodmagic.tranquility.tranquility.value=Sets the type of Tran
 groovyscript.wiki.bloodmagic.tranquility.value.value=Sets the amount of Tranquility provided
 groovyscript.wiki.bloodmagic.tranquility.block.required=either block or blockstate must be defined
 groovyscript.wiki.bloodmagic.tranquility.blockstate.required=either block or blockstate must be defined
+
 
 # Botania
 groovyscript.wiki.botania.apothecary.title=Petal Apothecary
@@ -824,6 +841,7 @@ groovyscript.wiki.chisel.carving.removeAll=Removes all Chisel Groups and Variati
 groovyscript.wiki.chisel.carving.removeGroup=Removes a Chisel Group and all Item Variations with that Chisel Group
 groovyscript.wiki.chisel.carving.removeVariation=Removes an Item Variation from the given Chisel Group
 
+
 # Compact Machines 3
 groovyscript.wiki.compactmachines3.miniaturization.title=Miniaturization
 groovyscript.wiki.compactmachines3.miniaturization.description=Consumes a 3d structure in-world based on keys when an item is thrown into the field.
@@ -863,6 +881,7 @@ groovyscript.wiki.draconicevolution.fusion.description=Consumes items and power 
 groovyscript.wiki.draconicevolution.fusion.catalyst.value=Sets the item used in the center Fusion Crafting Controller block
 groovyscript.wiki.draconicevolution.fusion.energy.value=Sets the power required per item input
 groovyscript.wiki.draconicevolution.fusion.tier.value=Sets the minimum tier of Fusion Crafting Injector
+
 
 # EnderIO
 groovyscript.wiki.enderio.level.value=Sets the minimum required machine tier of the recipe
@@ -943,6 +962,7 @@ groovyscript.wiki.enderio.vat.multipliers2.value=Sets the multiplier applied to 
 groovyscript.wiki.enderio.vat.baseMultiplier.value=Sets the base amount of fluid output
 groovyscript.wiki.enderio.vat.energy.value=Sets the energy cost of the recipe
 
+
 # EssentialCraft
 groovyscript.wiki.essentialcraft.demon_trade.title=Demon Trade
 groovyscript.wiki.essentialcraft.demon_trade.description=Adds an item that can be sold to Demons to obtain Ackronite. Note that each demon that spawns has a random item that it can accept, and will not accept any other item.
@@ -980,6 +1000,7 @@ groovyscript.wiki.essentialcraft.wind_rune.title=Wind Rune
 groovyscript.wiki.essentialcraft.wind_rune.description=Transforms various items using ESPE.
 groovyscript.wiki.essentialcraft.wind_rune.espe.value=Sets the ESPE cost for this recipe
 
+
 # EvilCraft
 groovyscript.wiki.evilcraft.blood_infuser.title=Blood Infuser
 groovyscript.wiki.evilcraft.blood_infuser.description=Consumes an item, some fluid, and requires a given tier of Promise of Tenacity to produce the output and some experience after a duration.
@@ -994,6 +1015,7 @@ groovyscript.wiki.evilcraft.environmental_accumulator.cooldowntime.value=Sets th
 groovyscript.wiki.evilcraft.environmental_accumulator.duration.value=Sets the base time in ticks the recipe takes to process
 groovyscript.wiki.evilcraft.environmental_accumulator.inputWeather.value=Sets the weather type required to start the recipe
 groovyscript.wiki.evilcraft.environmental_accumulator.outputWeather.value=Sets the weather type the world is changed to when the recipe is completed
+
 
 # Extended Crafting
 groovyscript.wiki.extendedcrafting.combination_crafting.title=Combination Crafting
@@ -1407,6 +1429,7 @@ groovyscript.wiki.inspirations.cauldron.removeByFluidOutput=Removes all recipes 
 groovyscript.wiki.inspirations.cauldron.removeByInput=Removes all recipes with the given item input
 groovyscript.wiki.inspirations.cauldron.removeByOutput=Removes all recipes with the given item output
 
+
 # Integrated Dynamics
 groovyscript.wiki.integrateddynamics.drying_basin.title=Drying Basin
 groovyscript.wiki.integrateddynamics.drying_basin.description=Takes either an item or fluid input and gives either an item or fluid output after a duration.
@@ -1426,6 +1449,7 @@ groovyscript.wiki.integrateddynamics.squeezer.basic.value=Sets if the recipe is 
 groovyscript.wiki.integrateddynamics.squeezer.output.value=Sets the possible item outputs and chance of those outputs being dropped
 groovyscript.wiki.integrateddynamics.squeezer.duration.value=Sets the time in ticks the recipe takes to process in the Mechanical Squeezer, has no effect on the Squeezer
 groovyscript.wiki.integrateddynamics.squeezer.mechanical.value=Sets if the recipe is added to the mechanical (Mechanical Squeezer) machine
+
 
 # Just Enough Items
 groovyscript.wiki.jei.catalyst.title=Category Catalysts
@@ -1526,7 +1550,6 @@ groovyscript.wiki.magneticraft.thermopile.description=The Thermopile generates e
 groovyscript.wiki.magneticraft.thermopile.state.value=Sets the IBlockState being used
 groovyscript.wiki.magneticraft.thermopile.temperature.value=Sets the temperature of the block
 groovyscript.wiki.magneticraft.thermopile.conductivity.value=Sets the thermal resistance of the block
-
 
 
 # Mekanism
@@ -1669,6 +1692,66 @@ groovyscript.wiki.naturesaura.spawning.removeByEntity=Removes all Altar of Birth
 groovyscript.wiki.naturesaura.spawning.removeByName=Removes the Altar of Birthing recipe with the given name
 
 
+# PneumaticCraft
+groovyscript.wiki.pneumaticcraft.amadron.title=Amadron
+groovyscript.wiki.pneumaticcraft.amadron.description=Uses an Amadron Tablet and linked inventories in world to trade via drones.
+groovyscript.wiki.pneumaticcraft.amadron.note0=Amadron recipes added or removed via GroovyScript will be saved to a config file in `config/pneumaticcraft/`, meaning changes made may persist unexpectedly through restarts.
+groovyscript.wiki.pneumaticcraft.amadron.periodic.value=Sets if the Amadron recipe is periodic
+groovyscript.wiki.pneumaticcraft.amadron.removeAllPeriodic=Removes all periodic recipes
+groovyscript.wiki.pneumaticcraft.amadron.removeAllStatic=Removes all static recipes
+
+groovyscript.wiki.pneumaticcraft.assembly_controller.title=Assembly Controller
+groovyscript.wiki.pneumaticcraft.assembly_controller.description=Uses a given Program to convert an input itemstack into an output itemstack. Drill recipes that output an itemstack used for the input itemstack of a Laser recipe can be chained via the Drill & Laser Program.
+groovyscript.wiki.pneumaticcraft.assembly_controller.programStack.value=Sets the program type used, between Drill and Laser
+groovyscript.wiki.pneumaticcraft.assembly_controller.removeAllDrill=Removes all Drill program recipes
+groovyscript.wiki.pneumaticcraft.assembly_controller.removeAllLaser=Removes all Laser program recipes
+
+groovyscript.wiki.pneumaticcraft.explosion.title=Explosion
+groovyscript.wiki.pneumaticcraft.explosion.description=Converts an input item into an output item, with a chance to fail and destroy the item.
+groovyscript.wiki.pneumaticcraft.explosion.note0=Consider using the inWorldCrafting Explosion compat instead!
+groovyscript.wiki.pneumaticcraft.explosion.lossRate.value=Sets the failure rate of the recipe, where the item is simply destroyed instead of being converted
+
+groovyscript.wiki.pneumaticcraft.heat_frame_cooling.title=Heat Frame Cooling
+groovyscript.wiki.pneumaticcraft.heat_frame_cooling.description=Converts an input itemstack into an output itemstack when inside an inventory placed within a Heat Frame which is cooled.
+
+groovyscript.wiki.pneumaticcraft.liquid_fuel.title=Liquid Fuel
+groovyscript.wiki.pneumaticcraft.liquid_fuel.description=Converts fluid into Pressure in a Liquid Compressor.
+groovyscript.wiki.pneumaticcraft.liquid_fuel.add=Adds entries in the format `fluid`, `pressure`
+groovyscript.wiki.pneumaticcraft.liquid_fuel.pressure.value=Sets the Pressure created by the fluid
+groovyscript.wiki.pneumaticcraft.liquid_fuel.remove=Removes entries with the given `fluid`
+
+groovyscript.wiki.pneumaticcraft.plastic_mixer.title=Plastic Mixer
+groovyscript.wiki.pneumaticcraft.plastic_mixer.description=Converts a fluidstack and an item with a variable damage value into each other, requiring temperature to operate the process, optionally consuming dye, and allowing either only melting or only solidifying.
+groovyscript.wiki.pneumaticcraft.plastic_mixer.note0=Items with metadata 15 will never consume dye, even if the option is enabled.
+groovyscript.wiki.pneumaticcraft.plastic_mixer.note1=Only one meta value can be used for a recipe per fluid, and the meta value will be applied to the item.
+groovyscript.wiki.pneumaticcraft.plastic_mixer.meta.value=Sets the meta value for selecting the recipe, only one meta value can be used for a fluid
+groovyscript.wiki.pneumaticcraft.plastic_mixer.useDye.value=Sets if the recipe consumes a random dye
+groovyscript.wiki.pneumaticcraft.plastic_mixer.allowMelting.value=Sets if the recipe allows melting the output item back into the input fluid
+groovyscript.wiki.pneumaticcraft.plastic_mixer.allowSolidifying.value=Sets if the recipe allows solidifying the input fluid into the output item
+groovyscript.wiki.pneumaticcraft.plastic_mixer.requiredTemperature.value=Sets the required temperature in Kelvin to melt or solidify the recipe
+groovyscript.wiki.pneumaticcraft.plastic_mixer.removeByFluid=Removes all recipes with the given fluid input
+groovyscript.wiki.pneumaticcraft.plastic_mixer.removeByItem=Removes all recipes with the given item output
+
+groovyscript.wiki.pneumaticcraft.pressure_chamber.title=Pressure Chamber
+groovyscript.wiki.pneumaticcraft.pressure_chamber.description=Converts any number of input itemstacks into any number of output itemstacks, either generating Pressure or consuming Pressure from the Pressure Chamber.
+groovyscript.wiki.pneumaticcraft.pressure_chamber.pressure.value=Sets the Pressure consumed to perform the craft, if negative will generate Pressure instead
+
+groovyscript.wiki.pneumaticcraft.refinery.title=Refinery
+groovyscript.wiki.pneumaticcraft.refinery.description=Converts an input fluidstack into between 2 and 4 fluidstacks, consuming Temperature, with the number of fluidstacks output depending on the recipe and the number of Refineries vertically stacked.
+groovyscript.wiki.pneumaticcraft.refinery.requiredTemperature.value=Sets the required temperate in Kelvin required to process the recipe
+
+groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.title=Thermopneumatic Processing Plant
+groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.description=Converts an input fluidstack into an output fluidstack, consuming Pressure and Temperature, with an optional itemstack being consumed.
+groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.pressure.value=Sets the Pressure consumed to perform the craft
+groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.requiredTemperature.value=Sets the required temperate in Kelvin required to process the recipe
+
+groovyscript.wiki.pneumaticcraft.xp_fluid.title=XP Fluid
+groovyscript.wiki.pneumaticcraft.xp_fluid.description=Controls what fluids are considered XP Fluids and how much experience they provide.
+groovyscript.wiki.pneumaticcraft.xp_fluid.add=Adds entries in the format `fluid`, `ratio`
+groovyscript.wiki.pneumaticcraft.xp_fluid.ratio.value=Sets the amount of experience provided by the fluid for the purpose of determining the ratio between xp fluids
+groovyscript.wiki.pneumaticcraft.xp_fluid.remove=Removes entries for the given `fluid`
+
+
 # Primal Tech
 groovyscript.wiki.primal_tech.clay_kiln.title=Clay Kiln
 groovyscript.wiki.primal_tech.clay_kiln.description=Converts an input item into an output itemstack after a given amount of time. Requires the block below to be Minecraft Fire or a Primal Tech Flame Grilled Wopper. Takes some time to heat up before beginning to smelt items.
@@ -1746,6 +1829,26 @@ groovyscript.wiki.prodigytech.zorra_altar.title=Zorra Altar
 groovyscript.wiki.prodigytech.zorra_altar.description=Allows over-enchanting Zorrasteel equipment.
 groovyscript.wiki.prodigytech.zorra_altar.addEnchantment=Adds an enchantment that can be applied in the Altar.
 groovyscript.wiki.prodigytech.zorra_altar.removeEnchantment=Removes an enchantment that can be applied in the Altar.
+
+
+# Project E
+groovyscript.wiki.projecte.entity_randomizer.title=Entity Randomizer
+groovyscript.wiki.projecte.entity_randomizer.description=Converts an entity on the list into a random other entity on the list when a projectile fired from the Philosopher's Stone hits it. There are two lists, one for 'mobs' and the other for 'peacefuls', but any entity can go on either list.
+groovyscript.wiki.projecte.entity_randomizer.addMob=Adds the given `entity` that extends `EntityLiving` to the mob list
+groovyscript.wiki.projecte.entity_randomizer.addPeaceful=Adds the given `entity` that extends `EntityLiving` to the peaceful list
+groovyscript.wiki.projecte.entity_randomizer.removeMob=Removes the given `entity` that extends `EntityLiving` from the mob list
+groovyscript.wiki.projecte.entity_randomizer.removePeaceful=Removes the given `entity` that extends `EntityLiving` from the peaceful list
+groovyscript.wiki.projecte.entity_randomizer.removeAllMobs=Removes all entries from the mob list
+groovyscript.wiki.projecte.entity_randomizer.removeAllPeacefuls=Removes all entries from the peacefuls list
+groovyscript.wiki.projecte.entity_randomizer.streamMobs=Iterates through every entry in the mob list
+groovyscript.wiki.projecte.entity_randomizer.streamPeacefuls=Iterates through every entry in the peacefuls list
+
+groovyscript.wiki.projecte.transmutation.title=World Transmutation
+groovyscript.wiki.projecte.transmutation.description=Converts an input blockstate into an output blockstate when right-clicked with by a Philosopher's Stone, with the ability to be converted into a different output blockstate when holding shift.
+groovyscript.wiki.projecte.transmutation.input.value=Sets the input blockstate
+groovyscript.wiki.projecte.transmutation.output.value=Sets the normal output blockstate
+groovyscript.wiki.projecte.transmutation.altOutput.value=Sets the shift output blockstate
+
 
 # Pyrotech
 groovyscript.wiki.pyrotech.anvil.title=Anvil
@@ -1834,85 +1937,6 @@ groovyscript.wiki.pyrotech.tanning_rack.description=Converts an item over time i
 groovyscript.wiki.pyrotech.tanning_rack.dryTime.value=Sets the time required for the recipe to complete
 groovyscript.wiki.pyrotech.tanning_rack.failureItem.value=Sets the output when the recipe failed
 groovyscript.wiki.pyrotech.tanning_rack.add=Adds recipes in the format `name`, `input`, `output`, `dryTime`, `failureItem`
-
-
-# PneumaticCraft
-groovyscript.wiki.pneumaticcraft.amadron.title=Amadron
-groovyscript.wiki.pneumaticcraft.amadron.description=Uses an Amadron Tablet and linked inventories in world to trade via drones.
-groovyscript.wiki.pneumaticcraft.amadron.note0=Amadron recipes added or removed via GroovyScript will be saved to a config file in `config/pneumaticcraft/`, meaning changes made may persist unexpectedly through restarts.
-groovyscript.wiki.pneumaticcraft.amadron.periodic.value=Sets if the Amadron recipe is periodic
-groovyscript.wiki.pneumaticcraft.amadron.removeAllPeriodic=Removes all periodic recipes
-groovyscript.wiki.pneumaticcraft.amadron.removeAllStatic=Removes all static recipes
-
-groovyscript.wiki.pneumaticcraft.assembly_controller.title=Assembly Controller
-groovyscript.wiki.pneumaticcraft.assembly_controller.description=Uses a given Program to convert an input itemstack into an output itemstack. Drill recipes that output an itemstack used for the input itemstack of a Laser recipe can be chained via the Drill & Laser Program.
-groovyscript.wiki.pneumaticcraft.assembly_controller.programStack.value=Sets the program type used, between Drill and Laser
-groovyscript.wiki.pneumaticcraft.assembly_controller.removeAllDrill=Removes all Drill program recipes
-groovyscript.wiki.pneumaticcraft.assembly_controller.removeAllLaser=Removes all Laser program recipes
-
-groovyscript.wiki.pneumaticcraft.explosion.title=Explosion
-groovyscript.wiki.pneumaticcraft.explosion.description=Converts an input item into an output item, with a chance to fail and destroy the item.
-groovyscript.wiki.pneumaticcraft.explosion.note0=Consider using the inWorldCrafting Explosion compat instead!
-groovyscript.wiki.pneumaticcraft.explosion.lossRate.value=Sets the failure rate of the recipe, where the item is simply destroyed instead of being converted
-
-groovyscript.wiki.pneumaticcraft.heat_frame_cooling.title=Heat Frame Cooling
-groovyscript.wiki.pneumaticcraft.heat_frame_cooling.description=Converts an input itemstack into an output itemstack when inside an inventory placed within a Heat Frame which is cooled.
-
-groovyscript.wiki.pneumaticcraft.liquid_fuel.title=Liquid Fuel
-groovyscript.wiki.pneumaticcraft.liquid_fuel.description=Converts fluid into Pressure in a Liquid Compressor.
-groovyscript.wiki.pneumaticcraft.liquid_fuel.add=Adds entries in the format `fluid`, `pressure`
-groovyscript.wiki.pneumaticcraft.liquid_fuel.pressure.value=Sets the Pressure created by the fluid
-groovyscript.wiki.pneumaticcraft.liquid_fuel.remove=Removes entries with the given `fluid`
-
-groovyscript.wiki.pneumaticcraft.plastic_mixer.title=Plastic Mixer
-groovyscript.wiki.pneumaticcraft.plastic_mixer.description=Converts a fluidstack and an item with a variable damage value into each other, requiring temperature to operate the process, optionally consuming dye, and allowing either only melting or only solidifying.
-groovyscript.wiki.pneumaticcraft.plastic_mixer.note0=Items with metadata 15 will never consume dye, even if the option is enabled.
-groovyscript.wiki.pneumaticcraft.plastic_mixer.note1=Only one meta value can be used for a recipe per fluid, and the meta value will be applied to the item.
-groovyscript.wiki.pneumaticcraft.plastic_mixer.meta.value=Sets the meta value for selecting the recipe, only one meta value can be used for a fluid
-groovyscript.wiki.pneumaticcraft.plastic_mixer.useDye.value=Sets if the recipe consumes a random dye
-groovyscript.wiki.pneumaticcraft.plastic_mixer.allowMelting.value=Sets if the recipe allows melting the output item back into the input fluid
-groovyscript.wiki.pneumaticcraft.plastic_mixer.allowSolidifying.value=Sets if the recipe allows solidifying the input fluid into the output item
-groovyscript.wiki.pneumaticcraft.plastic_mixer.requiredTemperature.value=Sets the required temperature in Kelvin to melt or solidify the recipe
-groovyscript.wiki.pneumaticcraft.plastic_mixer.removeByFluid=Removes all recipes with the given fluid input
-groovyscript.wiki.pneumaticcraft.plastic_mixer.removeByItem=Removes all recipes with the given item output
-
-groovyscript.wiki.pneumaticcraft.pressure_chamber.title=Pressure Chamber
-groovyscript.wiki.pneumaticcraft.pressure_chamber.description=Converts any number of input itemstacks into any number of output itemstacks, either generating Pressure or consuming Pressure from the Pressure Chamber.
-groovyscript.wiki.pneumaticcraft.pressure_chamber.pressure.value=Sets the Pressure consumed to perform the craft, if negative will generate Pressure instead
-
-groovyscript.wiki.pneumaticcraft.refinery.title=Refinery
-groovyscript.wiki.pneumaticcraft.refinery.description=Converts an input fluidstack into between 2 and 4 fluidstacks, consuming Temperature, with the number of fluidstacks output depending on the recipe and the number of Refineries vertically stacked.
-groovyscript.wiki.pneumaticcraft.refinery.requiredTemperature.value=Sets the required temperate in Kelvin required to process the recipe
-
-groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.title=Thermopneumatic Processing Plant
-groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.description=Converts an input fluidstack into an output fluidstack, consuming Pressure and Temperature, with an optional itemstack being consumed.
-groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.pressure.value=Sets the Pressure consumed to perform the craft
-groovyscript.wiki.pneumaticcraft.thermopneumatic_processing_plant.requiredTemperature.value=Sets the required temperate in Kelvin required to process the recipe
-
-groovyscript.wiki.pneumaticcraft.xp_fluid.title=XP Fluid
-groovyscript.wiki.pneumaticcraft.xp_fluid.description=Controls what fluids are considered XP Fluids and how much experience they provide.
-groovyscript.wiki.pneumaticcraft.xp_fluid.add=Adds entries in the format `fluid`, `ratio`
-groovyscript.wiki.pneumaticcraft.xp_fluid.ratio.value=Sets the amount of experience provided by the fluid for the purpose of determining the ratio between xp fluids
-groovyscript.wiki.pneumaticcraft.xp_fluid.remove=Removes entries for the given `fluid`
-
-
-# Project E
-groovyscript.wiki.projecte.entity_randomizer.title=Entity Randomizer
-groovyscript.wiki.projecte.entity_randomizer.description=Converts an entity on the list into a random other entity on the list when a projectile fired from the Philosopher's Stone hits it. There are two lists, one for 'mobs' and the other for 'peacefuls', but any entity can go on either list.
-groovyscript.wiki.projecte.entity_randomizer.addMob=Adds the given `entity` that extends `EntityLiving` to the mob list
-groovyscript.wiki.projecte.entity_randomizer.addPeaceful=Adds the given `entity` that extends `EntityLiving` to the peaceful list
-groovyscript.wiki.projecte.entity_randomizer.removeMob=Removes the given `entity` that extends `EntityLiving` from the mob list
-groovyscript.wiki.projecte.entity_randomizer.removePeaceful=Removes the given `entity` that extends `EntityLiving` from the peaceful list
-groovyscript.wiki.projecte.entity_randomizer.removeAllMobs=Removes all entries from the mob list
-groovyscript.wiki.projecte.entity_randomizer.removeAllPeacefuls=Removes all entries from the peacefuls list
-groovyscript.wiki.projecte.entity_randomizer.streamMobs=Iterates through every entry in the mob list
-groovyscript.wiki.projecte.entity_randomizer.streamPeacefuls=Iterates through every entry in the peacefuls list
-
-groovyscript.wiki.projecte.transmutation.title=World Transmutation
-groovyscript.wiki.projecte.transmutation.description=Converts an input blockstate into an output blockstate when right-clicked with by a Philosopher's Stone, with the ability to be converted into a different output blockstate when holding shift.
-groovyscript.wiki.projecte.transmutation.input.value=Sets the input blockstate
-groovyscript.wiki.projecte.transmutation.output.value=Sets the normal output blockstate
-groovyscript.wiki.projecte.transmutation.altOutput.value=Sets the shift output blockstate
 
 
 # Random Things
@@ -2249,48 +2273,6 @@ groovyscript.wiki.techreborn.wire_mill.time.value=Sets the time in ticks the rec
 groovyscript.wiki.techreborn.wire_mill.perTick.value=Sets the power consumed per tick
 
 
-# Tinkers
-groovyscript.wiki.tconstruct.smeltery_fuel.title=Smeltery Fuel
-groovyscript.wiki.tconstruct.smeltery_fuel.description=Modifies what fluids are accepted as fuels for the Smeltery and how long each fuels the Smeltery.
-groovyscript.wiki.tconstruct.smeltery_fuel.addFuel=Adds the given fluid as a smeltery fuel with the given burn time
-groovyscript.wiki.tconstruct.smeltery_fuel.removeFuel=Removes the given fluid from being a smeltery fuel
-
-groovyscript.wiki.tconstruct.drying.title=Drying Rack
-groovyscript.wiki.tconstruct.drying.description=Convert an item into a different item by hanging it out to dry.
-groovyscript.wiki.tconstruct.drying.add=Adds a new recipe in the format `input`, `output`, `time`
-groovyscript.wiki.tconstruct.drying.time.value=The time in ticks it takes for the item to dry
-
-groovyscript.wiki.tconstruct.casting_table.title=Casting Table
-groovyscript.wiki.tconstruct.casting_table.description=Pours out fluid onto a table to solidify it into a solid, optionally with a cast itemstack.
-groovyscript.wiki.tconstruct.casting_table.removeByCast=Removes all recipes that use the given item as a cast
-groovyscript.wiki.tconstruct.casting_table.cast.value=The item to use as a cast. null for no cast
-groovyscript.wiki.tconstruct.casting_table.time.value=The time in ticks it takes for the recipe to complete
-groovyscript.wiki.tconstruct.casting_table.consumesCast.value=Whether the cast item is destroyed
-
-groovyscript.wiki.tconstruct.casting_basin.title=Casting Basin
-groovyscript.wiki.tconstruct.casting_basin.description=Pours out fluid into a basin to solidify it into a solid, optionally with a cast itemstack.
-groovyscript.wiki.tconstruct.casting_basin.removeByCast=Removes all recipes that use the given item as a cast
-groovyscript.wiki.tconstruct.casting_basin.cast.value=The item to use as a cast. null for no cast
-groovyscript.wiki.tconstruct.casting_basin.time.value=The time in ticks it takes for the recipe to complete
-groovyscript.wiki.tconstruct.casting_basin.consumesCast.value=Whether the cast item is destroyed
-
-groovyscript.wiki.tconstruct.melting.title=Melting
-groovyscript.wiki.tconstruct.melting.description=Modifies what items can be melted down in the Smeltery.
-groovyscript.wiki.tconstruct.melting.add=Adds a new recipe in the format `input`, `output`, `time`
-groovyscript.wiki.tconstruct.melting.temp.value=Required temperature for melting. Also determines the speed of the melt
-
-groovyscript.wiki.tconstruct.entity_melting.title=Entity Melting
-groovyscript.wiki.tconstruct.entity_melting.description=Allows mobs to create a bit of fluid when hurt by the Smeltery.
-groovyscript.wiki.tconstruct.entity_melting.input.value=The entity to melt
-groovyscript.wiki.tconstruct.entity_melting.output.value=The fluid created each damage tick
-
-groovyscript.wiki.tconstruct.alloying.title=Alloying
-groovyscript.wiki.tconstruct.alloying.description=Modifies what fluids can be mixed together in the Smeltery.
-groovyscript.wiki.tconstruct.alloying.add=Adds a new recipe in the format `output`, `inputs`
-groovyscript.wiki.tconstruct.alloying.removeByInputsAndOutput=Removes all recipes that match the given output and the given inputs
-groovyscript.wiki.tconstruct.alloying.removeByInputs=Removes all recipes that match the given inputs
-
-
 # Thaumcraft
 groovyscript.wiki.thaumcraft.arcane_workbench.title=Arcane Workbench
 groovyscript.wiki.thaumcraft.arcane_workbench.description=A special crafting table, allowing additional requirements in the form of Vis Crystals, Vis, and having a specific research.
@@ -2391,12 +2373,6 @@ groovyscript.wiki.thaumcraft.warp.description=Determines if holding an item or e
 groovyscript.wiki.thaumcraft.warp.addWarp=Adds Warp to the given item in the format `item`, `amount`
 groovyscript.wiki.thaumcraft.warp.removeWarp=Removes Warp from the given item
 
-# The Aurorian
-groovyscript.wiki.theaurorian.moonlight_forge.title=Moonlight Forge
-groovyscript.wiki.theaurorian.moonlight_forge.description=Combines two items to get a third item. Only works at night, and works faster the higher it is placed in the world.
-groovyscript.wiki.theaurorian.moonlight_forge.removeByInput=Removes a recipe by the input item and the catalyst item
-groovyscript.wiki.theaurorian.scrapper.title=Scrapper
-groovyscript.wiki.theaurorian.scrapper.description=Turns an input item into an output item. Can be sped up by placing a Crystal on top of it. The crystal has a chance to break every time a recipe is executed.
 
 # Thermal Expansion
 groovyscript.wiki.thermalexpansion.energy.value=Sets the energy cost of the recipe
@@ -2617,6 +2593,48 @@ groovyscript.wiki.thermalexpansion.xp_collector.title=Insightful Condenser
 groovyscript.wiki.thermalexpansion.xp_collector.description=Collects experience orbs nearby, with the ability to increase the XP gained via catalyst itemstacks.
 groovyscript.wiki.thermalexpansion.xp_collector.add=Adds recipes in the format `catalyst`, `xp`, `factor`
 groovyscript.wiki.thermalexpansion.xp_collector.remove=Removes the given ItemStack as a valid catalyst item
+
+
+# Tinkers Construct
+groovyscript.wiki.tconstruct.smeltery_fuel.title=Smeltery Fuel
+groovyscript.wiki.tconstruct.smeltery_fuel.description=Modifies what fluids are accepted as fuels for the Smeltery and how long each fuels the Smeltery.
+groovyscript.wiki.tconstruct.smeltery_fuel.addFuel=Adds the given fluid as a smeltery fuel with the given burn time
+groovyscript.wiki.tconstruct.smeltery_fuel.removeFuel=Removes the given fluid from being a smeltery fuel
+
+groovyscript.wiki.tconstruct.drying.title=Drying Rack
+groovyscript.wiki.tconstruct.drying.description=Convert an item into a different item by hanging it out to dry.
+groovyscript.wiki.tconstruct.drying.add=Adds a new recipe in the format `input`, `output`, `time`
+groovyscript.wiki.tconstruct.drying.time.value=The time in ticks it takes for the item to dry
+
+groovyscript.wiki.tconstruct.casting_table.title=Casting Table
+groovyscript.wiki.tconstruct.casting_table.description=Pours out fluid onto a table to solidify it into a solid, optionally with a cast itemstack.
+groovyscript.wiki.tconstruct.casting_table.removeByCast=Removes all recipes that use the given item as a cast
+groovyscript.wiki.tconstruct.casting_table.cast.value=The item to use as a cast. null for no cast
+groovyscript.wiki.tconstruct.casting_table.time.value=The time in ticks it takes for the recipe to complete
+groovyscript.wiki.tconstruct.casting_table.consumesCast.value=Whether the cast item is destroyed
+
+groovyscript.wiki.tconstruct.casting_basin.title=Casting Basin
+groovyscript.wiki.tconstruct.casting_basin.description=Pours out fluid into a basin to solidify it into a solid, optionally with a cast itemstack.
+groovyscript.wiki.tconstruct.casting_basin.removeByCast=Removes all recipes that use the given item as a cast
+groovyscript.wiki.tconstruct.casting_basin.cast.value=The item to use as a cast. null for no cast
+groovyscript.wiki.tconstruct.casting_basin.time.value=The time in ticks it takes for the recipe to complete
+groovyscript.wiki.tconstruct.casting_basin.consumesCast.value=Whether the cast item is destroyed
+
+groovyscript.wiki.tconstruct.melting.title=Melting
+groovyscript.wiki.tconstruct.melting.description=Modifies what items can be melted down in the Smeltery.
+groovyscript.wiki.tconstruct.melting.add=Adds a new recipe in the format `input`, `output`, `time`
+groovyscript.wiki.tconstruct.melting.temp.value=Required temperature for melting. Also determines the speed of the melt
+
+groovyscript.wiki.tconstruct.entity_melting.title=Entity Melting
+groovyscript.wiki.tconstruct.entity_melting.description=Allows mobs to create a bit of fluid when hurt by the Smeltery.
+groovyscript.wiki.tconstruct.entity_melting.input.value=The entity to melt
+groovyscript.wiki.tconstruct.entity_melting.output.value=The fluid created each damage tick
+
+groovyscript.wiki.tconstruct.alloying.title=Alloying
+groovyscript.wiki.tconstruct.alloying.description=Modifies what fluids can be mixed together in the Smeltery.
+groovyscript.wiki.tconstruct.alloying.add=Adds a new recipe in the format `output`, `inputs`
+groovyscript.wiki.tconstruct.alloying.removeByInputsAndOutput=Removes all recipes that match the given output and the given inputs
+groovyscript.wiki.tconstruct.alloying.removeByInputs=Removes all recipes that match the given inputs
 
 
 # Woot

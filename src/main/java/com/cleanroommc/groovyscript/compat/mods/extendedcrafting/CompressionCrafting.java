@@ -15,18 +15,42 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 @RegistryDescription
 public class CompressionCrafting extends StandardListRegistry<CompressorRecipe> {
 
+    private static final Collection<CompressorRecipe> recipes = recipesViaReflection();
+
     public CompressionCrafting() {
         super(Alias.generateOfClassAnd(CompressionCrafting.class, "Compression"));
     }
 
+    /**
+     * The {@link CompressorRecipeManager#getRecipes} method returns a List or an ArrayList,
+     * depending on the version of extended crafting being used.
+     * To support both, we use reflection.
+     */
+    @SuppressWarnings("unchecked")
+    private static Collection<CompressorRecipe> recipesViaReflection() {
+        try {
+            var instance = CompressorRecipeManager.getInstance();
+            return (Collection<CompressorRecipe>) instance.getClass().getDeclaredMethod("getRecipes").invoke(instance);
+        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException ex) {
+            GroovyLog.get().error("Failed to get Compressor Recipes! This will prevent compatibility with Compression Crafting being loaded.");
+        }
+        return null;
+    }
+
     @Override
     public Collection<CompressorRecipe> getRecipes() {
-        return CompressorRecipeManager.getInstance().getRecipes();
+        return recipes;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return recipes != null;
     }
 
     @MethodDescription(description = "groovyscript.wiki.extendedcrafting.compression_crafting.add0", type = MethodDescription.Type.ADDITION)

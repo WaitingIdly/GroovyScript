@@ -13,9 +13,9 @@ import sonar.calculator.mod.common.recipes.FlawlessCalculatorRecipes;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 
 @RegistryDescription
 public class FlawlessCalculator extends StandardListRegistry<CalculatorRecipe> {

@@ -12,7 +12,11 @@ import com.teammetallurgy.atum.api.recipe.kiln.IKilnRecipe;
 import com.teammetallurgy.atum.api.recipe.kiln.KilnRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Kiln extends ForgeRegistryWrapper<IKilnRecipe> {
@@ -29,11 +33,11 @@ public class Kiln extends ForgeRegistryWrapper<IKilnRecipe> {
         return new RecipeBuilder();
     }
 
-    public IKilnRecipe add(IIngredient input, ItemStack output) {
+    public List<IKilnRecipe> add(IIngredient input, ItemStack output) {
         return add(input, output, 0);
     }
 
-    public IKilnRecipe add(IIngredient input, ItemStack output, float experience) {
+    public List<IKilnRecipe> add(IIngredient input, ItemStack output, float experience) {
         return recipeBuilder()
                 .experience(experience)
                 .input(input)
@@ -88,24 +92,25 @@ public class Kiln extends ForgeRegistryWrapper<IKilnRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IKilnRecipe register() {
-            if (!validate()) return null;
-            IKilnRecipe recipe = null;
+        public @NotNull List<IKilnRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient oreDictIngredient) {
-                recipe = new KilnRecipe(oreDictIngredient.getOreDict(), output.get(0), experience);
+                IKilnRecipe recipe = new KilnRecipe(oreDictIngredient.getOreDict(), output.get(0), experience);
                 recipe.setRegistryName(super.name);
                 ModSupport.ATUM.get().kiln.add(recipe);
-                return recipe;
-            } else {
-                ItemStack[] matchingStacks = input.get(0).getMatchingStacks();
-                for (int i = 0; i < matchingStacks.length; i++) {
-                    recipe = new KilnRecipe(matchingStacks[i], output.get(0), experience);
-                    var location = new ResourceLocation(super.name.getNamespace(), super.name.getPath() + i);
-                    recipe.setRegistryName(location);
-                    ModSupport.ATUM.get().kiln.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<IKilnRecipe> list = new ArrayList<>();
+            ItemStack[] matchingStacks = input.get(0).getMatchingStacks();
+            for (int i = 0; i < matchingStacks.length; i++) {
+                IKilnRecipe recipe = new KilnRecipe(matchingStacks[i], output.get(0), experience);
+                var location = new ResourceLocation(super.name.getNamespace(), super.name.getPath() + i);
+                recipe.setRegistryName(location);
+                list.add(recipe);
+                ModSupport.ATUM.get().kiln.add(recipe);
+            }
+
+            return list;
         }
     }
 }

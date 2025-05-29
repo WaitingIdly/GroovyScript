@@ -4,11 +4,13 @@ import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import reborncore.api.praescriptum.recipes.Recipe;
 import reborncore.api.praescriptum.recipes.RecipeHandler;
 import techreborn.api.recipe.Recipes;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription(override = @MethodOverride(method = {
@@ -66,8 +68,8 @@ public class AssemblingMachine extends AbstractPraescriptumRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Recipe register() {
-            if (!validate()) return null;
+        public @NotNull List<Recipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             Recipe recipe = Recipes.assemblingMachine.createRecipe();
             recipe.withInput(input.stream().map(Helper::toInputIngredient).collect(Collectors.toList()));
@@ -76,7 +78,7 @@ public class AssemblingMachine extends AbstractPraescriptumRegistry {
             recipe.withOperationDuration(time);
 
             ModSupport.TECH_REBORN.get().assemblingMachine.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

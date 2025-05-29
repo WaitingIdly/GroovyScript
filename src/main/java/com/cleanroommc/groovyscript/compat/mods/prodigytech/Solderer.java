@@ -11,7 +11,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import lykrast.prodigytech.common.recipe.SoldererManager;
 import lykrast.prodigytech.common.util.Config;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Solderer extends VirtualizedRegistry<SoldererManager.SoldererRecipe> {
@@ -145,24 +149,23 @@ public class Solderer extends VirtualizedRegistry<SoldererManager.SoldererRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SoldererManager.SoldererRecipe register() {
-            if (!validate()) return null;
-            SoldererManager.SoldererRecipe recipe = null;
+        public @NotNull List<SoldererManager.SoldererRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<SoldererManager.SoldererRecipe> list = new ArrayList<>();
             for (ItemStack pat : pattern.getMatchingStacks()) {
                 if (input.isEmpty()) {
-                    SoldererManager.SoldererRecipe theRecipe = new SoldererManager.SoldererRecipe(pat, ItemStack.EMPTY, output.get(0), gold, time);
-                    ModSupport.PRODIGY_TECH.get().solderer.add(theRecipe);
-                    if (recipe == null) recipe = theRecipe;
+                    var recipe = new SoldererManager.SoldererRecipe(pat, ItemStack.EMPTY, output.get(0), gold, time);
+                    ModSupport.PRODIGY_TECH.get().solderer.add(recipe);
+                    list.add(recipe);
                 } else {
                     for (ItemStack additive : input.get(0).getMatchingStacks()) {
-                        SoldererManager.SoldererRecipe theRecipe = new SoldererManager.SoldererRecipe(pat, additive, output.get(0), gold, time);
-                        ModSupport.PRODIGY_TECH.get().solderer.add(theRecipe);
-                        if (recipe == null) recipe = theRecipe;
+                        var recipe = new SoldererManager.SoldererRecipe(pat, additive, output.get(0), gold, time);
+                        ModSupport.PRODIGY_TECH.get().solderer.add(recipe);
+                        list.add(recipe);
                     }
                 }
             }
-
-            return recipe;
+            return list;
         }
     }
 }

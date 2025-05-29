@@ -9,11 +9,14 @@ import com.cleanroommc.groovyscript.core.mixin.thebetweenlands.PestleAndMortarRe
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.IPestleAndMortarRecipe;
 import thebetweenlands.common.recipe.mortar.PestleAndMortarRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class PestleAndMortar extends StandardListRegistry<IPestleAndMortarRecipe> {
@@ -64,14 +67,15 @@ public class PestleAndMortar extends StandardListRegistry<IPestleAndMortarRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IPestleAndMortarRecipe register() {
-            if (!validate()) return null;
-            IPestleAndMortarRecipe recipe = null;
+        public @NotNull List<IPestleAndMortarRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<IPestleAndMortarRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new PestleAndMortarRecipe(output.get(0), stack);
+                var recipe = new PestleAndMortarRecipe(output.get(0), stack);
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().pestleAndMortar.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

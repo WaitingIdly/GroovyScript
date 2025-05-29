@@ -8,10 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import io.github.phantamanta44.libnine.LibNine;
 import io.github.phantamanta44.threng.recipe.EnergizeRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Energizer extends StandardListRegistry<EnergizeRecipe> {
@@ -83,12 +85,12 @@ public class Energizer extends StandardListRegistry<EnergizeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable EnergizeRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<EnergizeRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             EnergizeRecipe recipe = new EnergizeRecipe(LazyAE2.matchesIIngredient(input.get(0)), energy, output.get(0));
             ModSupport.LAZYAE2.get().energizer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

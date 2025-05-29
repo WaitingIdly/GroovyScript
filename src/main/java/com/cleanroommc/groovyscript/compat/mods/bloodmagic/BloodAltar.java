@@ -14,10 +14,9 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription(
         admonition = {
@@ -45,7 +44,7 @@ public class BloodAltar extends StandardListRegistry<RecipeBloodAltar> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipeBloodAltar add(IIngredient input, ItemStack output, int minimumTier, int syphon, int consumeRate, int drainRate) {
+    public List<RecipeBloodAltar> add(IIngredient input, ItemStack output, int minimumTier, int syphon, int consumeRate, int drainRate) {
         return recipeBuilder()
                 .minimumTier(minimumTier)
                 .consumeRate(consumeRate)

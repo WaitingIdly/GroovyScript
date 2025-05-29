@@ -11,9 +11,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.hydrator.RecipeHydrate;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -86,15 +88,16 @@ public class Hydrator extends StandardListRegistry<RecipeHydrate> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeHydrate register() {
-            if (!validate()) return null;
-            RecipeHydrate recipe = null;
+        public @NotNull List<RecipeHydrate> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipeHydrate> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);
             for (List<ItemStack> stacks : cartesian) {
-                recipe = new RecipeHydrate(stacks.toArray(new ItemStack[0]), output.get(0), water);
+                var recipe = new RecipeHydrate(stacks.toArray(new ItemStack[0]), output.get(0), water);
+                list.add(recipe);
                 ModSupport.CYCLIC.get().hydrator.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

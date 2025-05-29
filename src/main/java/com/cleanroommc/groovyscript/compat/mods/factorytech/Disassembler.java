@@ -12,8 +12,9 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -113,11 +114,11 @@ public class Disassembler extends VirtualizedRegistry<Map.Entry<Class<? extends 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Map.Entry<Class<? extends EntityLiving>, List<ItemStack>> register() {
-            if (!validate()) return null;
+        public @NotNull List<Map.Entry<Class<? extends EntityLiving>, List<ItemStack>>> register() {
+            if (!validate()) return Collections.emptyList();
             Map.Entry<Class<? extends EntityLiving>, List<ItemStack>> recipe = Pair.of(entity, output);
             ModSupport.FACTORY_TECH.get().disassembler.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

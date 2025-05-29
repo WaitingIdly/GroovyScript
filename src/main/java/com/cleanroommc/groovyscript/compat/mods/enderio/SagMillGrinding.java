@@ -12,10 +12,9 @@ import crazypants.enderio.base.recipe.sagmill.SagMillRecipeManager;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.enderio.sag_mill.note", type = Admonition.Type.WARNING))
 public class SagMillGrinding extends StandardListRegistry<GrindingBall> {

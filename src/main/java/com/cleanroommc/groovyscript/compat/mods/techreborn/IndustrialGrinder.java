@@ -6,10 +6,13 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.IndustrialGrinderRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByOutput", example = @Example("item('techreborn:dust:53')"))))
 public class IndustrialGrinder extends AbstractGenericTechRebornRegistry {
@@ -88,14 +91,14 @@ public class IndustrialGrinder extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IndustrialGrinderRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IndustrialGrinderRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ItemStack output3 = output.size() >= 3 ? output.get(2) : null;
             ItemStack output4 = output.size() >= 4 ? output.get(3) : null;
             IndustrialGrinderRecipe recipe = new IndustrialGrinderRecipe(Helper.getStackFromIIngredient(input.get(0)), fluidInput.get(0), output.get(0), output2, output3, output4, time, perTick, oreDict);
             ModSupport.TECH_REBORN.get().industrialGrinder.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -8,10 +8,13 @@ import com.cleanroommc.groovyscript.core.mixin.primal_tech.WaterSawRecipesAccess
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import primal_tech.recipes.WaterSawRecipes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class WaterSaw extends StandardListRegistry<WaterSawRecipes> {
@@ -30,7 +33,7 @@ public class WaterSaw extends StandardListRegistry<WaterSawRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public WaterSawRecipes add(ItemStack output, IIngredient input, int choppingTime) {
+    public List<WaterSawRecipes> add(ItemStack output, IIngredient input, int choppingTime) {
         return recipeBuilder()
                 .choppingTime(choppingTime)
                 .input(input)
@@ -87,14 +90,15 @@ public class WaterSaw extends StandardListRegistry<WaterSawRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WaterSawRecipes register() {
-            if (!validate()) return null;
-            WaterSawRecipes recipe = null;
+        public @NotNull List<WaterSawRecipes> register() {
+            if (!validate()) return Collections.emptyList();
+            List<WaterSawRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {
-                recipe = WaterSawRecipesAccessor.createWaterSawRecipes(output.get(0), matchingStack, choppingTime);
+                WaterSawRecipes recipe = WaterSawRecipesAccessor.createWaterSawRecipes(output.get(0), matchingStack, choppingTime);
+                list.add(recipe);
                 ModSupport.PRIMAL_TECH.get().waterSaw.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -8,11 +8,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.core.mixin.thebetweenlands.SmokingRackRecipeAccessor;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.ISmokingRackRecipe;
 import thebetweenlands.common.recipe.misc.SmokingRackRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SmokingRack extends StandardListRegistry<ISmokingRackRecipe> {
@@ -73,14 +76,15 @@ public class SmokingRack extends StandardListRegistry<ISmokingRackRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ISmokingRackRecipe register() {
-            if (!validate()) return null;
-            ISmokingRackRecipe recipe = null;
+        public @NotNull List<ISmokingRackRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ISmokingRackRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new SmokingRackRecipe(output.get(0), time, stack);
+                var recipe = new SmokingRackRecipe(output.get(0), time, stack);
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().smokingRack.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.packager.RecipePackager;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -75,15 +77,16 @@ public class Packager extends StandardListRegistry<RecipePackager> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipePackager register() {
-            if (!validate()) return null;
-            RecipePackager recipe = null;
+        public @NotNull List<RecipePackager> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipePackager> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);
             for (List<ItemStack> stacks : cartesian) {
-                recipe = new RecipePackager(output.get(0), stacks.toArray(new ItemStack[0]));
+                var recipe = new RecipePackager(output.get(0), stacks.toArray(new ItemStack[0]));
+                list.add(recipe);
                 ModSupport.CYCLIC.get().packager.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

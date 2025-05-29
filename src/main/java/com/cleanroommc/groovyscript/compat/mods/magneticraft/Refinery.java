@@ -8,9 +8,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.refinery.IRefineryRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Refinery extends StandardListRegistry<IRefineryRecipe> {
@@ -65,11 +67,11 @@ public class Refinery extends StandardListRegistry<IRefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRefineryRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IRefineryRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IRefineryRecipe recipe = MagneticraftApi.getRefineryRecipeManager().createRecipe(fluidInput.get(0), fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidOutput.getOrEmpty(2), duration);
             ModSupport.MAGNETICRAFT.get().refinery.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

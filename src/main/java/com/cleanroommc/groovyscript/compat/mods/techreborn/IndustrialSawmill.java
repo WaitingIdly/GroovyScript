@@ -6,10 +6,13 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByOutput", example = @Example("item('minecraft:planks:4')"))))
 public class IndustrialSawmill extends AbstractGenericTechRebornRegistry {
@@ -88,13 +91,13 @@ public class IndustrialSawmill extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IndustrialSawmillRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IndustrialSawmillRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ItemStack output3 = output.size() >= 3 ? output.get(2) : null;
             IndustrialSawmillRecipe recipe = new IndustrialSawmillRecipe(Helper.getStackFromIIngredient(input.get(0)), fluidInput.get(0), output.get(0), output2, output3, time, perTick, oreDict);
             ModSupport.TECH_REBORN.get().industrialSawmill.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

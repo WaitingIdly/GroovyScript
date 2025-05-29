@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class WaterNet extends StandardListRegistry<NetRecipe> {
@@ -78,11 +80,11 @@ public class WaterNet extends StandardListRegistry<NetRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable NetRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<NetRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             NetRecipe recipe = new NetRecipe(BlockNettedScreen.SifterType.WATER, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), 0, output.toArray(new ItemStack[0]));
             ModSupport.BETTER_WITH_ADDONS.get().waterNet.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

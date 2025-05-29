@@ -11,10 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePureDaisy;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
@@ -30,12 +29,12 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.botania.pure_daisy.add0", type = MethodDescription.Type.ADDITION)
-    public RecipePureDaisy add(IBlockState output, IBlockState input, int time) {
+    public List<RecipePureDaisy> add(IBlockState output, IBlockState input, int time) {
         return recipeBuilder().time(time).output(output).input(input).register();
     }
 
     @MethodDescription(description = "groovyscript.wiki.botania.pure_daisy.add1", type = MethodDescription.Type.ADDITION)
-    public RecipePureDaisy add(IBlockState output, IBlockState input) {
+    public List<RecipePureDaisy> add(IBlockState output, IBlockState input) {
         return recipeBuilder().output(output).input(input).register();
     }
 

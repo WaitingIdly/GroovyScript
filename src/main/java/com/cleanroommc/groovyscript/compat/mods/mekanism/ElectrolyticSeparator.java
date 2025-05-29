@@ -30,7 +30,7 @@ public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<Separator
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "fluid('lava') * 10, gas('cleanGold') * 5, gas('cleanCopper') * 3, 3000", commented = true))
-    public SeparatorRecipe add(FluidStack input, GasStack leftOutput, GasStack rightOutput, double energy) {
+    public List<SeparatorRecipe> add(FluidStack input, GasStack leftOutput, GasStack rightOutput, double energy) {
         return recipeBuilder().energy(energy).gasOutput(leftOutput, rightOutput).fluidInput(input).register();
     }
 

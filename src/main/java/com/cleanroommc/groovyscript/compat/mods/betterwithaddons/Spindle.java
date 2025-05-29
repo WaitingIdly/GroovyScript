@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Spindle extends StandardListRegistry<SpindleRecipe> {
@@ -85,11 +87,11 @@ public class Spindle extends StandardListRegistry<SpindleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SpindleRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SpindleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SpindleRecipe recipe = new SpindleRecipe(popoff, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), output.toArray(new ItemStack[0]));
             ModSupport.BETTER_WITH_ADDONS.get().spindle.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

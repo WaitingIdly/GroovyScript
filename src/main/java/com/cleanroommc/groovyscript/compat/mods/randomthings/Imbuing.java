@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import lumien.randomthings.recipes.imbuing.ImbuingRecipe;
 import lumien.randomthings.recipes.imbuing.ImbuingRecipeHandler;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -72,17 +74,18 @@ public class Imbuing extends StandardListRegistry<ImbuingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ImbuingRecipe register() {
-            if (!validate()) return null;
-            ImbuingRecipe recipe = null;
+        public @NotNull List<ImbuingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ImbuingRecipe> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);
             for (var toImbue : mainInput.getMatchingStacks()) {
                 for (var stacks : cartesian) {
-                    recipe = new ImbuingRecipe(toImbue, output.get(0), stacks.toArray(new ItemStack[0]));
+                    var recipe = new ImbuingRecipe(toImbue, output.get(0), stacks.toArray(new ItemStack[0]));
+                    list.add(recipe);
                     ModSupport.RANDOM_THINGS.get().imbuing.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

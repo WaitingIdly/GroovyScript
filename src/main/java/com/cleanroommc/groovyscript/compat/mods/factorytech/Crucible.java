@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Crucible extends StandardListRegistry<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> {
@@ -61,14 +64,15 @@ public class Crucible extends StandardListRegistry<MachineRecipes.MachineRecipe<
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MachineRecipes.MachineRecipe<ItemStack, FluidStack> register() {
-            if (!validate()) return null;
-            MachineRecipes.MachineRecipe<ItemStack, FluidStack> recipe = null;
+        public @NotNull List<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> register() {
+            if (!validate()) return Collections.emptyList();
+            List<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new MachineRecipes.MachineRecipe<>(stack, fluidOutput.get(0));
+                var recipe = new MachineRecipes.MachineRecipe<>(stack, fluidOutput.get(0));
+                list.add(recipe);
                 ModSupport.FACTORY_TECH.get().crucible.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

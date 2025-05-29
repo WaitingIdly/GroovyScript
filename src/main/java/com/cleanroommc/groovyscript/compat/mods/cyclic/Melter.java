@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.melter.RecipeMelter;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -75,15 +77,16 @@ public class Melter extends StandardListRegistry<RecipeMelter> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeMelter register() {
-            if (!validate()) return null;
-            RecipeMelter recipe = null;
+        public @NotNull List<RecipeMelter> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipeMelter> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);
             for (List<ItemStack> stacks : cartesian) {
-                recipe = new RecipeMelter(stacks.toArray(new ItemStack[0]), fluidOutput.get(0).getFluid().getName(), fluidOutput.get(0).amount);
+                var recipe = new RecipeMelter(stacks.toArray(new ItemStack[0]), fluidOutput.get(0).getFluid().getName(), fluidOutput.get(0).amount);
+                list.add(recipe);
                 ModSupport.CYCLIC.get().melter.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

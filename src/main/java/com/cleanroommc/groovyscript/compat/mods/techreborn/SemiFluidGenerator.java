@@ -4,10 +4,13 @@ import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import reborncore.api.praescriptum.fuels.Fuel;
 import reborncore.api.praescriptum.fuels.FuelHandler;
 import techreborn.api.recipe.Fuels;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("fluid('fluidbiofuel')"))))
 public class SemiFluidGenerator extends AbstractGeneratorRegistry {
@@ -60,8 +63,8 @@ public class SemiFluidGenerator extends AbstractGeneratorRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Fuel register() {
-            if (!validate()) return null;
+        public @NotNull List<Fuel> register() {
+            if (!validate()) return Collections.emptyList();
 
             Fuel recipe = Fuels.semiFluidGenerator.addFuel();
             recipe.addFluidSource(fluidInput.get(0));
@@ -69,7 +72,7 @@ public class SemiFluidGenerator extends AbstractGeneratorRegistry {
             recipe.withEnergyOutput(energy);
 
             ModSupport.TECH_REBORN.get().semiFluidGenerator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

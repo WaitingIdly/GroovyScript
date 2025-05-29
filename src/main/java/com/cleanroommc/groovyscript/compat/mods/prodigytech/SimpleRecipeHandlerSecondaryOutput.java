@@ -8,9 +8,17 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import lykrast.prodigytech.common.recipe.*;
 import lykrast.prodigytech.common.util.Config;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class SimpleRecipeHandlerSecondaryOutput extends SimpleRecipeHandlerAbstract<SimpleRecipeSecondaryOutput> {
+
+    SimpleRecipeHandlerSecondaryOutput(String name, SimpleRecipeManagerSecondaryOutput instance) {
+        super(name, instance);
+    }
 
     @RecipeBuilderDescription(example = {
             @Example(".input(item('minecraft:gold_ingot')).output(item('minecraft:diamond')).time(50)"),
@@ -22,8 +30,30 @@ public abstract class SimpleRecipeHandlerSecondaryOutput extends SimpleRecipeHan
         return new SimpleRecipeHandlerSecondaryOutput.RecipeBuilder();
     }
 
-    SimpleRecipeHandlerSecondaryOutput(String name, SimpleRecipeManagerSecondaryOutput instance) {
-        super(name, instance);
+    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("ore('plankWood')"))))
+    public static class HeatSawmill extends SimpleRecipeHandlerSecondaryOutput {
+
+        HeatSawmill() {
+            super("Heat Sawmill", HeatSawmillManager.INSTANCE);
+        }
+
+        @Override
+        protected int getDefaultTime() {
+            return Config.heatSawmillProcessTime;
+        }
+    }
+
+    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("ore('oreLapis')"))))
+    public static class OreRefinery extends SimpleRecipeHandlerSecondaryOutput {
+
+        OreRefinery() {
+            super("Ore Refinery", OreRefineryManager.INSTANCE);
+        }
+
+        @Override
+        protected int getDefaultTime() {
+            return Config.oreRefineryProcessTime;
+        }
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))
@@ -69,47 +99,22 @@ public abstract class SimpleRecipeHandlerSecondaryOutput extends SimpleRecipeHan
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SimpleRecipeSecondaryOutput register() {
-            if (!validate()) return null;
-            SimpleRecipeSecondaryOutput recipe = null;
+        public @NotNull List<SimpleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IIngredient input1 = input.get(0);
             ItemStack secondaryOutput = output.size() == 1 ? ItemStack.EMPTY : output.get(1);
             if (input1 instanceof OreDictIngredient oreDictIngredient) {
-                recipe = new SimpleRecipeSecondaryOutput(oreDictIngredient.getOreDict(), output.get(0), secondaryOutput, time, secondaryChance);
+                SimpleRecipeSecondaryOutput recipe = new SimpleRecipeSecondaryOutput(oreDictIngredient.getOreDict(), output.get(0), secondaryOutput, time, secondaryChance);
                 addRecipe(recipe);
-            } else {
-                for (ItemStack input : input1.getMatchingStacks()) {
-                    recipe = new SimpleRecipeSecondaryOutput(input, output.get(0), secondaryOutput, time, secondaryChance);
-                    addRecipe(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
-        }
-    }
-
-    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("ore('plankWood')"))))
-    public static class HeatSawmill extends SimpleRecipeHandlerSecondaryOutput {
-
-        HeatSawmill() {
-            super("Heat Sawmill", HeatSawmillManager.INSTANCE);
-        }
-
-        @Override
-        protected int getDefaultTime() {
-            return Config.heatSawmillProcessTime;
-        }
-    }
-
-    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("ore('oreLapis')"))))
-    public static class OreRefinery extends SimpleRecipeHandlerSecondaryOutput {
-
-        OreRefinery() {
-            super("Ore Refinery", OreRefineryManager.INSTANCE);
-        }
-
-        @Override
-        protected int getDefaultTime() {
-            return Config.oreRefineryProcessTime;
+            List<SimpleRecipe> list = new ArrayList<>();
+            for (ItemStack input : input1.getMatchingStacks()) {
+                SimpleRecipeSecondaryOutput recipe = new SimpleRecipeSecondaryOutput(input, output.get(0), secondaryOutput, time, secondaryChance);
+                addRecipe(recipe);
+                list.add(recipe);
+            }
+            return list;
         }
     }
 }

@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 import java.util.Map;
 
 public class HighOven extends StandardListRegistry<MeltingRecipe> {

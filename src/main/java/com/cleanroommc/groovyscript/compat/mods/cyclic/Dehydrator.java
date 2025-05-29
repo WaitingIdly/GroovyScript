@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.dehydrator.RecipeDeHydrate;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Dehydrator extends StandardListRegistry<RecipeDeHydrate> {
@@ -92,14 +95,15 @@ public class Dehydrator extends StandardListRegistry<RecipeDeHydrate> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeDeHydrate register() {
-            if (!validate()) return null;
-            RecipeDeHydrate recipe = null;
+        public @NotNull List<RecipeDeHydrate> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipeDeHydrate> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).toMcIngredient().getMatchingStacks()) {
-                recipe = new RecipeDeHydrate(matchingStack, output.get(0), time, water);
+                RecipeDeHydrate recipe = new RecipeDeHydrate(matchingStack, output.get(0), time, water);
+                list.add(recipe);
                 ModSupport.CYCLIC.get().dehydrator.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

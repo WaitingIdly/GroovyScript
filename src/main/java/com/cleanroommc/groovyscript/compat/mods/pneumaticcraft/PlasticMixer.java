@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.core.mixin.pneumaticcraft.PlasticMixerRegist
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import me.desht.pneumaticcraft.common.recipes.PlasticMixerRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = {
@@ -153,11 +155,11 @@ public class PlasticMixer extends StandardListRegistry<PlasticMixerRegistry.Plas
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PlasticMixerRegistry.PlasticMixerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PlasticMixerRegistry.PlasticMixerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PlasticMixerRegistry.PlasticMixerRecipe recipe = PlasticMixerRecipeAccessor.createPlasticMixerRecipe(fluidInput.get(0), output.get(0), requiredTemperature, allowMelting, allowSolidifying, useDye, meta);
             ModSupport.PNEUMATIC_CRAFT.get().plasticMixer.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

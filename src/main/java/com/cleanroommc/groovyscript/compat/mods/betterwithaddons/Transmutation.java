@@ -8,9 +8,11 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Transmutation extends StandardListRegistry<TransmutationRecipe> {
@@ -84,11 +86,11 @@ public class Transmutation extends StandardListRegistry<TransmutationRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TransmutationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<TransmutationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             TransmutationRecipe recipe = new TransmutationRecipe(BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), spirits, output.get(0));
             ModSupport.BETTER_WITH_ADDONS.get().transmutation.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

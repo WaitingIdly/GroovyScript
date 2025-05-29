@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import essentialcraft.api.RadiatingChamberRecipe;
 import essentialcraft.api.RadiatingChamberRecipes;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class RadiatingChamber extends StandardListRegistry<RadiatingChamberRecipe> {
@@ -99,15 +101,15 @@ public class RadiatingChamber extends StandardListRegistry<RadiatingChamberRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RadiatingChamberRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RadiatingChamberRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Ingredient[] inputIngredient = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             // the attribute names lie to the devs, they're called 'int mruRequired' and 'float costModifier'
             // but actually they're 'int timeInTicks' and 'float mruPerTick'
             RadiatingChamberRecipe recipe = new RadiatingChamberRecipe(inputIngredient, output.get(0), time, upperBalance, lowerBalance, mruPerTick);
             ModSupport.ESSENTIALCRAFT.get().radiatingChamber.addScripted(recipe);
             RadiatingChamberRecipes.addRecipe(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

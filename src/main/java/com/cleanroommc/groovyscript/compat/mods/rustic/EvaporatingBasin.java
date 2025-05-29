@@ -11,10 +11,9 @@ import org.jetbrains.annotations.NotNull;
 import rustic.common.crafting.IEvaporatingBasinRecipe;
 import rustic.common.crafting.Recipes;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class EvaporatingBasin extends StandardListRegistry<IEvaporatingBasinRecipe> {

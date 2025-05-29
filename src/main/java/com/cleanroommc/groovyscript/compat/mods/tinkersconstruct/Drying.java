@@ -12,11 +12,9 @@ import net.minecraft.util.NonNullList;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.DryingRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
-
-public class Drying extends VirtualizedRegistry<DryingRecipe> {
 
 @RegistryDescription
 public class Drying extends StandardListRegistry<DryingRecipe> {

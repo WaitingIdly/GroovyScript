@@ -8,7 +8,10 @@ import com.cleanroommc.groovyscript.helper.ingredient.OreDictIngredient;
 import com.cleanroommc.groovyscript.helper.recipe.IRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import essentialcraft.api.OreSmeltingRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(reloadability = RegistryDescription.Reloadability.DISABLED, admonition = {
         @Admonition(value = "groovyscript.wiki.essentialcraft.magmatic_smeltery.note0", type = Admonition.Type.WARNING),
@@ -122,12 +125,12 @@ public class MagmaticSmeltery extends VirtualizedRegistry<OreSmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable OreSmeltingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<OreSmeltingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             OreSmeltingRecipe recipe = new OreSmeltingRecipe(input, output, color, factor);
             recipe.register();
             ModSupport.ESSENTIALCRAFT.get().magmaticSmeltery.addScripted(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

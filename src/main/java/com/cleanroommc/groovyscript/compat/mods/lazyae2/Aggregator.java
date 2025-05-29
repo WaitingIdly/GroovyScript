@@ -8,10 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import io.github.phantamanta44.libnine.LibNine;
 import io.github.phantamanta44.threng.recipe.AggRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -74,12 +76,12 @@ public class Aggregator extends StandardListRegistry<AggRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AggRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<AggRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             AggRecipe recipe = new AggRecipe(input.stream().map(LazyAE2::matchesIIngredient).collect(Collectors.toList()), output.get(0));
             ModSupport.LAZYAE2.get().aggregator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

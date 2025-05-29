@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.github.alexthe666.iceandfire.recipe.DragonForgeRecipe;
 import com.github.alexthe666.iceandfire.recipe.IafRecipeRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 // want all the examples to be commented
 @RegistryDescription(admonition = @Admonition("groovyscript.wiki.iceandfire.lightning_forge.note"))
@@ -58,16 +61,17 @@ public class LightningForge extends StandardListRegistry<DragonForgeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DragonForgeRecipe register() {
-            if (!validate()) return null;
-            DragonForgeRecipe recipe = null;
+        public @NotNull List<DragonForgeRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<DragonForgeRecipe> list = new ArrayList<>();
             for (var inputStack : input.get(0).getMatchingStacks()) {
                 for (var blood : input.get(1).getMatchingStacks()) {
-                    recipe = new DragonForgeRecipe(inputStack, blood, output.get(0));
+                    var recipe = new DragonForgeRecipe(inputStack, blood, output.get(0));
+                    list.add(recipe);
                     ModSupport.ICE_AND_FIRE.get().lightningForge.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

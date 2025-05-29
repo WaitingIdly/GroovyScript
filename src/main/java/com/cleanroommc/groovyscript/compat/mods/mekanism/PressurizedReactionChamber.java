@@ -34,7 +34,7 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public PressurizedRecipe add(IIngredient inputSolid, FluidStack inputFluid, GasStack inputGas, ItemStack outputSolid, GasStack outputGas, double energy, int duration) {
+    public List<PressurizedRecipe> add(IIngredient inputSolid, FluidStack inputFluid, GasStack inputGas, ItemStack outputSolid, GasStack outputGas, double energy, int duration) {
         return recipeBuilder().duration(duration).energy(energy).gasOutput(outputGas).gasInput(inputGas).fluidInput(inputFluid).output(outputSolid).input(inputSolid).register();
     }
 

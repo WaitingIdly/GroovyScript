@@ -14,9 +14,9 @@ import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 
 @RegistryDescription
 public class Empowerer extends StandardListRegistry<EmpowererRecipe> {

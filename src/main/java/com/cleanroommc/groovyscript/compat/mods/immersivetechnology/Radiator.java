@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.RadiatorRecipe;
 import mctmods.immersivetechnology.common.Config;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Radiator extends StandardListRegistry<RadiatorRecipe> {
@@ -87,11 +89,11 @@ public class Radiator extends StandardListRegistry<RadiatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RadiatorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RadiatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RadiatorRecipe recipe = new RadiatorRecipe(fluidOutput.get(0), fluidInput.get(0), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().radiator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

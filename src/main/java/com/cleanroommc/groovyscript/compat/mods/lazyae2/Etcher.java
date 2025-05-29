@@ -8,10 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import io.github.phantamanta44.libnine.LibNine;
 import io.github.phantamanta44.threng.recipe.EtchRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Etcher extends StandardListRegistry<EtchRecipe> {
@@ -90,12 +92,12 @@ public class Etcher extends StandardListRegistry<EtchRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable EtchRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<EtchRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             EtchRecipe recipe = new EtchRecipe(LazyAE2.matchesIIngredient(top), LazyAE2.matchesIIngredient(bottom), LazyAE2.matchesIIngredient(input.get(0)), output.get(0));
             ModSupport.LAZYAE2.get().etcher.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

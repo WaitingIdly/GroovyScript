@@ -5,9 +5,12 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.BlastFurnaceRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(value = "groovyscript.wiki.techreborn.blast_furnace.note0", type = Admonition.Type.INFO),
@@ -72,21 +75,19 @@ public class BlastFurnace extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable BlastFurnaceRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BlastFurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             BlastFurnaceRecipe recipe = new BlastFurnaceRecipe(
                     Helper.getStackFromIIngredient(input.get(0)),
-                    input.size() == 2
-                            ? Helper.getStackFromIIngredient(input.get(1))
-                            : null,
+                    input.size() == 2 ? Helper.getStackFromIIngredient(input.get(1)) : null,
                     output.get(0),
                     output2,
                     time,
                     perTick,
                     neededHeat);
             ModSupport.TECH_REBORN.get().blastFurnace.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

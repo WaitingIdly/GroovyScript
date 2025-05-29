@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.generators.thermopile.IThermopileRecipe;
 import net.minecraft.block.state.IBlockState;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Thermopile extends StandardListRegistry<IThermopileRecipe> {
@@ -81,11 +83,11 @@ public class Thermopile extends StandardListRegistry<IThermopileRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IThermopileRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IThermopileRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IThermopileRecipe recipe = MagneticraftApi.getThermopileRecipeManager().createRecipe(state, temperature, conductivity);
             ModSupport.MAGNETICRAFT.get().thermopile.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

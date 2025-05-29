@@ -6,12 +6,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.futuremc.recipe.SimpleRecipe;
 import thedarkcolour.futuremc.recipe.stonecutter.StonecutterRecipes;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Stonecutter extends StandardListRegistry<SimpleRecipe> {
@@ -61,11 +63,11 @@ public class Stonecutter extends StandardListRegistry<SimpleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SimpleRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SimpleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SimpleRecipe recipe = new SimpleRecipe(input.get(0).toMcIngredient(), output.get(0));
             ModSupport.FUTURE_MC.get().stonecutter.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Reprocessor extends StandardListRegistry<ReprocessorRecipe> {
@@ -33,7 +36,7 @@ public class Reprocessor extends StandardListRegistry<ReprocessorRecipe> {
 //        return add(input, output, amount, false);
 //    }
 
-    public ReprocessorRecipe add(IIngredient input, ItemStack output/*, int amount, boolean exact*/) {
+    public List<ReprocessorRecipe> add(IIngredient input, ItemStack output/*, int amount, boolean exact*/) {
         return recipeBuilder()
 //                .exact(exact)
 //                .amount(amount)
@@ -105,15 +108,16 @@ public class Reprocessor extends StandardListRegistry<ReprocessorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ReprocessorRecipe register() {
-            if (!validate()) return null;
-            ReprocessorRecipe recipe = null;
+        public @NotNull List<ReprocessorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ReprocessorRecipe> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {
 //                recipe = new ReprocessorRecipe(output.get(0), amount, matchingStack, exact);
-                recipe = new ReprocessorRecipe(output.get(0), 1, matchingStack, false);
+                var recipe = new ReprocessorRecipe(output.get(0), 1, matchingStack, false);
+                list.add(recipe);
                 ModSupport.MYSTICAL_AGRICULTURE.get().reprocessor.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

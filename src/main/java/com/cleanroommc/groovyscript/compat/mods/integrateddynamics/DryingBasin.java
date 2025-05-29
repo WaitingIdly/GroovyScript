@@ -16,10 +16,9 @@ import org.cyclops.integrateddynamics.block.BlockDryingBasinConfig;
 import org.cyclops.integrateddynamics.block.BlockMechanicalDryingBasin;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class DryingBasin extends StandardListRegistry<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> {

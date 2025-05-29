@@ -8,9 +8,11 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Tatara extends StandardListRegistry<SmeltingRecipe> {
@@ -74,11 +76,11 @@ public class Tatara extends StandardListRegistry<SmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SmeltingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SmeltingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SmeltingRecipe recipe = new SmeltingRecipe(BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), output.get(0));
             ModSupport.BETTER_WITH_ADDONS.get().tatara.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import dalapo.factech.tileentity.specialized.TileEntityTemperer;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Temperer extends StandardListRegistry<TileEntityTemperer.TempererRecipe> {
@@ -70,14 +73,15 @@ public class Temperer extends StandardListRegistry<TileEntityTemperer.TempererRe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TileEntityTemperer.TempererRecipe register() {
-            if (!validate()) return null;
-            TileEntityTemperer.TempererRecipe recipe = null;
+        public @NotNull List<TileEntityTemperer.TempererRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<TileEntityTemperer.TempererRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new TileEntityTemperer.TempererRecipe(stack, output.get(0), time);
+                var recipe = new TileEntityTemperer.TempererRecipe(stack, output.get(0), time);
+                list.add(recipe);
                 ModSupport.FACTORY_TECH.get().temperer.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

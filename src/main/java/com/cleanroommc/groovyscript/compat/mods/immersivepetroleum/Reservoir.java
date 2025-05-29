@@ -10,12 +10,9 @@ import flaxbeard.immersivepetroleum.api.crafting.PumpjackHandler;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RegistryDescription(
         category = RegistryDescription.Category.ENTRIES,
@@ -229,8 +226,8 @@ public class Reservoir extends VirtualizedRegistry<Pair<PumpjackHandler.Reservoi
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PumpjackHandler.ReservoirType register() {
-            if (!validate()) return null;
+        public @NotNull List<PumpjackHandler.ReservoirType> register() {
+            if (!validate()) return Collections.emptyList();
 
             PumpjackHandler.ReservoirType recipe = new PumpjackHandler.ReservoirType(name, fluidOutput.getOrEmpty(0).getFluid().getName(), minSize, maxSize, replenishRate);
 
@@ -245,7 +242,7 @@ public class Reservoir extends VirtualizedRegistry<Pair<PumpjackHandler.Reservoi
             else recipe.biomeWhitelist = biomesArray;
 
             ModSupport.IMMERSIVE_PETROLEUM.get().reservoir.add(recipe, weight);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

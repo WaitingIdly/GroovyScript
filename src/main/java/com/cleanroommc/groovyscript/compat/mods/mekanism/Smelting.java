@@ -36,7 +36,7 @@ public class Smelting extends VirtualizedMekanismRegistry<SmeltingRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond_block'), item('minecraft:clay')", commented = true))
-    public SmeltingRecipe add(IIngredient ingredient, ItemStack output) {
+    public List<SmeltingRecipe> add(IIngredient ingredient, ItemStack output) {
         return recipeBuilder().output(output).input(ingredient).register();
     }
 

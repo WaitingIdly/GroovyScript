@@ -11,9 +11,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Packing extends StandardListRegistry<PackingRecipe> {
@@ -83,12 +85,12 @@ public class Packing extends StandardListRegistry<PackingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PackingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PackingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             PackingRecipe recipe = new PackingRecipe(BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), compress);
             recipe.setJeiOutput(IngredientHelper.isEmpty(jeiOutput) ? IngredientHelper.toItemStack(compress) : jeiOutput);
             ModSupport.BETTER_WITH_ADDONS.get().packing.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

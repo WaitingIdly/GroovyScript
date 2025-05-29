@@ -8,11 +8,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.core.mixin.thebetweenlands.DruidAltarRecipeAccessor;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.IDruidAltarRecipe;
 import thebetweenlands.common.recipe.misc.DruidAltarRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.thebetweenlands.druid_altar.note0", type = Admonition.Type.WARNING))
 public class DruidAltar extends StandardListRegistry<IDruidAltarRecipe> {
@@ -63,20 +66,21 @@ public class DruidAltar extends StandardListRegistry<IDruidAltarRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IDruidAltarRecipe register() {
-            if (!validate()) return null;
-            IDruidAltarRecipe recipe = null;
+        public @NotNull List<IDruidAltarRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<IDruidAltarRecipe> list = new ArrayList<>();
             for (var input1 : input.get(0).getMatchingStacks()) {
                 for (var input2 : input.get(1).getMatchingStacks()) {
                     for (var input3 : input.get(2).getMatchingStacks()) {
                         for (var input4 : input.get(3).getMatchingStacks()) {
-                            recipe = new DruidAltarRecipe(input1, input2, input3, input4, output.get(0));
+                            IDruidAltarRecipe recipe = new DruidAltarRecipe(input1, input2, input3, input4, output.get(0));
+                            list.add(recipe);
                             ModSupport.BETWEENLANDS.get().druidAltar.add(recipe);
                         }
                     }
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

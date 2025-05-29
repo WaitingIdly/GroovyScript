@@ -8,10 +8,9 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
 
 @RegistryDescription
 public class Centrifuge extends StandardListRegistry<MachineRecipes.MachineRecipe<ItemStack, ItemStack[]>> {
@@ -76,14 +75,15 @@ public class Centrifuge extends StandardListRegistry<MachineRecipes.MachineRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MachineRecipes.MachineRecipe<ItemStack, ItemStack[]> register() {
-            if (!validate()) return null;
-            MachineRecipes.MachineRecipe<ItemStack, ItemStack[]> recipe = null;
+        public @NotNull List<MachineRecipes.MachineRecipe<ItemStack, ItemStack[]>> register() {
+            if (!validate()) return Collections.emptyList();
+            List<MachineRecipes.MachineRecipe<ItemStack, ItemStack[]>> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new MachineRecipes.MachineRecipe<>(stack, output.toArray(new ItemStack[0]), allowStoneParts);
+                var recipe = new MachineRecipes.MachineRecipe<>(stack, output.toArray(new ItemStack[0]), allowStoneParts);
                 ModSupport.FACTORY_TECH.get().centrifuge.add(recipe);
+                list.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

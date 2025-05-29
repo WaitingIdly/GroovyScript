@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import essentialcraft.api.MagicianTableRecipe;
 import essentialcraft.api.MagicianTableRecipes;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.essentialcraft.magician_table.note0", type = Admonition.Type.WARNING))
 public class MagicianTable extends StandardListRegistry<MagicianTableRecipe> {
@@ -69,13 +71,13 @@ public class MagicianTable extends StandardListRegistry<MagicianTableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MagicianTableRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MagicianTableRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             Ingredient[] inputIngredient = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             MagicianTableRecipe recipe = new MagicianTableRecipe(inputIngredient, output.get(0), mru);
             ModSupport.ESSENTIALCRAFT.get().magicianTable.addScripted(recipe);
             MagicianTableRecipes.addRecipe(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

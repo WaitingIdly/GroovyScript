@@ -13,10 +13,9 @@ import rustic.common.crafting.ICrushingTubRecipe;
 import rustic.common.crafting.Recipes;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class CrushingTub extends StandardListRegistry<ICrushingTubRecipe> {

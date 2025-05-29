@@ -29,7 +29,7 @@ public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<Thermal
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "fluid('water'), fluid('steam')", commented = true))
-    public ThermalEvaporationRecipe add(FluidStack input, FluidStack output) {
+    public List<ThermalEvaporationRecipe> add(FluidStack input, FluidStack output) {
         return recipeBuilder().fluidInput(input).fluidOutput(output).register();
     }
 

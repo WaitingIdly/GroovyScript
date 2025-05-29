@@ -28,7 +28,7 @@ public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeut
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('water'), gas('hydrogen')", commented = true))
-    public SolarNeutronRecipe add(GasStack input, GasStack output) {
+    public List<SolarNeutronRecipe> add(GasStack input, GasStack output) {
         return recipeBuilder().gasOutput(output).gasInput(input).register();
     }
 

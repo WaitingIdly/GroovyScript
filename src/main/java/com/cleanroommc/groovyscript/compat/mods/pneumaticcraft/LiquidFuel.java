@@ -9,8 +9,10 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import me.desht.pneumaticcraft.common.PneumaticCraftAPIHandler;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
@@ -89,10 +91,10 @@ public class LiquidFuel extends VirtualizedRegistry<Pair<String, Integer>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Pair<FluidStack, Integer> register() {
-            if (!validate()) return null;
+        public @NotNull List<Pair<FluidStack, Integer>> register() {
+            if (!validate()) return Collections.emptyList();
             ModSupport.PNEUMATIC_CRAFT.get().liquidFuel.add(fluidInput.get(0), pressure);
-            return Pair.of(fluidInput.get(0), pressure);
+            return Collections.singletonList(Pair.of(fluidInput.get(0), pressure));
         }
     }
 }

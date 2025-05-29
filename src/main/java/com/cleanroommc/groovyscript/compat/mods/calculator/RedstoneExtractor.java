@@ -13,9 +13,9 @@ import sonar.core.recipes.DefaultSonarRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 
 @RegistryDescription
 public class RedstoneExtractor extends StandardListRegistry<DefaultSonarRecipe.Value> {

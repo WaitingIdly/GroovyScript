@@ -36,7 +36,7 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipeTartaricForge add(Collection<IIngredient> input, ItemStack output, double minimumSouls, double soulDrain) {
+    public List<RecipeTartaricForge> add(Collection<IIngredient> input, ItemStack output, double minimumSouls, double soulDrain) {
         return recipeBuilder()
                 .soulDrain(soulDrain)
                 .minimumSouls(minimumSouls)

@@ -13,9 +13,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES, admonition = @Admonition(value = "groovyscript.wiki.betterwithaddons.lure_tree.note0", type = Admonition.Type.INFO))
 public class LureTree extends StandardListRegistry<TileEntityLureTree.TreeFood> {
@@ -105,14 +108,15 @@ public class LureTree extends StandardListRegistry<TileEntityLureTree.TreeFood> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TileEntityLureTree.TreeFood register() {
-            if (!validate()) return null;
-            TileEntityLureTree.TreeFood recipe = null;
+        public @NotNull List<TileEntityLureTree.TreeFood> register() {
+            if (!validate()) return Collections.emptyList();
+            List<TileEntityLureTree.TreeFood> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new TileEntityLureTree.TreeFood(stack, food);
+                var recipe = new TileEntityLureTree.TreeFood(stack, food);
+                list.add(recipe);
                 ModSupport.BETTER_WITH_ADDONS.get().lureTree.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

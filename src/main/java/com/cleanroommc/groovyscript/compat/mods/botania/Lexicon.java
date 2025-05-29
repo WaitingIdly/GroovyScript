@@ -229,12 +229,12 @@ public class Lexicon {
         }
 
         @MethodDescription(type = MethodDescription.Type.ADDITION)
-        public LexiconEntry add(String name, LexiconCategory category) {
+        public List<LexiconEntry> add(String name, LexiconCategory category) {
             return entryBuilder().name(name).category(category).register();
         }
 
         @MethodDescription(type = MethodDescription.Type.ADDITION)
-        public LexiconEntry add(String name, String category) {
+        public List<LexiconEntry> add(String name, String category) {
             return entryBuilder().name(name).category(category).register();
         }
 

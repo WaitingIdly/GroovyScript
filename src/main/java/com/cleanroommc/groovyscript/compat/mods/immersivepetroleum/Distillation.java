@@ -10,9 +10,11 @@ import flaxbeard.immersivepetroleum.api.crafting.DistillationRecipe;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Distillation extends StandardListRegistry<DistillationRecipe> {
@@ -123,11 +125,11 @@ public class Distillation extends StandardListRegistry<DistillationRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DistillationRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DistillationRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             DistillationRecipe recipe = new DistillationRecipe(fluidOutput.toArray(new FluidStack[0]), output.toArray(new ItemStack[0]), fluidInput.get(0), energy, time, chance.elements());
             ModSupport.IMMERSIVE_PETROLEUM.get().distillation.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

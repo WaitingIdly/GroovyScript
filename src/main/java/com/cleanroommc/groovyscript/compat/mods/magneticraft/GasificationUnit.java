@@ -10,9 +10,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.gasificationunit.IGasificationUnitRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class GasificationUnit extends StandardListRegistry<IGasificationUnitRecipe> {
@@ -83,19 +86,20 @@ public class GasificationUnit extends StandardListRegistry<IGasificationUnitReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IGasificationUnitRecipe register() {
-            if (!validate()) return null;
-            IGasificationUnitRecipe recipe = null;
+        public @NotNull List<IGasificationUnitRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
-                recipe = MagneticraftApi.getGasificationUnitRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.getOrEmpty(0), fluidOutput.getOrEmpty(0), duration, minTemperature, true);
+                var recipe = MagneticraftApi.getGasificationUnitRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.getOrEmpty(0), fluidOutput.getOrEmpty(0), duration, minTemperature, true);
                 ModSupport.MAGNETICRAFT.get().gasificationUnit.add(recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = MagneticraftApi.getGasificationUnitRecipeManager().createRecipe(stack, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), duration, minTemperature, false);
-                    ModSupport.MAGNETICRAFT.get().gasificationUnit.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<IGasificationUnitRecipe> list = new ArrayList<>();
+            for (var stack : input.get(0).getMatchingStacks()) {
+                var recipe = MagneticraftApi.getGasificationUnitRecipeManager().createRecipe(stack, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), duration, minTemperature, false);
+                list.add(recipe);
+                ModSupport.MAGNETICRAFT.get().gasificationUnit.add(recipe);
+            }
+            return list;
         }
     }
 }

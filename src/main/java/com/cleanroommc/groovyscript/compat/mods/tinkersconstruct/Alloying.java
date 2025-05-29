@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.smeltery.AlloyRecipe;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription

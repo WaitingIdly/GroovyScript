@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.meteor.extrabotany.api.ExtraBotanyAPI;
 import com.meteor.extrabotany.common.crafting.recipe.RecipePedestal;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Pedestal extends StandardListRegistry<RecipePedestal> {
@@ -30,7 +33,7 @@ public class Pedestal extends StandardListRegistry<RecipePedestal> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipePedestal add(IIngredient input, ItemStack output) {
+    public List<RecipePedestal> add(IIngredient input, ItemStack output) {
         return recipeBuilder().input(input).output(output).register();
     }
 
@@ -73,14 +76,15 @@ public class Pedestal extends StandardListRegistry<RecipePedestal> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipePedestal register() {
-            if (!validate()) return null;
-            RecipePedestal recipe = null;
+        public @NotNull List<RecipePedestal> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipePedestal> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {
-                recipe = new RecipePedestal(output.get(0), matchingStack);
+                var recipe = new RecipePedestal(output.get(0), matchingStack);
+                list.add(recipe);
                 ModSupport.EXTRA_BOTANY.get().pedestal.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

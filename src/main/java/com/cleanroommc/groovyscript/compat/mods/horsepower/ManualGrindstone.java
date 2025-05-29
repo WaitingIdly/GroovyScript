@@ -9,12 +9,15 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import se.gory_moon.horsepower.recipes.GrindstoneRecipe;
 import se.gory_moon.horsepower.recipes.HPRecipes;
 import se.gory_moon.horsepower.recipes.HandGrindstoneRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ManualGrindstone extends StandardListRegistry<GrindstoneRecipe> {
@@ -53,7 +56,7 @@ public class ManualGrindstone extends StandardListRegistry<GrindstoneRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.manual_grindstone.add0", type = MethodDescription.Type.ADDITION)
-    public GrindstoneRecipe add(IIngredient input, ItemStack output, int time) {
+    public List<GrindstoneRecipe> add(IIngredient input, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .output(output)
@@ -62,7 +65,7 @@ public class ManualGrindstone extends StandardListRegistry<GrindstoneRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.manual_grindstone.add1", type = MethodDescription.Type.ADDITION)
-    public GrindstoneRecipe add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
+    public List<GrindstoneRecipe> add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
         return recipeBuilder()
                 .time(time)
                 .chance(chance)
@@ -117,14 +120,15 @@ public class ManualGrindstone extends StandardListRegistry<GrindstoneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable GrindstoneRecipe register() {
-            if (!validate()) return null;
-            GrindstoneRecipe recipe = null;
+        public @NotNull List<GrindstoneRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<GrindstoneRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new HandGrindstoneRecipe(stack, output.get(0), output.getOrEmpty(1), chance, time);
+                var recipe = new HandGrindstoneRecipe(stack, output.get(0), output.getOrEmpty(1), chance, time);
+                list.add(recipe);
                 ModSupport.HORSE_POWER.get().manualGrindstone.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

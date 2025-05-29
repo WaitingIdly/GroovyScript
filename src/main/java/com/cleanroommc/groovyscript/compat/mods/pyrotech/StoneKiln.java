@@ -10,7 +10,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.ModuleTechMachine;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.StoneKilnRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class StoneKiln extends ForgeRegistryWrapper<StoneKilnRecipe> {
@@ -25,7 +28,7 @@ public class StoneKiln extends ForgeRegistryWrapper<StoneKilnRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'clay_to_iron_stone', item('minecraft:clay_ball') * 5, item('minecraft:iron_ingot'), 1200, 0.5f, item('minecraft:dirt'), item('minecraft:cobblestone')"))
-    public StoneKilnRecipe add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, ItemStack... failureOutput) {
+    public List<StoneKilnRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, ItemStack... failureOutput) {
         return recipeBuilder()
                 .burnTime(burnTime)
                 .failureChance(failureChance)
@@ -128,11 +131,11 @@ public class StoneKiln extends ForgeRegistryWrapper<StoneKilnRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable StoneKilnRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<StoneKilnRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             StoneKilnRecipe recipe = new StoneKilnRecipe(output.get(0), input.get(0).toMcIngredient(), burnTime, failureChance, failureOutput.toArray(new ItemStack[0])).setRegistryName(super.name);
             PyroTech.stoneKiln.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.MeltingCrucibleRecipe;
 import mctmods.immersivetechnology.common.Config;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class MeltingCrucible extends StandardListRegistry<MeltingCrucibleRecipe> {
@@ -96,11 +98,11 @@ public class MeltingCrucible extends StandardListRegistry<MeltingCrucibleRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MeltingCrucibleRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MeltingCrucibleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             MeltingCrucibleRecipe recipe = new MeltingCrucibleRecipe(fluidOutput.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy, time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().meltingCrucible.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

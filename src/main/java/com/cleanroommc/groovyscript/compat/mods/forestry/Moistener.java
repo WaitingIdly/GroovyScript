@@ -28,7 +28,7 @@ public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
         restoreFromBackup().forEach(MoistenerRecipeManagerAccessor.getRecipes()::add);
     }
 
-    public IMoistenerRecipe add(ItemStack output, IIngredient input, int time) {
+    public List<IMoistenerRecipe> add(ItemStack output, IIngredient input, int time) {
         return recipeBuilder().time(time).output(output).input(input).register();
     }
 

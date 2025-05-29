@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.lothrazar.cyclicmagic.CyclicContent;
 import com.lothrazar.cyclicmagic.block.solidifier.RecipeSolidifier;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -78,15 +80,16 @@ public class Solidifier extends StandardListRegistry<RecipeSolidifier> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeSolidifier register() {
-            if (!validate()) return null;
-            RecipeSolidifier recipe = null;
+        public @NotNull List<RecipeSolidifier> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipeSolidifier> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);
             for (List<ItemStack> stacks : cartesian) {
-                recipe = new RecipeSolidifier(stacks.toArray(new ItemStack[0]), output.get(0), fluidInput.get(0).getFluid().getName(), fluidInput.get(0).amount);
+                var recipe = new RecipeSolidifier(stacks.toArray(new ItemStack[0]), output.get(0), fluidInput.get(0).getFluid().getName(), fluidInput.get(0).amount);
+                list.add(recipe);
                 ModSupport.CYCLIC.get().solidifier.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

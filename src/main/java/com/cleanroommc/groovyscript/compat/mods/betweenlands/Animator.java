@@ -17,11 +17,12 @@ import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.LootTable;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import thebetweenlands.api.recipes.IAnimatorRecipe;
 import thebetweenlands.common.recipe.misc.AnimatorRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -144,12 +145,12 @@ public class Animator extends StandardListRegistry<IAnimatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IAnimatorRecipe register() {
-            if (!validate()) return null;
-            AnimatorRecipe recipe = null;
+        public @NotNull List<IAnimatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<IAnimatorRecipe> list = new ArrayList<>();
             if (lootTable != null) {
                 for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = new AnimatorRecipe(stack, fuel, life, lootTable) {
+                    IAnimatorRecipe recipe = new AnimatorRecipe(stack, fuel, life, lootTable) {
 
                         /**
                          * In order to get Loot Table recipes to display properly we need to do this.
@@ -165,25 +166,27 @@ public class Animator extends StandardListRegistry<IAnimatorRecipe> {
                             return loot.isEmpty() ? ItemStack.EMPTY : loot.get(world.rand.nextInt(loot.size()));
                         }
                     };
+                    list.add(recipe);
                     ModSupport.BETWEENLANDS.get().animator.add(recipe);
                 }
             } else if (entity != null) {
                 if (output.isEmpty()) {
                     for (var stack : input.get(0).getMatchingStacks()) {
-                        recipe = new AnimatorRecipe(stack, fuel, life, entity);
+                        AnimatorRecipe recipe = new AnimatorRecipe(stack, fuel, life, entity);
                         recipe.setRenderEntity(render);
+                        list.add(recipe);
                         ModSupport.BETWEENLANDS.get().animator.add(recipe);
                     }
                 } else {
                     for (var stack : input.get(0).getMatchingStacks()) {
-                        recipe = new AnimatorRecipe(stack, fuel, life, output.get(0), entity);
+                        AnimatorRecipe recipe = new AnimatorRecipe(stack, fuel, life, output.get(0), entity);
                         recipe.setRenderEntity(render);
+                        list.add(recipe);
                         ModSupport.BETWEENLANDS.get().animator.add(recipe);
                     }
                 }
             }
-            ModSupport.BETWEENLANDS.get().animator.add(recipe);
-            return recipe;
+            return list;
         }
     }
 }

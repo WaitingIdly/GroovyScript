@@ -28,7 +28,7 @@ public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('water'), gas('hydrogen')", commented = true))
-    public WasherRecipe add(GasStack input, GasStack output) {
+    public List<WasherRecipe> add(GasStack input, GasStack output) {
         return recipeBuilder().gasOutput(output).gasInput(input).register();
     }
 

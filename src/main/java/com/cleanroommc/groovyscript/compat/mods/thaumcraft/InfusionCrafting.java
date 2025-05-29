@@ -53,7 +53,7 @@ public class InfusionCrafting extends VirtualizedRegistry<Pair<ResourceLocation,
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public InfusionRecipe add(String research, ItemStack outputResult, int inst, Collection<AspectStack> aspects, IIngredient centralItem, IIngredient... input) {
+    public List<InfusionRecipe> add(String research, ItemStack outputResult, int inst, Collection<AspectStack> aspects, IIngredient centralItem, IIngredient... input) {
         return recipeBuilder().researchKey(research).mainInput(centralItem).instability(inst).aspect(aspects).input(input).output(outputResult).register();
     }
 

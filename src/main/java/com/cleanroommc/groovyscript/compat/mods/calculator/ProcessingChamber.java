@@ -13,9 +13,9 @@ import sonar.calculator.mod.common.recipes.ProcessingChamberRecipes;
 import sonar.core.recipes.ISonarRecipeObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 
 @RegistryDescription
 public class ProcessingChamber extends StandardListRegistry<CalculatorRecipe> {

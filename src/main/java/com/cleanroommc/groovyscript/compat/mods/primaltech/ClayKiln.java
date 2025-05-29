@@ -8,10 +8,13 @@ import com.cleanroommc.groovyscript.core.mixin.primal_tech.ClayKilnRecipesAccess
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import primal_tech.recipes.ClayKilnRecipes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ClayKiln extends StandardListRegistry<ClayKilnRecipes> {
@@ -30,7 +33,7 @@ public class ClayKiln extends StandardListRegistry<ClayKilnRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public ClayKilnRecipes add(ItemStack output, IIngredient input, int cookTime) {
+    public List<ClayKilnRecipes> add(ItemStack output, IIngredient input, int cookTime) {
         return recipeBuilder()
                 .cookTime(cookTime)
                 .input(input)
@@ -87,14 +90,15 @@ public class ClayKiln extends StandardListRegistry<ClayKilnRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ClayKilnRecipes register() {
-            if (!validate()) return null;
-            ClayKilnRecipes recipe = null;
+        public @NotNull List<ClayKilnRecipes> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ClayKilnRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {
-                recipe = ClayKilnRecipesAccessor.createClayKilnRecipes(output.get(0), matchingStack, cookTime);
+                ClayKilnRecipes recipe = ClayKilnRecipesAccessor.createClayKilnRecipes(output.get(0), matchingStack, cookTime);
+                list.add(recipe);
                 ModSupport.PRIMAL_TECH.get().clayKiln.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

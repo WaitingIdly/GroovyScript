@@ -11,7 +11,6 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import zmaster587.libVulpes.interfaces.IRecipe;
 import zmaster587.libVulpes.recipe.RecipesMachine;
 import zmaster587.libVulpes.tile.multiblock.TileMultiblockMachine;
@@ -90,14 +89,13 @@ public abstract class BaseRegistry extends StandardListRegistry<IRecipe> {
     public abstract static class RecipeBuilder extends AbstractRecipeBuilder<IRecipe> {
         // still have to override the Validate method + add getRegistry method
 
+        protected final List<Float> outputChances = new ArrayList<>();
         @Property(value = "groovyscript.wiki.advancedrocketry.power.value", needsOverride = true)
         protected int power = 0;
         @Property(value = "groovyscript.wiki.advancedrocketry.time.value", needsOverride = true)
         protected int time = 0;
         @Property(value = "groovyscript.wiki.advancedrocketry.outputSize.value", needsOverride = true)
         protected int outputSize = 0;
-
-        protected final List<Float> outputChances = new ArrayList<>();
 
         // 0.0f is used because that's what AR uses for "100% chance". Copium.
         @Override
@@ -128,8 +126,8 @@ public abstract class BaseRegistry extends StandardListRegistry<IRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             List<List<ItemStack>> inputs = new LinkedList<>();
             Map<Integer, String> oredicts = new HashMap<>();
             for (int i = 0; i < input.size(); i++) {
@@ -156,7 +154,7 @@ public abstract class BaseRegistry extends StandardListRegistry<IRecipe> {
             RecipesMachine.Recipe r = new RecipesMachine.Recipe(outputs, inputs, fluidOutputs, fluidInput, time, power, oredicts);
             if (outputSize > 0) r.setMaxOutputSize(outputSize);
             getRegistry().add(r);
-            return r;
+            return Collections.singletonList(r);
         }
     }
 

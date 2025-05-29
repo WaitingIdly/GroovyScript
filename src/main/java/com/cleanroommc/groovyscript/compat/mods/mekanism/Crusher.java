@@ -30,7 +30,7 @@ public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:clay_ball'), item('minecraft:gold_ingot')", commented = true))
-    public CrusherRecipe add(IIngredient ingredient, ItemStack output) {
+    public List<CrusherRecipe> add(IIngredient ingredient, ItemStack output) {
         return recipeBuilder().output(output).input(ingredient).register();
     }
 

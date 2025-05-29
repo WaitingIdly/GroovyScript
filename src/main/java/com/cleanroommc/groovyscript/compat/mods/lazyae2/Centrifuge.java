@@ -8,10 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import io.github.phantamanta44.libnine.LibNine;
 import io.github.phantamanta44.threng.recipe.PurifyRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Centrifuge extends StandardListRegistry<PurifyRecipe> {
@@ -73,12 +75,12 @@ public class Centrifuge extends StandardListRegistry<PurifyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PurifyRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<PurifyRecipe> register() {
+            if (!validate()) return Collections.emptyList();
 
             PurifyRecipe recipe = new PurifyRecipe(LazyAE2.matchesIIngredient(input.get(0)), output.get(0));
             ModSupport.LAZYAE2.get().centrifuge.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

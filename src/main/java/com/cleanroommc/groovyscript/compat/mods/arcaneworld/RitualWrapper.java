@@ -17,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import party.lemons.arcaneworld.crafting.ritual.Ritual;
 import party.lemons.arcaneworld.crafting.ritual.RitualRegistry;
 import party.lemons.arcaneworld.crafting.ritual.impl.*;
@@ -344,8 +343,8 @@ public class RitualWrapper extends ForgeRegistryWrapper<Ritual> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Ritual register() {
-            if (!validate()) return null;
+        public @NotNull List<Ritual> register() {
+            if (!validate()) return Collections.emptyList();
             var ingredients = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             Ritual recipe = switch (ritualType) {
                 case ARENA -> new RitualArena(entity, ingredients);
@@ -368,7 +367,7 @@ public class RitualWrapper extends ForgeRegistryWrapper<Ritual> {
             recipe.setRegistryName(super.name);
             recipe.setTranslationKey(translationKey);
             ModSupport.ARCANE_WORLD.get().ritual.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

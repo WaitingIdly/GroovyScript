@@ -32,12 +32,12 @@ public class MetallurgicInfuser extends VirtualizedMekanismRegistry<MetallurgicI
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.metallurgic_infuser.add0", type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:nether_star'), infusionType('groovy_example'), 50, item('minecraft:clay')", commented = true))
-    public MetallurgicInfuserRecipe add(IIngredient ingredient, InfuseType infuseType, int infuseAmount, ItemStack output) {
+    public List<MetallurgicInfuserRecipe> add(IIngredient ingredient, InfuseType infuseType, int infuseAmount, ItemStack output) {
         return recipeBuilder().infuse(infuseType).amount(infuseAmount).output(output).input(ingredient).register();
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.metallurgic_infuser.add1", type = MethodDescription.Type.ADDITION)
-    public MetallurgicInfuserRecipe add(IIngredient ingredient, String infuseType, int infuseAmount, ItemStack output) {
+    public List<MetallurgicInfuserRecipe> add(IIngredient ingredient, String infuseType, int infuseAmount, ItemStack output) {
         return recipeBuilder().infuse(infuseType).amount(infuseAmount).output(output).input(ingredient).register();
     }
 

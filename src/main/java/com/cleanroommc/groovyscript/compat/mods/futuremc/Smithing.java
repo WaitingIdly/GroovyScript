@@ -6,12 +6,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipe;
 import thedarkcolour.futuremc.recipe.smithing.SmithingRecipes;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.futuremc.smithing.note0", type = Admonition.Type.WARNING))
 public class Smithing extends StandardListRegistry<SmithingRecipe> {
@@ -58,11 +60,11 @@ public class Smithing extends StandardListRegistry<SmithingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SmithingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SmithingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SmithingRecipe recipe = new SmithingRecipe(input.get(0).toMcIngredient(), input.get(1).toMcIngredient(), output.get(0));
             ModSupport.FUTURE_MC.get().smithing.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

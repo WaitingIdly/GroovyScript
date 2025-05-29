@@ -12,7 +12,11 @@ import com.teammetallurgy.atum.api.recipe.spinningwheel.ISpinningWheelRecipe;
 import com.teammetallurgy.atum.api.recipe.spinningwheel.SpinningWheelRecipe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SpinningWheel extends ForgeRegistryWrapper<ISpinningWheelRecipe> {
@@ -29,11 +33,11 @@ public class SpinningWheel extends ForgeRegistryWrapper<ISpinningWheelRecipe> {
         return new RecipeBuilder();
     }
 
-    public ISpinningWheelRecipe add(IIngredient input, ItemStack output) {
+    public List<ISpinningWheelRecipe> add(IIngredient input, ItemStack output) {
         return add(input, output, 1);
     }
 
-    public ISpinningWheelRecipe add(IIngredient input, ItemStack output, int rotations) {
+    public List<ISpinningWheelRecipe> add(IIngredient input, ItemStack output, int rotations) {
         return recipeBuilder()
                 .rotations(rotations)
                 .input(input)
@@ -88,24 +92,24 @@ public class SpinningWheel extends ForgeRegistryWrapper<ISpinningWheelRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ISpinningWheelRecipe register() {
-            if (!validate()) return null;
-            ISpinningWheelRecipe recipe = null;
+        public @NotNull List<ISpinningWheelRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient oreDictIngredient) {
-                recipe = new SpinningWheelRecipe(oreDictIngredient.getOreDict(), output.get(0), rotations);
+                ISpinningWheelRecipe recipe = new SpinningWheelRecipe(oreDictIngredient.getOreDict(), output.get(0), rotations);
                 recipe.setRegistryName(super.name);
                 ModSupport.ATUM.get().spinningWheel.add(recipe);
-                return recipe;
-            } else {
-                ItemStack[] matchingStacks = input.get(0).getMatchingStacks();
-                for (int i = 0; i < matchingStacks.length; i++) {
-                    recipe = new SpinningWheelRecipe(matchingStacks[i], output.get(0), rotations);
-                    var location = new ResourceLocation(super.name.getNamespace(), super.name.getPath() + i);
-                    recipe.setRegistryName(location);
-                    ModSupport.ATUM.get().spinningWheel.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<ISpinningWheelRecipe> list = new ArrayList<>();
+            ItemStack[] matchingStacks = input.get(0).getMatchingStacks();
+            for (int i = 0; i < matchingStacks.length; i++) {
+                ISpinningWheelRecipe recipe = new SpinningWheelRecipe(matchingStacks[i], output.get(0), rotations);
+                var location = new ResourceLocation(super.name.getNamespace(), super.name.getPath() + i);
+                recipe.setRegistryName(location);
+                list.add(recipe);
+                ModSupport.ATUM.get().spinningWheel.add(recipe);
+            }
+            return list;
         }
     }
 }

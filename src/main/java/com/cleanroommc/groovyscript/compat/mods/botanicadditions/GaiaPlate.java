@@ -9,10 +9,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import tk.zeitheron.botanicadds.api.GaiaPlateRecipes;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class GaiaPlate extends StandardListRegistry<GaiaPlateRecipes.RecipeGaiaPlate> {
@@ -81,14 +83,14 @@ public class GaiaPlate extends StandardListRegistry<GaiaPlateRecipes.RecipeGaiaP
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable GaiaPlateRecipes.RecipeGaiaPlate register() {
-            if (!validate()) return null;
+        public @NotNull List<GaiaPlateRecipes.RecipeGaiaPlate> register() {
+            if (!validate()) return Collections.emptyList();
             Object[] inputs = input.stream()
                     .map(i -> i instanceof OreDictIngredient oreDictIngredient ? oreDictIngredient.getOreDict() : i.getMatchingStacks()[0])
                     .toArray();
             GaiaPlateRecipes.RecipeGaiaPlate recipe = new GaiaPlateRecipes.RecipeGaiaPlate(output.get(0), mana, inputs);
             ModSupport.BOTANIC_ADDITIONS.get().gaiaPlate.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

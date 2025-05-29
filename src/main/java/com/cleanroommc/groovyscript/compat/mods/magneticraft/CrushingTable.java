@@ -10,9 +10,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.crushingtable.ICrushingTableRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CrushingTable extends StandardListRegistry<ICrushingTableRecipe> {
@@ -63,19 +66,20 @@ public class CrushingTable extends StandardListRegistry<ICrushingTableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICrushingTableRecipe register() {
-            if (!validate()) return null;
-            ICrushingTableRecipe recipe = null;
+        public @NotNull List<ICrushingTableRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ICrushingTableRecipe> list = new ArrayList<>();
             if (input.get(0) instanceof OreDictIngredient ore) {
-                recipe = MagneticraftApi.getCrushingTableRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), true);
+                ICrushingTableRecipe recipe = MagneticraftApi.getCrushingTableRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), true);
                 ModSupport.MAGNETICRAFT.get().crushingTable.add(recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = MagneticraftApi.getCrushingTableRecipeManager().createRecipe(stack, output.get(0), false);
-                    ModSupport.MAGNETICRAFT.get().crushingTable.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            for (var stack : input.get(0).getMatchingStacks()) {
+                ICrushingTableRecipe recipe = MagneticraftApi.getCrushingTableRecipeManager().createRecipe(stack, output.get(0), false);
+                list.add(recipe);
+                ModSupport.MAGNETICRAFT.get().crushingTable.add(recipe);
+            }
+            return list;
         }
     }
 }

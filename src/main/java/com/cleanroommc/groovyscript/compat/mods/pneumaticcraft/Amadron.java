@@ -12,9 +12,10 @@ import me.desht.pneumaticcraft.common.recipes.AmadronOffer;
 import me.desht.pneumaticcraft.common.recipes.AmadronOfferManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription(
@@ -145,6 +146,11 @@ public class Amadron extends VirtualizedRegistry<AmadronOffer> {
         @Property
         private boolean periodic;
 
+        private static void register(boolean periodic, AmadronOffer recipe) {
+            if (periodic) ModSupport.PNEUMATIC_CRAFT.get().amadron.addPeriodic(recipe);
+            else ModSupport.PNEUMATIC_CRAFT.get().amadron.addStatic(recipe);
+        }
+
         @RecipeBuilderMethodDescription
         public RecipeBuilder periodic() {
             this.periodic = !periodic;
@@ -170,27 +176,23 @@ public class Amadron extends VirtualizedRegistry<AmadronOffer> {
             msg.add(output.isEmpty() && fluidOutput.isEmpty(), "either output or fluidOutput must contain an entry, but both were empty");
         }
 
-        private static void register(boolean periodic, AmadronOffer recipe) {
-            if (periodic) ModSupport.PNEUMATIC_CRAFT.get().amadron.addPeriodic(recipe);
-            else ModSupport.PNEUMATIC_CRAFT.get().amadron.addStatic(recipe);
-        }
-
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AmadronOffer register() {
-            if (!validate()) return null;
-            AmadronOffer recipe = null;
+        public @NotNull List<AmadronOffer> register() {
+            if (!validate()) return Collections.emptyList();
             Object o = fluidOutput.isEmpty() ? output.getOrEmpty(0) : fluidOutput.get(0);
             if (input.isEmpty()) {
-                recipe = new AmadronOffer(fluidInput.getOrEmpty(0), o);
+                AmadronOffer recipe = new AmadronOffer(fluidInput.getOrEmpty(0), o);
                 register(periodic, recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = new AmadronOffer(stack, o);
-                    register(periodic, recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<AmadronOffer> list = new ArrayList<>();
+            for (var stack : input.get(0).getMatchingStacks()) {
+                AmadronOffer recipe = new AmadronOffer(stack, o);
+                list.add(recipe);
+                register(periodic, recipe);
+            }
+            return list;
         }
     }
 }

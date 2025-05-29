@@ -4,9 +4,12 @@ import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.ScrapboxRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByOutput", example = @Example("item('minecraft:diamond')"))))
 public class Scrapbox extends AbstractGenericTechRebornRegistry {
@@ -57,11 +60,11 @@ public class Scrapbox extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ScrapboxRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ScrapboxRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ScrapboxRecipe recipe = new ScrapboxRecipe(output.get(0), time, perTick);
             ModSupport.TECH_REBORN.get().blastFurnace.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

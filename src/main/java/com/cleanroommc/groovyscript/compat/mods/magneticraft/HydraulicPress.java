@@ -11,9 +11,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.hydraulicpress.HydraulicPressMode;
 import com.cout970.magneticraft.api.registries.machines.hydraulicpress.IHydraulicPressRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 
 @RegistryDescription
@@ -109,19 +112,19 @@ public class HydraulicPress extends StandardListRegistry<IHydraulicPressRecipe> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IHydraulicPressRecipe register() {
-            if (!validate()) return null;
-            IHydraulicPressRecipe recipe = null;
+        public @NotNull List<IHydraulicPressRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
-                recipe = MagneticraftApi.getHydraulicPressRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), ticks, mode, true);
+                var recipe = MagneticraftApi.getHydraulicPressRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), ticks, mode, true);
                 ModSupport.MAGNETICRAFT.get().hydraulicPress.add(recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = MagneticraftApi.getHydraulicPressRecipeManager().createRecipe(stack, output.get(0), ticks, mode, false);
-                    ModSupport.MAGNETICRAFT.get().hydraulicPress.add(recipe);
-                }
             }
-            return recipe;
+            List<IHydraulicPressRecipe> list = new ArrayList<>();
+            for (var stack : input.get(0).getMatchingStacks()) {
+                var recipe = MagneticraftApi.getHydraulicPressRecipeManager().createRecipe(stack, output.get(0), ticks, mode, false);
+                list.add(recipe);
+                ModSupport.MAGNETICRAFT.get().hydraulicPress.add(recipe);
+            }
+            return list;
         }
     }
 }

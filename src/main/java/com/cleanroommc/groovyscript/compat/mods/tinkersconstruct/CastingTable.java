@@ -11,22 +11,24 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.smeltery.CastingRecipe;
 import slimeknights.tconstruct.library.smeltery.ICastingRecipe;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CastingTable extends StandardListRegistry<ICastingRecipe> {
 
+    public CastingTable() {
+        super(Alias.generateOfClass(CastingTable.class).andGenerate("Table"));
+    }
+
     @RecipeBuilderDescription(example = @Example(".fluidInput(fluid('lava') * 50).output(item('minecraft:diamond')).coolingTime(750).consumesCast(true).cast(ore('gemEmerald'))"))
     public RecipeBuilder recipeBuilder() {
         return new RecipeBuilder();
-    }
-
-    public CastingTable() {
-        super(Alias.generateOfClass(CastingTable.class).andGenerate("Table"));
     }
 
     @Override
@@ -132,19 +134,17 @@ public class CastingTable extends StandardListRegistry<ICastingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICastingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ICastingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CastingRecipe recipe = new CastingRecipe(
                     output.get(0),
-                    cast != null
-                            ? MeltingRecipeBuilder.recipeMatchFromIngredient(cast)
-                            : null,
+                    cast != null ? MeltingRecipeBuilder.recipeMatchFromIngredient(cast) : null,
                     fluidInput.get(0),
                     time,
                     consumesCast,
                     false);
             add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

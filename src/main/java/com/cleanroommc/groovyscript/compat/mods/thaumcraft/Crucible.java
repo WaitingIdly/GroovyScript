@@ -53,7 +53,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public CrucibleRecipe add(String researchKey, ItemStack result, IIngredient catalyst, AspectList tags) {
+    public List<CrucibleRecipe> add(String researchKey, ItemStack result, IIngredient catalyst, AspectList tags) {
         return recipeBuilder().researchKey(researchKey).catalyst(catalyst).aspect(tags).output(result).register();
     }
 

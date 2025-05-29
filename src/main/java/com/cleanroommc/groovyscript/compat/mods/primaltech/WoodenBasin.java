@@ -10,12 +10,10 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import primal_tech.recipes.WoodenBasinRecipes;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @RegistryDescription(
         admonition = @Admonition(type = Admonition.Type.WARNING, value = "groovyscript.wiki.primal_tech.wooden_basin.note0")
@@ -36,7 +34,7 @@ public class WoodenBasin extends StandardListRegistry<WoodenBasinRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public WoodenBasinRecipes add(ItemStack output, FluidStack fluid, IIngredient... inputs) {
+    public List<WoodenBasinRecipes> add(ItemStack output, FluidStack fluid, IIngredient... inputs) {
         return recipeBuilder()
                 .input(inputs)
                 .fluidInput(fluid)
@@ -90,15 +88,16 @@ public class WoodenBasin extends StandardListRegistry<WoodenBasinRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WoodenBasinRecipes register() {
-            if (!validate()) return null;
-            WoodenBasinRecipes recipe = null;
+        public @NotNull List<WoodenBasinRecipes> register() {
+            if (!validate()) return Collections.emptyList();
+            List<WoodenBasinRecipes> list = new ArrayList<>();
             List<List<Object>> cartesian = IngredientHelper.cartesianProductOres(input);
             for (List<Object> entry : cartesian) {
-                recipe = WoodenBasinRecipesAccessor.createWoodenBasinRecipes(output.get(0), fluidInput.get(0), entry.toArray());
+                WoodenBasinRecipes recipe = WoodenBasinRecipesAccessor.createWoodenBasinRecipes(output.get(0), fluidInput.get(0), entry.toArray());
+                list.add(recipe);
                 ModSupport.PRIMAL_TECH.get().woodenBasin.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

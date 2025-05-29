@@ -20,11 +20,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Collection;
-import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription(

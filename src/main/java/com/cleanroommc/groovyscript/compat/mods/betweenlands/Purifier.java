@@ -8,11 +8,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.core.mixin.thebetweenlands.PurifierRecipeAccessor;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.IPurifierRecipe;
 import thebetweenlands.common.recipe.purifier.PurifierRecipeStandard;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Purifier extends StandardListRegistry<IPurifierRecipe> {
@@ -63,14 +66,15 @@ public class Purifier extends StandardListRegistry<IPurifierRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IPurifierRecipe register() {
-            if (!validate()) return null;
-            IPurifierRecipe recipe = null;
+        public @NotNull List<IPurifierRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<IPurifierRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new PurifierRecipeStandard(output.get(0), stack);
+                var recipe = new PurifierRecipeStandard(output.get(0), stack);
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().purifier.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

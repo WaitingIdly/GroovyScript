@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.shiroroku.theaurorian.Recipes.ScrapperRecipe;
 import com.shiroroku.theaurorian.Recipes.ScrapperRecipeHandler;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Scrapper extends StandardListRegistry<ScrapperRecipe> {
@@ -65,14 +68,15 @@ public class Scrapper extends StandardListRegistry<ScrapperRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ScrapperRecipe register() {
-            if (!validate()) return null;
-            ScrapperRecipe recipe = null;
+        public @NotNull List<ScrapperRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ScrapperRecipe> list = new ArrayList<>();
             for (ItemStack input1 : input.get(0).getMatchingStacks()) {
-                recipe = new ScrapperRecipe(input1, output.get(0));
+                var recipe = new ScrapperRecipe(input1, output.get(0));
+                list.add(recipe);
                 ModSupport.THE_AURORIAN.get().scrapper.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

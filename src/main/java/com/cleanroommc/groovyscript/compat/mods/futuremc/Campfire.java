@@ -6,12 +6,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipe;
 import thedarkcolour.futuremc.recipe.campfire.CampfireRecipes;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Campfire extends StandardListRegistry<CampfireRecipe> {
@@ -71,11 +73,11 @@ public class Campfire extends StandardListRegistry<CampfireRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CampfireRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CampfireRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CampfireRecipe recipe = new CampfireRecipe(input.get(0).toMcIngredient(), output.get(0), duration);
             ModSupport.FUTURE_MC.get().campfire.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

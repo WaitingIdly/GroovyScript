@@ -10,11 +10,14 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import se.gory_moon.horsepower.recipes.HPRecipes;
 import se.gory_moon.horsepower.recipes.PressRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Press extends StandardListRegistry<PressRecipe> {
@@ -52,7 +55,7 @@ public class Press extends StandardListRegistry<PressRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public PressRecipe add(IIngredient input, ItemStack output) {
+    public List<PressRecipe> add(IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .output(output)
                 .input(input)
@@ -60,7 +63,7 @@ public class Press extends StandardListRegistry<PressRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public PressRecipe add(IIngredient input, FluidStack output) {
+    public List<PressRecipe> add(IIngredient input, FluidStack output) {
         return recipeBuilder()
                 .fluidOutput(output)
                 .input(input)
@@ -100,21 +103,23 @@ public class Press extends StandardListRegistry<PressRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable PressRecipe register() {
-            if (!validate()) return null;
-            PressRecipe recipe = null;
+        public @NotNull List<PressRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<PressRecipe> list = new ArrayList<>();
             if (fluidOutput.isEmpty()) {
                 for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = new PressRecipe(stack, output.get(0), ItemStack.EMPTY, 0, 0);
+                    var recipe = new PressRecipe(stack, output.get(0), ItemStack.EMPTY, 0, 0);
+                    list.add(recipe);
                     ModSupport.HORSE_POWER.get().press.add(recipe);
                 }
             } else {
                 for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = new PressRecipe(stack, fluidOutput.get(0));
+                    var recipe = new PressRecipe(stack, fluidOutput.get(0));
+                    list.add(recipe);
                     ModSupport.HORSE_POWER.get().press.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

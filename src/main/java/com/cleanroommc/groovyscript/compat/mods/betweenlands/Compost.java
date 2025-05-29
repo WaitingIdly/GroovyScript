@@ -7,11 +7,14 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.ICompostBinRecipe;
 import thebetweenlands.common.recipe.misc.CompostRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Compost extends StandardListRegistry<ICompostBinRecipe> {
@@ -75,14 +78,15 @@ public class Compost extends StandardListRegistry<ICompostBinRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICompostBinRecipe register() {
-            if (!validate()) return null;
-            ICompostBinRecipe recipe = null;
+        public @NotNull List<ICompostBinRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ICompostBinRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new CompostRecipe(amount, time, stack);
+                ICompostBinRecipe recipe = new CompostRecipe(amount, time, stack);
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().compost.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

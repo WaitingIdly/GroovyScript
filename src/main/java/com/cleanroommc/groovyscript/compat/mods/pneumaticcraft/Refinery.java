@@ -8,10 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import me.desht.pneumaticcraft.common.recipes.RefineryRecipe;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Refinery extends StandardListRegistry<RefineryRecipe> {
@@ -77,11 +79,11 @@ public class Refinery extends StandardListRegistry<RefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RefineryRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<RefineryRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             RefineryRecipe recipe = new RefineryRecipe(requiredTemperature, fluidInput.get(0), fluidOutput.toArray(new FluidStack[0]));
             ModSupport.PNEUMATIC_CRAFT.get().refinery.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

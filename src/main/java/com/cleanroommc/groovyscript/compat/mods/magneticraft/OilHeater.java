@@ -8,9 +8,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.oilheater.IOilHeaterRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class OilHeater extends StandardListRegistry<IOilHeaterRecipe> {
@@ -73,11 +75,11 @@ public class OilHeater extends StandardListRegistry<IOilHeaterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IOilHeaterRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IOilHeaterRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IOilHeaterRecipe recipe = MagneticraftApi.getOilHeaterRecipeManager().createRecipe(fluidInput.get(0), fluidOutput.get(0), duration, minTemperature);
             ModSupport.MAGNETICRAFT.get().oilHeater.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

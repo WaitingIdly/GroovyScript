@@ -27,7 +27,7 @@ public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuser
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('copper') * 10, gas('iron'), gas('gold') * 15", commented = true))
-    public ChemicalInfuserRecipe add(GasStack leftInput, GasStack rightInput, GasStack output) {
+    public List<ChemicalInfuserRecipe> add(GasStack leftInput, GasStack rightInput, GasStack output) {
         return recipeBuilder().gasInput(leftInput, rightInput).gasOutput(output).register();
     }
 

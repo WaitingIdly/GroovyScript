@@ -5,9 +5,12 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.ImplosionCompressorRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = {
         @MethodDescription(method = "removeByInput", example = @Example("item('techreborn:ingot:22')")),
@@ -62,12 +65,12 @@ public class ImplosionCompressor extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ImplosionCompressorRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<ImplosionCompressorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ImplosionCompressorRecipe recipe = new ImplosionCompressorRecipe(Helper.getStackFromIIngredient(input.get(0)), input.size() >= 2 ? Helper.getStackFromIIngredient(input.get(1)) : null, output.get(0), output2, time, perTick);
             ModSupport.TECH_REBORN.get().implosionCompressor.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

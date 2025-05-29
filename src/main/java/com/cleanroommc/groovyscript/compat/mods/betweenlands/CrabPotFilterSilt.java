@@ -8,11 +8,14 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.core.mixin.thebetweenlands.CrabPotFilterRecipeSiltAccessor;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.ICrabPotFilterRecipeSilt;
 import thebetweenlands.common.recipe.misc.CrabPotFilterRecipeSilt;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CrabPotFilterSilt extends StandardListRegistry<ICrabPotFilterRecipeSilt> {
@@ -63,14 +66,15 @@ public class CrabPotFilterSilt extends StandardListRegistry<ICrabPotFilterRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ICrabPotFilterRecipeSilt register() {
-            if (!validate()) return null;
-            ICrabPotFilterRecipeSilt recipe = null;
+        public @NotNull List<ICrabPotFilterRecipeSilt> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ICrabPotFilterRecipeSilt> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new CrabPotFilterRecipeSilt(output.get(0), stack);
+                ICrabPotFilterRecipeSilt recipe = new CrabPotFilterRecipeSilt(output.get(0), stack);
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().crabPotFilterSilt.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -8,9 +8,13 @@ import com.cleanroommc.groovyscript.helper.SimpleObjectStream;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class FusionReactor extends VirtualizedRegistry<FusionReactorRecipe> {
@@ -123,16 +127,17 @@ public class FusionReactor extends VirtualizedRegistry<FusionReactorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable FusionReactorRecipe register() {
-            if (!validate()) return null;
-            FusionReactorRecipe recipe = null;
+        public @NotNull List<FusionReactorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<FusionReactorRecipe> list = new ArrayList<>();
             for (ItemStack top : input.get(0).getMatchingStacks()) {
                 for (ItemStack bottom : input.get(1).getMatchingStacks()) {
-                    recipe = new FusionReactorRecipe(top, bottom, output.get(0), start, perTick, time, size);
+                    var recipe = new FusionReactorRecipe(top, bottom, output.get(0), start, perTick, time, size);
+                    list.add(recipe);
                     ModSupport.TECH_REBORN.get().fusionReactor.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

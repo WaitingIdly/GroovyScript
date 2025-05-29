@@ -32,7 +32,7 @@ public class InjectionChamber extends VirtualizedMekanismRegistry<InjectionRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond'), gas('water'), item('minecraft:nether_star')", commented = true))
-    public InjectionRecipe add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
+    public List<InjectionRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
         return recipeBuilder().gasInput(gasInput).output(output).input(ingredient).register();
     }
 

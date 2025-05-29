@@ -13,7 +13,7 @@ import mezz.jei.api.IRecipeRegistry;
 import mezz.jei.api.recipe.IRecipeCategory;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 import java.util.function.Function;
@@ -52,10 +52,10 @@ public class Category extends VirtualizedRegistry<String> {
     }
 
     @MethodDescription
-    public CustomCategory add(String id,
-                              Function<IGuiHelper, ? extends IRecipeCategory<? extends IRecipeWrapper>> category,
-                              List<?> catalysts,
-                              List<? extends IRecipeWrapper> wrappers) {
+    public List<CustomCategory> add(String id,
+                                    Function<IGuiHelper, ? extends IRecipeCategory<? extends IRecipeWrapper>> category,
+                                    List<?> catalysts,
+                                    List<? extends IRecipeWrapper> wrappers) {
         return categoryBuilder()
                 .id(id)
                 .category(category)
@@ -275,11 +275,11 @@ public class Category extends VirtualizedRegistry<String> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CustomCategory register() {
-            if (!validate()) return null;
+        public @NotNull List<CustomCategory> register() {
+            if (!validate()) return Collections.emptyList();
             var customCategory = new CustomCategory(id, category, catalyst, wrapper);
             ModSupport.JEI.get().category.add(customCategory);
-            return customCategory;
+            return Collections.singletonList(customCategory);
         }
     }
 }

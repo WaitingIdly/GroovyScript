@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Refrigerator extends StandardListRegistry<MachineRecipes.MachineRecipe<FluidStack, ItemStack>> {
@@ -56,11 +58,11 @@ public class Refrigerator extends StandardListRegistry<MachineRecipes.MachineRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MachineRecipes.MachineRecipe<FluidStack, ItemStack> register() {
-            if (!validate()) return null;
+        public @NotNull List<MachineRecipes.MachineRecipe<FluidStack, ItemStack>> register() {
+            if (!validate()) return Collections.emptyList();
             var recipe = new MachineRecipes.MachineRecipe<>(fluidInput.get(0), output.get(0));
             ModSupport.FACTORY_TECH.get().refrigerator.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

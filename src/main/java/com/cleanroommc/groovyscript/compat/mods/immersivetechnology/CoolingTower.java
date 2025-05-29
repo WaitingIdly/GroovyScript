@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.CoolingTowerRecipe;
 import mctmods.immersivetechnology.common.Config;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class CoolingTower extends StandardListRegistry<CoolingTowerRecipe> {
@@ -87,11 +89,11 @@ public class CoolingTower extends StandardListRegistry<CoolingTowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CoolingTowerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CoolingTowerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CoolingTowerRecipe recipe = new CoolingTowerRecipe(fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidOutput.getOrEmpty(2), fluidInput.get(0), fluidInput.getOrEmpty(1), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().coolingTower.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

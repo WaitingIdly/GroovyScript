@@ -9,7 +9,10 @@ import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.ModuleTechMachine;
 import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.BrickOvenRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(
@@ -29,7 +32,7 @@ public class BrickOven extends ForgeRegistryWrapper<BrickOvenRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt_brick', item('minecraft:apple'), item('minecraft:dirt'), 1000"))
-    public BrickOvenRecipe add(String name, IIngredient input, ItemStack output, int duration) {
+    public List<BrickOvenRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)
@@ -97,11 +100,11 @@ public class BrickOven extends ForgeRegistryWrapper<BrickOvenRecipe> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable BrickOvenRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<BrickOvenRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             BrickOvenRecipe recipe = new BrickOvenRecipe(output.get(0), input.get(0).toMcIngredient(), duration).setRegistryName(super.name);
             PyroTech.brickOven.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

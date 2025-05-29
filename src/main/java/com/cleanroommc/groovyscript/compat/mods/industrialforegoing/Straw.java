@@ -10,10 +10,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.ForgeRegistryWrapper;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Straw extends ForgeRegistryWrapper<StrawHandler> {
@@ -28,7 +30,7 @@ public class Straw extends ForgeRegistryWrapper<StrawHandler> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.industrialforegoing.straw.add0", type = MethodDescription.Type.ADDITION)
-    public StrawHandler add(FluidStack fluidInput, Collection<PotionEffect> effect) {
+    public List<StrawHandler> add(FluidStack fluidInput, Collection<PotionEffect> effect) {
         return recipeBuilder()
                 .effect(effect)
                 .fluidInput(fluidInput)
@@ -36,7 +38,7 @@ public class Straw extends ForgeRegistryWrapper<StrawHandler> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.industrialforegoing.straw.add1", type = MethodDescription.Type.ADDITION)
-    public StrawHandler add(String name, FluidStack fluidInput, Collection<PotionEffect> effect) {
+    public List<StrawHandler> add(String name, FluidStack fluidInput, Collection<PotionEffect> effect) {
         return recipeBuilder()
                 .effect(effect)
                 .name(name)
@@ -93,13 +95,13 @@ public class Straw extends ForgeRegistryWrapper<StrawHandler> {
 
         @RecipeBuilderRegistrationMethod
         @Override
-        public @Nullable StrawHandler register() {
-            if (!validate()) return null;
+        public @NotNull List<StrawHandler> register() {
+            if (!validate()) return Collections.emptyList();
             PotionStrawHandler recipe = new PotionStrawHandler(fluidInput.get(0).getFluid());
             effect.forEach(recipe::addPotion);
             recipe.setRegistryName(this.name);
             ModSupport.INDUSTRIAL_FOREGOING.get().straw.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

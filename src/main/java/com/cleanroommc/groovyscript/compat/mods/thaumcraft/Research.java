@@ -11,6 +11,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
@@ -18,6 +19,9 @@ import thaumcraft.api.research.*;
 import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.research.ScanEnchantment;
 import thaumcraft.common.lib.research.ScanPotion;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Research extends VirtualizedRegistry<ResearchCategory> {
@@ -232,13 +236,13 @@ public class Research extends VirtualizedRegistry<ResearchCategory> {
         }
 
         @RecipeBuilderRegistrationMethod
-        public ResearchCategory register() {
+        public @NotNull List<ResearchCategory> register() {
             ResearchCategory category = background2 == null
                     ? new ResearchCategory(key, researchKey, formula, icon, background)
                     : new ResearchCategory(key, researchKey, formula, icon, background, background2);
 
             ModSupport.THAUMCRAFT.get().research.addCategory(category);
-            return category;
+            return Collections.singletonList(category);
         }
     }
 }

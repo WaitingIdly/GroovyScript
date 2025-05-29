@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import dalapo.factech.tileentity.specialized.TileEntityAgitator;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Agitator extends StandardListRegistry<TileEntityAgitator.AgitatorRecipe> {
@@ -70,19 +73,21 @@ public class Agitator extends StandardListRegistry<TileEntityAgitator.AgitatorRe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TileEntityAgitator.AgitatorRecipe register() {
-            if (!validate()) return null;
-            TileEntityAgitator.AgitatorRecipe recipe = null;
+        public @NotNull List<TileEntityAgitator.AgitatorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<TileEntityAgitator.AgitatorRecipe> list = new ArrayList<>();
             if (input.isEmpty()) {
-                recipe = new TileEntityAgitator.AgitatorRecipe(null, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), fluidInput.getOrEmpty(0), fluidInput.getOrEmpty(1));
+                TileEntityAgitator.AgitatorRecipe recipe = new TileEntityAgitator.AgitatorRecipe(null, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), fluidInput.getOrEmpty(0), fluidInput.getOrEmpty(1));
+                list.add(recipe);
                 ModSupport.FACTORY_TECH.get().agitator.add(recipe);
             } else {
                 for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = new TileEntityAgitator.AgitatorRecipe(stack, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), fluidInput.getOrEmpty(0), fluidInput.getOrEmpty(1));
+                    TileEntityAgitator.AgitatorRecipe recipe = new TileEntityAgitator.AgitatorRecipe(stack, output.getOrEmpty(0), fluidOutput.getOrEmpty(0), fluidInput.getOrEmpty(0), fluidInput.getOrEmpty(1));
+                    list.add(recipe);
                     ModSupport.FACTORY_TECH.get().agitator.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

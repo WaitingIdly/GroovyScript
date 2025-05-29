@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Saw extends StandardListRegistry<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> {
@@ -75,14 +78,15 @@ public class Saw extends StandardListRegistry<MachineRecipes.MachineRecipe<ItemS
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MachineRecipes.MachineRecipe<ItemStack, ItemStack> register() {
-            if (!validate()) return null;
-            MachineRecipes.MachineRecipe<ItemStack, ItemStack> recipe = null;
+        public @NotNull List<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> register() {
+            if (!validate()) return Collections.emptyList();
+            List<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new MachineRecipes.MachineRecipe<>(stack, output.get(0), allowStoneParts);
+                var recipe = new MachineRecipes.MachineRecipe<>(stack, output.get(0), allowStoneParts);
+                list.add(recipe);
                 ModSupport.FACTORY_TECH.get().saw.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

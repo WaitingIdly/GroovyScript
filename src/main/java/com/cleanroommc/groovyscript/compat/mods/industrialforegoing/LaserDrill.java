@@ -12,10 +12,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.biome.Biome;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -248,12 +249,12 @@ public class LaserDrill extends VirtualizedRegistry<Pair<LaserDrillEntry.LaserDr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable LaserDrillEntry.LaserDrillEntryExtended register() {
-            if (!validate()) return null;
+        public @NotNull List<LaserDrillEntry.LaserDrillEntryExtended> register() {
+            if (!validate()) return Collections.emptyList();
             LaserDrillEntry.LaserDrillEntryExtended recipe = LaserDrillEntry.findForOre(output.get(0), new LaserDrillEntry.LaserDrillEntryExtended(lensMeta, output.get(0)));
             LaserDrillEntry.OreRarity entry = new LaserDrillEntry.OreRarity(weight, whitelist, blacklist, maxY, minY);
             ModSupport.INDUSTRIAL_FOREGOING.get().laserDrill.add(recipe, entry);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

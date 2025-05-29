@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import mctmods.immersivetechnology.api.crafting.SolarTowerRecipe;
 import mctmods.immersivetechnology.common.Config;
 import net.minecraftforge.fluids.FluidStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SolarTower extends StandardListRegistry<SolarTowerRecipe> {
@@ -87,11 +89,11 @@ public class SolarTower extends StandardListRegistry<SolarTowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SolarTowerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<SolarTowerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             SolarTowerRecipe recipe = new SolarTowerRecipe(fluidOutput.get(0), fluidInput.get(0), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().solarTower.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

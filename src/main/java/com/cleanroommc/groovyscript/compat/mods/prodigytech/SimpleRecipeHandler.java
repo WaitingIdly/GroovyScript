@@ -11,9 +11,17 @@ import lykrast.prodigytech.common.recipe.SimpleRecipe;
 import lykrast.prodigytech.common.recipe.SimpleRecipeManager;
 import lykrast.prodigytech.common.util.Config;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class SimpleRecipeHandler extends SimpleRecipeHandlerAbstract<SimpleRecipe> {
+
+    SimpleRecipeHandler(String name, SimpleRecipeManager instance) {
+        super(name, instance);
+    }
 
     @RecipeBuilderDescription(example = {
             @Example(".input(item('minecraft:gold_ingot')).output(item('minecraft:diamond')).time(50)"),
@@ -23,8 +31,30 @@ public abstract class SimpleRecipeHandler extends SimpleRecipeHandlerAbstract<Si
         return new SimpleRecipeHandler.RecipeBuilder();
     }
 
-    SimpleRecipeHandler(String name, SimpleRecipeManager instance) {
-        super(name, instance);
+    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("item('minecraft:gravel')"))))
+    public static class RotaryGrinder extends SimpleRecipeHandler {
+
+        RotaryGrinder() {
+            super("Rotary Grinder", RotaryGrinderManager.INSTANCE);
+        }
+
+        @Override
+        protected int getDefaultTime() {
+            return Config.rotaryGrinderProcessTime;
+        }
+    }
+
+    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("item('minecraft:gravel')"))))
+    public static class MagneticReassembler extends SimpleRecipeHandler {
+
+        MagneticReassembler() {
+            super("Magnetic Reassembler", MagneticReassemblerManager.INSTANCE);
+        }
+
+        @Override
+        protected int getDefaultTime() {
+            return Config.magneticReassemblerProcessTime;
+        }
     }
 
     @Property(property = "input", comp = @Comp(eq = 1))
@@ -60,46 +90,21 @@ public abstract class SimpleRecipeHandler extends SimpleRecipeHandlerAbstract<Si
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SimpleRecipe register() {
-            if (!validate()) return null;
-            SimpleRecipe recipe = null;
+        public @NotNull List<SimpleRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IIngredient input1 = input.get(0);
             if (input1 instanceof OreDictIngredient oreDictIngredient) {
-                recipe = new SimpleRecipe(oreDictIngredient.getOreDict(), output.get(0), time);
+                SimpleRecipe recipe = new SimpleRecipe(oreDictIngredient.getOreDict(), output.get(0), time);
                 addRecipe(recipe);
-            } else {
-                for (ItemStack input : input1.getMatchingStacks()) {
-                    recipe = new SimpleRecipe(input, output.get(0), time);
-                    addRecipe(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
-        }
-    }
-
-    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("item('minecraft:gravel')"))))
-    public static class RotaryGrinder extends SimpleRecipeHandler {
-
-        RotaryGrinder() {
-            super("Rotary Grinder", RotaryGrinderManager.INSTANCE);
-        }
-
-        @Override
-        protected int getDefaultTime() {
-            return Config.rotaryGrinderProcessTime;
-        }
-    }
-
-    @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("item('minecraft:gravel')"))))
-    public static class MagneticReassembler extends SimpleRecipeHandler {
-
-        MagneticReassembler() {
-            super("Magnetic Reassembler", MagneticReassemblerManager.INSTANCE);
-        }
-
-        @Override
-        protected int getDefaultTime() {
-            return Config.magneticReassemblerProcessTime;
+            List<SimpleRecipe> list = new ArrayList<>();
+            for (ItemStack input : input1.getMatchingStacks()) {
+                SimpleRecipe recipe = new SimpleRecipe(input, output.get(0), time);
+                addRecipe(recipe);
+                list.add(recipe);
+            }
+            return list;
         }
     }
 }

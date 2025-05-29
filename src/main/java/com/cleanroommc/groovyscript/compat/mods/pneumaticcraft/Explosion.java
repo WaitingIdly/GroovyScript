@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import me.desht.pneumaticcraft.common.recipes.ExplosionCraftingRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(value = "groovyscript.wiki.pneumaticcraft.explosion.note0", type = Admonition.Type.TIP)
@@ -85,15 +88,15 @@ public class Explosion extends StandardListRegistry<ExplosionCraftingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ExplosionCraftingRecipe register() {
-            if (!validate()) return null;
-            ExplosionCraftingRecipe recipe = null;
+        public @NotNull List<ExplosionCraftingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ExplosionCraftingRecipe> list = new ArrayList<>();
             for (ItemStack stack : input.get(0).getMatchingStacks()) {
-                ExplosionCraftingRecipe recipe1 = new ExplosionCraftingRecipe(stack, output.get(0), lossRate);
-                ModSupport.PNEUMATIC_CRAFT.get().explosion.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                var recipe = new ExplosionCraftingRecipe(stack, output.get(0), lossRate);
+                list.add(recipe);
+                ModSupport.PNEUMATIC_CRAFT.get().explosion.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -2,15 +2,25 @@ package com.cleanroommc.groovyscript.compat.mods.prodigytech;
 
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
-import com.cleanroommc.groovyscript.api.documentation.annotations.*;
+import com.cleanroommc.groovyscript.api.documentation.annotations.Comp;
+import com.cleanroommc.groovyscript.api.documentation.annotations.Example;
+import com.cleanroommc.groovyscript.api.documentation.annotations.MethodDescription;
+import com.cleanroommc.groovyscript.api.documentation.annotations.Property;
+import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderDescription;
+import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderMethodDescription;
+import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderRegistrationMethod;
+import com.cleanroommc.groovyscript.api.documentation.annotations.RegistryDescription;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import lykrast.prodigytech.common.recipe.ExplosionFurnaceManager;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ExplosionFurnace extends StandardListRegistry<ExplosionFurnaceManager.ExplosionFurnaceRecipe> {
@@ -78,26 +88,26 @@ public class ExplosionFurnace extends StandardListRegistry<ExplosionFurnaceManag
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ExplosionFurnaceManager.ExplosionFurnaceRecipe register() {
-            if (!validate()) return null;
-            ExplosionFurnaceManager.ExplosionFurnaceRecipe recipe = null;
+        public @NotNull List<ExplosionFurnaceManager.ExplosionFurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ExplosionFurnaceManager.ExplosionFurnaceRecipe> list = new ArrayList<>();
             IIngredient inputItem = input.get(0);
             // We do not do the OreDict check like in other places as it adds far too much code bloat
             if (input.size() == 1) {
                 for (ItemStack it : inputItem.getMatchingStacks()) {
-                    recipe = new ExplosionFurnaceManager.ExplosionFurnaceRecipe(it, output.get(0), power);
+                    var recipe = new ExplosionFurnaceManager.ExplosionFurnaceRecipe(it, output.get(0), power);
+                    list.add(recipe);
                     ModSupport.PRODIGY_TECH.get().explosionFurnace.addRecipe(recipe);
                 }
-            } else {
-                for (ItemStack inp : inputItem.getMatchingStacks()) {
-                    for (ItemStack rea : input.get(1).getMatchingStacks()) {
-                        recipe = new ExplosionFurnaceManager.ExplosionFurnaceRecipe(inp, output.get(0), power, rea, craftPerReagent);
-                        ModSupport.PRODIGY_TECH.get().explosionFurnace.addRecipe(recipe);
-                    }
+            }
+            for (ItemStack inp : inputItem.getMatchingStacks()) {
+                for (ItemStack rea : input.get(1).getMatchingStacks()) {
+                    var recipe = new ExplosionFurnaceManager.ExplosionFurnaceRecipe(inp, output.get(0), power, rea, craftPerReagent);
+                    list.add(recipe);
+                    ModSupport.PRODIGY_TECH.get().explosionFurnace.addRecipe(recipe);
                 }
             }
-
-            return recipe;
+            return list;
         }
     }
 }

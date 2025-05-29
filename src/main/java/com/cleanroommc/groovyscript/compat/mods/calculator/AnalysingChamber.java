@@ -13,11 +13,7 @@ import sonar.calculator.mod.common.recipes.AnalysingChamberRecipes;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Collection;
+import java.util.*;
 
 
 /**

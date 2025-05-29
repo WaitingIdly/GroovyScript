@@ -15,10 +15,9 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 
 @RegistryDescription
 public class LightTransmutation extends StandardListRegistry<LightOreTransmutations.Transmutation> {

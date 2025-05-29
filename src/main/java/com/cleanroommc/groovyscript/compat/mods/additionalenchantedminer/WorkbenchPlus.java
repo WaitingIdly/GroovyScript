@@ -11,7 +11,7 @@ import com.yogpc.qp.tile.ItemDamage;
 import com.yogpc.qp.utils.IngredientWithCount;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import scala.collection.JavaConversions;
 import scala.collection.JavaConverters;
 import scala.collection.Seq;
@@ -100,8 +100,8 @@ public class WorkbenchPlus extends VirtualizedRegistry<IngredientRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IngredientRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IngredientRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             //convert Java List to Scala Seq
             List<List<IngredientWithCount>> inputJavaList = input.stream()
                     .map(i -> {
@@ -117,7 +117,7 @@ public class WorkbenchPlus extends VirtualizedRegistry<IngredientRecipe> {
                             .collect(Collectors.toList())).asScala().toSeq();
             IngredientRecipe recipe = new IngredientRecipe(this.name, output.get(0), energy, true, inputScalaList, true);
             ModSupport.ADDITIONAL_ENCHANTED_MINER.get().workbenchPlus.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

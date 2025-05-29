@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import lumien.randomthings.recipes.anvil.AnvilRecipe;
 import lumien.randomthings.recipes.anvil.AnvilRecipeHandler;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = {
         @Admonition(value = "groovyscript.wiki.randomthings.anvil.note0", type = Admonition.Type.TIP),
@@ -74,16 +77,17 @@ public class Anvil extends StandardListRegistry<AnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AnvilRecipe register() {
-            if (!validate()) return null;
-            AnvilRecipe recipe = null;
+        public @NotNull List<AnvilRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<AnvilRecipe> list = new ArrayList<>();
             for (var input1 : input.get(0).getMatchingStacks()) {
                 for (var input2 : input.get(1).getMatchingStacks()) {
-                    recipe = new AnvilRecipe(input1, input2, output.get(0), cost);
+                    AnvilRecipe recipe = new AnvilRecipe(input1, input2, output.get(0), cost);
+                    list.add(recipe);
                     ModSupport.RANDOM_THINGS.get().anvil.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

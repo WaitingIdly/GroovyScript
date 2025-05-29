@@ -11,10 +11,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import lykrast.prodigytech.common.recipe.AtomicReshaperManager;
 import lykrast.prodigytech.common.util.Config;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription
@@ -95,13 +96,11 @@ public class AtomicReshaper extends VirtualizedRegistry<AtomicReshaperManager.At
     @Property(property = "output", comp = @Comp(gte = 1))
     public static class RecipeBuilder extends AbstractRecipeBuilder<AtomicReshaperManager.AtomicReshaperRecipe> {
 
+        private final List<Integer> outputWeights = new ArrayList<>();
         @Property(comp = @Comp(gte = 1), defaultValue = "Config.atomicReshaperProcessTime")
         private int time = Config.atomicReshaperProcessTime;
-
         @Property(comp = @Comp(gte = 1))
         private int primordium;
-
-        private final List<Integer> outputWeights = new ArrayList<>();
 
         @RecipeBuilderMethodDescription
         public AtomicReshaper.RecipeBuilder time(int time) {
@@ -182,22 +181,22 @@ public class AtomicReshaper extends VirtualizedRegistry<AtomicReshaperManager.At
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AtomicReshaperManager.AtomicReshaperRecipe register() {
-            if (!validate()) return null;
-            AtomicReshaperManager.AtomicReshaperRecipe recipe = null;
+        public @NotNull List<AtomicReshaperManager.AtomicReshaperRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IIngredient inputItem = input.get(0);
             if (inputItem instanceof OreDictIngredient oreDictIngredient) {
                 String oredict = oreDictIngredient.getOreDict();
-                recipe = new AtomicReshaperManager.AtomicReshaperRecipe(oredict, time, primordium, getRecipeOutput());
+                AtomicReshaperManager.AtomicReshaperRecipe recipe = new AtomicReshaperManager.AtomicReshaperRecipe(oredict, time, primordium, getRecipeOutput());
                 ModSupport.PRODIGY_TECH.get().atomicReshaper.add(recipe);
-            } else {
-                for (ItemStack it : inputItem.getMatchingStacks()) {
-                    recipe = new AtomicReshaperManager.AtomicReshaperRecipe(it, time, primordium, getRecipeOutput());
-                    ModSupport.PRODIGY_TECH.get().atomicReshaper.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-
-            return recipe;
+            List<AtomicReshaperManager.AtomicReshaperRecipe> list = new ArrayList<>();
+            for (ItemStack it : inputItem.getMatchingStacks()) {
+                AtomicReshaperManager.AtomicReshaperRecipe recipe = new AtomicReshaperManager.AtomicReshaperRecipe(it, time, primordium, getRecipeOutput());
+                ModSupport.PRODIGY_TECH.get().atomicReshaper.add(recipe);
+                list.add(recipe);
+            }
+            return list;
         }
     }
 }

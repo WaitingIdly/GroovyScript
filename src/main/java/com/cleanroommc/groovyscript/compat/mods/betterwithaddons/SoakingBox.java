@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SoakingBox extends StandardListRegistry<CherryBoxRecipe> {
@@ -75,11 +77,11 @@ public class SoakingBox extends StandardListRegistry<CherryBoxRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable CherryBoxRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<CherryBoxRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             CherryBoxRecipe recipe = new CherryBoxRecipe(BlockCherryBox.CherryBoxType.SOAKING, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), output.get(0));
             ModSupport.BETTER_WITH_ADDONS.get().soakingBox.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

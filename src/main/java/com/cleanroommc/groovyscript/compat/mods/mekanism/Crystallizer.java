@@ -28,7 +28,7 @@ public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('cleanGold'), item('minecraft:gold_ingot')", commented = true))
-    public CrystallizerRecipe add(GasStack input, ItemStack output) {
+    public List<CrystallizerRecipe> add(GasStack input, ItemStack output) {
         return recipeBuilder().gasInput(input).output(output).register();
     }
 

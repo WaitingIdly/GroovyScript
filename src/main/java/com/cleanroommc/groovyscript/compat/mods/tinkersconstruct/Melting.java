@@ -12,11 +12,8 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fml.common.registry.EntityEntry;
-import org.jetbrains.annotations.NotNull;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
-import java.util.Collections;
 import java.util.Collection;
 
 @RegistryDescription

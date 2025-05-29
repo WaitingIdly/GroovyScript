@@ -32,7 +32,7 @@ public class DissolutionChamber extends VirtualizedMekanismRegistry<DissolutionR
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:packed_ice'), gas('water')", commented = true))
-    public DissolutionRecipe add(IIngredient ingredient, GasStack output) {
+    public List<DissolutionRecipe> add(IIngredient ingredient, GasStack output) {
         return recipeBuilder().gasOutput(output).input(ingredient).register();
     }
 

@@ -11,12 +11,9 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import me.desht.pneumaticcraft.common.item.ItemAssemblyProgram;
 import me.desht.pneumaticcraft.common.recipes.AssemblyRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -168,15 +165,15 @@ public class AssemblyController extends VirtualizedRegistry<AssemblyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable AssemblyRecipe register() {
-            if (!validate()) return null;
-            AssemblyRecipe recipe = null;
+        public @NotNull List<AssemblyRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<AssemblyRecipe> list = new ArrayList<>();
             for (ItemStack stack : input.get(0).getMatchingStacks()) {
-                AssemblyRecipe recipe1 = new AssemblyRecipe(stack, output.get(0), programStack);
-                ModSupport.PNEUMATIC_CRAFT.get().assemblyController.add(recipe1);
-                if (recipe == null) recipe = recipe1;
+                AssemblyRecipe recipe = new AssemblyRecipe(stack, output.get(0), programStack);
+                ModSupport.PNEUMATIC_CRAFT.get().assemblyController.add(recipe);
+                list.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

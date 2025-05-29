@@ -8,9 +8,11 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
 public class RiverGrate extends StandardListRegistry<MachineRecipes.MachineRecipe<Double, ItemStack>> {
@@ -73,11 +75,11 @@ public class RiverGrate extends StandardListRegistry<MachineRecipes.MachineRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MachineRecipes.MachineRecipe<Double, ItemStack> register() {
-            if (!validate()) return null;
+        public @NotNull List<MachineRecipes.MachineRecipe<Double, ItemStack>> register() {
+            if (!validate()) return Collections.emptyList();
             var recipe = new MachineRecipes.MachineRecipe<>(weight, output.get(0), allowStoneParts);
             ModSupport.FACTORY_TECH.get().riverGrate.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

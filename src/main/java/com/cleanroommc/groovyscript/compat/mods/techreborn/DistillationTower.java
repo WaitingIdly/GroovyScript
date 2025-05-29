@@ -5,9 +5,12 @@ import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.DistillationTowerRecipe;
+
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = {
         @MethodDescription(method = "removeByInput", example = @Example("item('techreborn:dynamiccell').withNbt(['Fluid': ['FluidName': 'fluidoil', 'Amount': 1000]])")),
@@ -70,14 +73,14 @@ public class DistillationTower extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable DistillationTowerRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<DistillationTowerRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ItemStack output3 = output.size() >= 3 ? output.get(2) : null;
             ItemStack output4 = output.size() >= 4 ? output.get(3) : null;
             DistillationTowerRecipe recipe = new DistillationTowerRecipe(Helper.getStackFromIIngredient(input.get(0)), input.size() >= 2 ? Helper.getStackFromIIngredient(input.get(1)) : null, output.get(0), output2, output3, output4, time, perTick, oreDict);
             ModSupport.TECH_REBORN.get().distillationTower.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

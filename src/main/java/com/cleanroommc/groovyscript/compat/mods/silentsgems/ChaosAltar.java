@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import net.silentchaos512.gems.api.recipe.altar.RecipeChaosAltar;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.silentgems.chaos_altar.note0", type = Admonition.Type.WARNING))
 public class ChaosAltar extends StandardListRegistry<RecipeChaosAltar> {
@@ -79,14 +82,15 @@ public class ChaosAltar extends StandardListRegistry<RecipeChaosAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeChaosAltar register() {
-            if (!validate()) return null;
-            RecipeChaosAltar recipe = null;
+        public @NotNull List<RecipeChaosAltar> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RecipeChaosAltar> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new RecipeChaosAltar(output.get(0), stack, cost, catalyst);
+                RecipeChaosAltar recipe = new RecipeChaosAltar(output.get(0), stack, cost, catalyst);
+                list.add(recipe);
                 ModSupport.SILENT_GEMS.get().chaosAltar.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

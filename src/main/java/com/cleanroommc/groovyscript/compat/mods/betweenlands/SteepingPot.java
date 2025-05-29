@@ -13,13 +13,15 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import thebetweenlands.api.recipes.ISteepingPotRecipe;
 import thebetweenlands.common.inventory.container.ContainerSilkBundle;
 import thebetweenlands.common.recipe.misc.SteepingPotRecipes;
 import thebetweenlands.common.registries.FluidRegistry;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -159,8 +161,8 @@ public class SteepingPot extends StandardListRegistry<SteepingPotRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable SteepingPotRecipes register() {
-            if (!validate()) return null;
+        public @NotNull List<SteepingPotRecipes> register() {
+            if (!validate()) return Collections.emptyList();
 
             for (var ingredient : input) {
                 for (var stack : ingredient.getMatchingStacks()) {
@@ -168,25 +170,28 @@ public class SteepingPot extends StandardListRegistry<SteepingPotRecipes> {
                 }
             }
 
-            SteepingPotRecipes recipe = null;
+            List<SteepingPotRecipes> list = new ArrayList<>();
             List<List<Object>> inputs = IngredientHelper.cartesianProductOres(input);
             for (var objects : inputs) {
-                recipe = new SteepingPotRecipes(fluidOutput.get(0), meta, fluidInput.get(0), objects.toArray());
+                var recipe = new SteepingPotRecipes(fluidOutput.get(0), meta, fluidInput.get(0), objects.toArray());
+                list.add(recipe);
                 ModSupport.BETWEENLANDS.get().steepingPot.add(recipe);
             }
 
 //            if (output.isEmpty()) {
 //                for (var objects : inputs) {
 //                    recipe = new SteepingPotRecipes(fluidOutput.get(0), meta, fluidInput.get(0), objects.toArray());
+//                    list.add(recipe);
 //                    ModSupport.BETWEENLANDS.get().steepingPot.add(recipe);
 //                }
 //            } else {
 //                for (var objects : inputs) {
 //                    recipe = new SteepingPotRecipes(output.get(0), fluidInput.get(0), objects.toArray());
+//                    list.add(recipe);
 //                    ModSupport.BETWEENLANDS.get().steepingPot.add(recipe);
 //                }
 //            }
-            return recipe;
+            return list;
         }
     }
 }

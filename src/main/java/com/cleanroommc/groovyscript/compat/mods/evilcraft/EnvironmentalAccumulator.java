@@ -14,9 +14,9 @@ import org.cyclops.evilcraft.core.recipe.custom.EnvironmentalAccumulatorRecipePr
 import org.cyclops.evilcraft.core.weather.WeatherType;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Collection;
 import java.util.Locale;
 
 @RegistryDescription

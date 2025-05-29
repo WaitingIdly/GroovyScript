@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import me.desht.pneumaticcraft.api.recipe.IThermopneumaticProcessingPlantRecipe;
 import me.desht.pneumaticcraft.common.recipes.BasicThermopneumaticProcessingPlantRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ThermopneumaticProcessingPlant extends StandardListRegistry<IThermopneumaticProcessingPlantRecipe> {
@@ -88,20 +91,20 @@ public class ThermopneumaticProcessingPlant extends StandardListRegistry<IThermo
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IThermopneumaticProcessingPlantRecipe register() {
-            if (!validate()) return null;
-            IThermopneumaticProcessingPlantRecipe recipe = null;
+        public @NotNull List<IThermopneumaticProcessingPlantRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.isEmpty()) {
-                recipe = new BasicThermopneumaticProcessingPlantRecipe(fluidInput.get(0), ItemStack.EMPTY, fluidOutput.get(0), requiredTemperature, pressure);
+                var recipe = new BasicThermopneumaticProcessingPlantRecipe(fluidInput.get(0), ItemStack.EMPTY, fluidOutput.get(0), requiredTemperature, pressure);
                 ModSupport.PNEUMATIC_CRAFT.get().thermopneumaticProcessingPlant.add(recipe);
-            } else {
-                for (ItemStack stack : input.get(0).getMatchingStacks()) {
-                    IThermopneumaticProcessingPlantRecipe recipe1 = new BasicThermopneumaticProcessingPlantRecipe(fluidInput.get(0), stack, fluidOutput.get(0), requiredTemperature, pressure);
-                    ModSupport.PNEUMATIC_CRAFT.get().thermopneumaticProcessingPlant.add(recipe1);
-                    if (recipe == null) recipe = recipe1;
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<IThermopneumaticProcessingPlantRecipe> list = new ArrayList<>();
+            for (ItemStack stack : input.get(0).getMatchingStacks()) {
+                var recipe = new BasicThermopneumaticProcessingPlantRecipe(fluidInput.get(0), stack, fluidOutput.get(0), requiredTemperature, pressure);
+                ModSupport.PNEUMATIC_CRAFT.get().thermopneumaticProcessingPlant.add(recipe);
+                list.add(recipe);
+            }
+            return list;
         }
     }
 }

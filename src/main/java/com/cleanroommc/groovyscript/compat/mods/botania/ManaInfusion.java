@@ -12,10 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipeManaInfusion;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription(
         admonition = @Admonition(value = "groovyscript.wiki.botania.mana_infusion.note", type = Admonition.Type.WARNING)
@@ -33,7 +32,7 @@ public class ManaInfusion extends StandardListRegistry<RecipeManaInfusion> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipeManaInfusion add(ItemStack output, IIngredient input, int mana) {
+    public List<RecipeManaInfusion> add(ItemStack output, IIngredient input, int mana) {
         return recipeBuilder().mana(mana).output(output).input(input).register();
     }
 

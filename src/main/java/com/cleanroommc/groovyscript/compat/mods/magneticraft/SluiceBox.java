@@ -12,9 +12,12 @@ import com.cout970.magneticraft.api.registries.machines.sluicebox.ISluiceBoxReci
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import kotlin.Pair;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class SluiceBox extends StandardListRegistry<ISluiceBoxRecipe> {
@@ -85,19 +88,20 @@ public class SluiceBox extends StandardListRegistry<ISluiceBoxRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ISluiceBoxRecipe register() {
-            if (!validate()) return null;
-            ISluiceBoxRecipe recipe = null;
+        public @NotNull List<ISluiceBoxRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
-                recipe = MagneticraftApi.getSluiceBoxRecipeManager().createRecipe(ore.getMatchingStacks()[0], output, chances, true);
+                var recipe = MagneticraftApi.getSluiceBoxRecipeManager().createRecipe(ore.getMatchingStacks()[0], output, chances, true);
                 ModSupport.MAGNETICRAFT.get().sluiceBox.add(recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = MagneticraftApi.getSluiceBoxRecipeManager().createRecipe(stack, output, chances, false);
-                    ModSupport.MAGNETICRAFT.get().sluiceBox.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<ISluiceBoxRecipe> list = new ArrayList<>();
+            for (var stack : input.get(0).getMatchingStacks()) {
+                var recipe = MagneticraftApi.getSluiceBoxRecipeManager().createRecipe(stack, output, chances, false);
+                list.add(recipe);
+                ModSupport.MAGNETICRAFT.get().sluiceBox.add(recipe);
+            }
+            return list;
         }
     }
 }

@@ -11,10 +11,9 @@ import hellfirepvp.astralsorcery.common.base.FluidRarityRegistry;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import org.apache.logging.log4j.Level;
-
-import java.util.Collection;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

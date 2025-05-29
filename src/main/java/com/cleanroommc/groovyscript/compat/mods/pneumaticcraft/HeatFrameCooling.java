@@ -7,9 +7,11 @@ import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import me.desht.pneumaticcraft.common.recipes.HeatFrameCoolingRecipe;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class HeatFrameCooling extends StandardListRegistry<HeatFrameCoolingRecipe> {
@@ -72,11 +74,11 @@ public class HeatFrameCooling extends StandardListRegistry<HeatFrameCoolingRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable HeatFrameCoolingRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<HeatFrameCoolingRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             HeatFrameCoolingRecipe recipe = new HeatFrameCoolingRecipe(PneumaticCraft.toItemIngredient(input.get(0)), output.get(0));
             ModSupport.PNEUMATIC_CRAFT.get().heatFrameCooling.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

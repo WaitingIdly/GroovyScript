@@ -32,7 +32,7 @@ public class ChemicalOxidizer extends VirtualizedMekanismRegistry<OxidationRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "ore('dustGold'), gas('gold')", commented = true))
-    public OxidationRecipe add(IIngredient ingredient, GasStack output) {
+    public List<OxidationRecipe> add(IIngredient ingredient, GasStack output) {
         return recipeBuilder().gasOutput(output).input(ingredient).register();
     }
 

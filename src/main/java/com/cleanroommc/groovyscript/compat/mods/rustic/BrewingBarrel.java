@@ -11,10 +11,9 @@ import rustic.common.crafting.BrewingBarrelRecipe;
 import rustic.common.crafting.IBrewingBarrelRecipe;
 import rustic.common.crafting.Recipes;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class BrewingBarrel extends StandardListRegistry<IBrewingBarrelRecipe> {

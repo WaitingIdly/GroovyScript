@@ -14,10 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
@@ -36,7 +35,7 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.bloodmagic.alchemy_array.add0", type = MethodDescription.Type.ADDITION)
-    public RecipeAlchemyArray add(IIngredient input, IIngredient catalyst, ItemStack output) {
+    public List<RecipeAlchemyArray> add(IIngredient input, IIngredient catalyst, ItemStack output) {
         return recipeBuilder()
                 .catalyst(catalyst)
                 .input(input)
@@ -45,12 +44,12 @@ public class AlchemyArray extends StandardListRegistry<RecipeAlchemyArray> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.bloodmagic.alchemy_array.add1", type = MethodDescription.Type.ADDITION)
-    public RecipeAlchemyArray add(IIngredient input, IIngredient catalyst, ItemStack output, String circleTexture) {
+    public List<RecipeAlchemyArray> add(IIngredient input, IIngredient catalyst, ItemStack output, String circleTexture) {
         return add(input, catalyst, output, new ResourceLocation(circleTexture));
     }
 
     @MethodDescription(description = "groovyscript.wiki.bloodmagic.alchemy_array.add1", type = MethodDescription.Type.ADDITION)
-    public RecipeAlchemyArray add(IIngredient input, IIngredient catalyst, ItemStack output, ResourceLocation circleTexture) {
+    public List<RecipeAlchemyArray> add(IIngredient input, IIngredient catalyst, ItemStack output, ResourceLocation circleTexture) {
         return recipeBuilder()
                 .catalyst(catalyst)
                 .texture(circleTexture)

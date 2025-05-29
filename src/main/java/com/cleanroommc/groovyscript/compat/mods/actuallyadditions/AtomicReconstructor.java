@@ -13,10 +13,9 @@ import de.ellpeck.actuallyadditions.api.recipe.LensConversionRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import java.util.Collection;
 
 @RegistryDescription
 public class AtomicReconstructor extends StandardListRegistry<LensConversionRecipe> {
@@ -35,7 +34,7 @@ public class AtomicReconstructor extends StandardListRegistry<LensConversionReci
         return ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
     }
 
-    public LensConversionRecipe add(IIngredient input, ItemStack output, int energy, Lens type) {
+    public List<LensConversionRecipe> add(IIngredient input, ItemStack output, int energy, Lens type) {
         return recipeBuilder()
                 .type(type)
                 .energy(energy)

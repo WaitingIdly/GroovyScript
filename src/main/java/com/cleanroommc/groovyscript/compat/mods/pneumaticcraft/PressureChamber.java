@@ -10,9 +10,11 @@ import me.desht.pneumaticcraft.api.recipe.IPressureChamberRecipe;
 import me.desht.pneumaticcraft.api.recipe.ItemIngredient;
 import me.desht.pneumaticcraft.common.recipes.PressureChamberRecipe;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class PressureChamber extends StandardListRegistry<IPressureChamberRecipe> {
@@ -78,11 +80,11 @@ public class PressureChamber extends StandardListRegistry<IPressureChamberRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable IPressureChamberRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<IPressureChamberRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             IPressureChamberRecipe recipe = new PressureChamberRecipe.SimpleRecipe(input.stream().map(PneumaticCraft::toItemIngredient).toArray(ItemIngredient[]::new), pressure, output.toArray(new ItemStack[0]));
             ModSupport.PNEUMATIC_CRAFT.get().pressureChamber.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -1,10 +1,7 @@
 package com.cleanroommc.groovyscript.helper.recipe;
 
 import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderRegistrationMethod;
-import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.Nonnull;
-import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public interface IRecipeBuilder<T> {
      *
      * @return the built recipes or an empty list if values are invalid
      */
-    @Nonnull
     @RecipeBuilderRegistrationMethod
+    @NotNull
     List<T> register();
 }

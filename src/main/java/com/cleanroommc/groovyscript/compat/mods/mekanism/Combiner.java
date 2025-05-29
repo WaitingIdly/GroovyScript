@@ -30,7 +30,7 @@ public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "ore('gemQuartz') * 8, item('minecraft:netherrack'), item('minecraft:quartz_ore')", commented = true))
-    public CombinerRecipe add(IIngredient ingredient, ItemStack extra, ItemStack output) {
+    public List<CombinerRecipe> add(IIngredient ingredient, ItemStack extra, ItemStack output) {
         return recipeBuilder().extra(extra).output(output).input(ingredient).register();
     }
 

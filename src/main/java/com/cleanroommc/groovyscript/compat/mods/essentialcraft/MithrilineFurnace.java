@@ -10,9 +10,11 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import essentialcraft.api.MithrilineFurnaceRecipe;
 import essentialcraft.api.MithrilineFurnaceRecipes;
 import net.minecraft.item.crafting.Ingredient;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class MithrilineFurnace extends VirtualizedRegistry<MithrilineFurnaceRecipe> {
@@ -91,14 +93,14 @@ public class MithrilineFurnace extends VirtualizedRegistry<MithrilineFurnaceReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MithrilineFurnaceRecipe register() {
-            if (!validate()) return null;
+        public @NotNull List<MithrilineFurnaceRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             int stackSize = input.get(0).getAmount();
             Ingredient inputItem = input.get(0).withAmount(1).toMcIngredient();
             MithrilineFurnaceRecipe recipe = new MithrilineFurnaceRecipe(inputItem, output.get(0), (float) espe, stackSize);
             ModSupport.ESSENTIALCRAFT.get().mithrilineFurnace.addScripted(recipe);
             MithrilineFurnaceRecipes.addRecipe(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -14,10 +14,11 @@ import com.cleanroommc.groovyscript.registry.AbstractReloadableStorage;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.crafting.Ingredient;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @RegistryDescription(admonition = @Admonition("groovyscript.wiki.bloodarsenal.sanguine_infusion.note0"))
@@ -172,8 +173,8 @@ public class SanguineInfusion extends StandardListRegistry<RecipeSanguineInfusio
         @SuppressWarnings("unchecked")
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RecipeSanguineInfusion register() {
-            if (!validate()) return null;
+        public @NotNull List<RecipeSanguineInfusion> register() {
+            if (!validate()) return Collections.emptyList();
             List<Pair<Object, Integer>> inputs = new ArrayList<>();
             for (var ingredient : input) {
                 if (ingredient instanceof OreDictIngredient ore) {
@@ -184,18 +185,20 @@ public class SanguineInfusion extends StandardListRegistry<RecipeSanguineInfusio
             }
             if (filter != null) inputs.add(Pair.of(new RecipeFilter(filter), 0));
 
-            RecipeSanguineInfusion recipe = null;
+            List<RecipeSanguineInfusion> list = new ArrayList<>();
             if (modifier == null) {
                 for (var stack : infuse.getMatchingStacks()) {
-                    recipe = new RecipeSanguineInfusion(output.get(0), cost, stack, inputs.toArray(new Pair[0]));
+                    var recipe = new RecipeSanguineInfusion(output.get(0), cost, stack, inputs.toArray(new Pair[0]));
+                    list.add(recipe);
                     ModSupport.BLOOD_ARSENAL.get().sanguineInfusion.add(recipe);
                 }
             } else {
-                recipe = new RecipeSanguineInfusion(cost, modifier, inputs.toArray(new Pair[0]));
+                var recipe = new RecipeSanguineInfusion(cost, modifier, inputs.toArray(new Pair[0]));
                 recipe.setLevelMultiplier(levelMultiplier);
+                list.add(recipe);
                 ModSupport.BLOOD_ARSENAL.get().sanguineInfusion.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

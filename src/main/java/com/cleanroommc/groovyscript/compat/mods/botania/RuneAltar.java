@@ -14,8 +14,8 @@ import vazkii.botania.api.recipe.RecipeRuneAltar;
 import vazkii.botania.common.block.ModBlocks;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +33,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipeRuneAltar add(ItemStack output, int mana, IIngredient... inputs) {
+    public List<RecipeRuneAltar> add(ItemStack output, int mana, IIngredient... inputs) {
         return recipeBuilder().mana(mana).output(output).input(inputs).register();
     }
 

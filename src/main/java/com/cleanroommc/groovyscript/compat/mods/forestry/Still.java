@@ -27,7 +27,7 @@ public class Still extends ForestryRegistry<IStillRecipe> {
         restoreFromBackup().forEach(StillRecipeManagerAccessor.getRecipes()::add);
     }
 
-    public IStillRecipe add(FluidStack output, int time, FluidStack input) {
+    public List<IStillRecipe> add(FluidStack output, int time, FluidStack input) {
         return recipeBuilder().time(time).fluidOutput(output).fluidInput(input).register();
     }
 

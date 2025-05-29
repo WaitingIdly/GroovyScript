@@ -9,9 +9,11 @@ import moze_intel.projecte.utils.WorldTransmutations;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Transmutation extends StandardListRegistry<WorldTransmutations.Entry> {
@@ -130,11 +132,11 @@ public class Transmutation extends StandardListRegistry<WorldTransmutations.Entr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable WorldTransmutations.Entry register() {
-            if (!validate()) return null;
+        public @NotNull List<WorldTransmutations.Entry> register() {
+            if (!validate()) return Collections.emptyList();
             WorldTransmutations.Entry recipe = new WorldTransmutations.Entry(input, ImmutablePair.of(output, altOutput));
             ModSupport.PROJECT_E.get().transmutation.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

@@ -8,9 +8,12 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import dalapo.factech.tileentity.specialized.TileEntityCompressionChamber;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Compressor extends StandardListRegistry<TileEntityCompressionChamber.CompressorRecipe> {
@@ -64,14 +67,15 @@ public class Compressor extends StandardListRegistry<TileEntityCompressionChambe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable TileEntityCompressionChamber.CompressorRecipe register() {
-            if (!validate()) return null;
-            TileEntityCompressionChamber.CompressorRecipe recipe = null;
+        public @NotNull List<TileEntityCompressionChamber.CompressorRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<TileEntityCompressionChamber.CompressorRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new TileEntityCompressionChamber.CompressorRecipe(stack, fluidInput.getOrEmpty(0), output.get(0));
+                TileEntityCompressionChamber.CompressorRecipe recipe = new TileEntityCompressionChamber.CompressorRecipe(stack, fluidInput.getOrEmpty(0), output.get(0));
+                list.add(recipe);
                 ModSupport.FACTORY_TECH.get().compressor.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

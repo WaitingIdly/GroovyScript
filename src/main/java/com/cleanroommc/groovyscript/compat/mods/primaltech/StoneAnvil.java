@@ -8,10 +8,13 @@ import com.cleanroommc.groovyscript.core.mixin.primal_tech.StoneAnvilRecipesAcce
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import primal_tech.recipes.StoneAnvilRecipes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
@@ -30,7 +33,7 @@ public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public StoneAnvilRecipes add(ItemStack output, IIngredient input) {
+    public List<StoneAnvilRecipes> add(ItemStack output, IIngredient input) {
         return recipeBuilder()
                 .input(input)
                 .output(output)
@@ -76,14 +79,15 @@ public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable StoneAnvilRecipes register() {
-            if (!validate()) return null;
-            StoneAnvilRecipes recipe = null;
+        public @NotNull List<StoneAnvilRecipes> register() {
+            if (!validate()) return Collections.emptyList();
+            List<StoneAnvilRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {
-                recipe = StoneAnvilRecipesAccessor.createStoneAnvilRecipes(output.get(0), matchingStack);
+                var recipe = StoneAnvilRecipesAccessor.createStoneAnvilRecipes(output.get(0), matchingStack);
+                list.add(recipe);
                 ModSupport.PRIMAL_TECH.get().stoneAnvil.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

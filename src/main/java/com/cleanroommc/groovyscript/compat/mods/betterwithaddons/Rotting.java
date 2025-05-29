@@ -17,8 +17,11 @@ import com.google.common.collect.Multimap;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES, admonition = @Admonition(value = "groovyscript.wiki.betterwithaddons.rotting.note0", type = Admonition.Type.WARNING))
@@ -145,14 +148,15 @@ public class Rotting extends VirtualizedRegistry<Map.Entry<Item, RotInfo>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable RotHandler.RotInfo register() {
-            if (!validate()) return null;
-            RotHandler.RotInfo recipe = null;
+        public @NotNull List<RotHandler.RotInfo> register() {
+            if (!validate()) return Collections.emptyList();
+            List<RotHandler.RotInfo> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new RotHandler.RotInfo(stack, time, key, rotted);
+                var recipe = new RotHandler.RotInfo(stack, time, key, rotted);
+                list.add(recipe);
                 ModSupport.BETTER_WITH_ADDONS.get().rotting.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

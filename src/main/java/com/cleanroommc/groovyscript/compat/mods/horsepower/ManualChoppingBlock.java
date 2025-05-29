@@ -9,12 +9,15 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import se.gory_moon.horsepower.recipes.ChoppingBlockRecipe;
 import se.gory_moon.horsepower.recipes.HPRecipes;
 import se.gory_moon.horsepower.recipes.ManualChoppingBlockRecipe;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ManualChoppingBlock extends StandardListRegistry<ChoppingBlockRecipe> {
@@ -52,7 +55,7 @@ public class ManualChoppingBlock extends StandardListRegistry<ChoppingBlockRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public ChoppingBlockRecipe add(IIngredient input, ItemStack output, int time) {
+    public List<ChoppingBlockRecipe> add(IIngredient input, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .output(output)
@@ -102,14 +105,15 @@ public class ManualChoppingBlock extends StandardListRegistry<ChoppingBlockRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ChoppingBlockRecipe register() {
-            if (!validate()) return null;
-            ChoppingBlockRecipe recipe = null;
+        public @NotNull List<ChoppingBlockRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ChoppingBlockRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new ManualChoppingBlockRecipe(stack, output.get(0), ItemStack.EMPTY, 0, time);
+                var recipe = new ManualChoppingBlockRecipe(stack, output.get(0), ItemStack.EMPTY, 0, time);
+                list.add(recipe);
                 ModSupport.HORSE_POWER.get().manualChoppingBlock.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -9,9 +9,12 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import com.shiroroku.theaurorian.Recipes.MoonlightForgeRecipe;
 import com.shiroroku.theaurorian.Recipes.MoonlightForgeRecipeHandler;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class MoonlightForge extends StandardListRegistry<MoonlightForgeRecipe> {
@@ -65,16 +68,17 @@ public class MoonlightForge extends StandardListRegistry<MoonlightForgeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable MoonlightForgeRecipe register() {
-            if (!validate()) return null;
-            MoonlightForgeRecipe recipe = null;
+        public @NotNull List<MoonlightForgeRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<MoonlightForgeRecipe> list = new ArrayList<>();
             for (ItemStack input1 : input.get(0).getMatchingStacks()) {
                 for (ItemStack input2 : input.get(1).getMatchingStacks()) {
-                    recipe = new MoonlightForgeRecipe(input1, input2, output.get(0));
+                    var recipe = new MoonlightForgeRecipe(input1, input2, output.get(0));
+                    list.add(recipe);
                     ModSupport.THE_AURORIAN.get().moonlightForge.add(recipe);
                 }
             }
-            return recipe;
+            return list;
         }
     }
 }

@@ -34,7 +34,7 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond'), gas('hydrogen'), item('minecraft:nether_star')", commented = true))
-    public OsmiumCompressorRecipe add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
+    public List<OsmiumCompressorRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
         return recipeBuilder().gasInput(gasInput).output(output).input(ingredient).register();
     }
 

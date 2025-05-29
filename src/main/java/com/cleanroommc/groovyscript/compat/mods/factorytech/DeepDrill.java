@@ -9,9 +9,11 @@ import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import dalapo.factech.auxiliary.MachineRecipes;
 import dalapo.factech.helper.Pair;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
 public class DeepDrill extends StandardListRegistry<Pair<ItemStack, Double>> {
@@ -60,11 +62,11 @@ public class DeepDrill extends StandardListRegistry<Pair<ItemStack, Double>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable Pair<ItemStack, Double> register() {
-            if (!validate()) return null;
+        public @NotNull List<Pair<ItemStack, Double>> register() {
+            if (!validate()) return Collections.emptyList();
             var recipe = new Pair<>(output.get(0), weight);
             ModSupport.FACTORY_TECH.get().deepDrill.add(recipe);
-            return recipe;
+            return Collections.singletonList(recipe);
         }
     }
 }

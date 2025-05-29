@@ -13,8 +13,8 @@ import vazkii.botania.api.BotaniaAPI;
 import vazkii.botania.api.recipe.RecipePetals;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,7 +36,7 @@ public class Apothecary extends StandardListRegistry<RecipePetals> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public RecipePetals add(ItemStack output, IIngredient... inputs) {
+    public List<RecipePetals> add(ItemStack output, IIngredient... inputs) {
         return recipeBuilder()
                 .output(output)
                 .input(inputs)

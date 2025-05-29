@@ -11,9 +11,12 @@ import com.cout970.magneticraft.api.MagneticraftApi;
 import com.cout970.magneticraft.api.registries.machines.sifter.ISieveRecipe;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import net.minecraft.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class Sieve extends StandardListRegistry<ISieveRecipe> {
@@ -93,22 +96,23 @@ public class Sieve extends StandardListRegistry<ISieveRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ISieveRecipe register() {
-            if (!validate()) return null;
-            ISieveRecipe recipe = null;
+        public @NotNull List<ISieveRecipe> register() {
+            if (!validate()) return Collections.emptyList();
             float primaryChance = chances.size() >= 1 ? chances.getFloat(0) : 0;
             float secondaryChance = chances.size() >= 2 ? chances.getFloat(1) : 0;
             float tertiaryChance = chances.size() >= 3 ? chances.getFloat(2) : 0;
             if (input.get(0) instanceof OreDictIngredient ore) {
-                recipe = MagneticraftApi.getSieveRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), primaryChance, output.getOrEmpty(1), secondaryChance, output.getOrEmpty(2), tertiaryChance, duration, true);
+                var recipe = MagneticraftApi.getSieveRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), primaryChance, output.getOrEmpty(1), secondaryChance, output.getOrEmpty(2), tertiaryChance, duration, true);
                 ModSupport.MAGNETICRAFT.get().sieve.add(recipe);
-            } else {
-                for (var stack : input.get(0).getMatchingStacks()) {
-                    recipe = MagneticraftApi.getSieveRecipeManager().createRecipe(stack, output.get(0), primaryChance, output.getOrEmpty(1), secondaryChance, output.getOrEmpty(2), tertiaryChance, duration, false);
-                    ModSupport.MAGNETICRAFT.get().sieve.add(recipe);
-                }
+                return Collections.singletonList(recipe);
             }
-            return recipe;
+            List<ISieveRecipe> list = new ArrayList<>();
+            for (var stack : input.get(0).getMatchingStacks()) {
+                var recipe = MagneticraftApi.getSieveRecipeManager().createRecipe(stack, output.get(0), primaryChance, output.getOrEmpty(1), secondaryChance, output.getOrEmpty(2), tertiaryChance, duration, false);
+                list.add(recipe);
+                ModSupport.MAGNETICRAFT.get().sieve.add(recipe);
+            }
+            return list;
         }
     }
 }

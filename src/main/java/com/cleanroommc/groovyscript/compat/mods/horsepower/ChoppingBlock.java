@@ -9,11 +9,14 @@ import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 import se.gory_moon.horsepower.recipes.ChoppingBlockRecipe;
 import se.gory_moon.horsepower.recipes.HPRecipes;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @RegistryDescription
 public class ChoppingBlock extends StandardListRegistry<ChoppingBlockRecipe> {
@@ -52,7 +55,7 @@ public class ChoppingBlock extends StandardListRegistry<ChoppingBlockRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.chopping_block.add0", type = MethodDescription.Type.ADDITION)
-    public ChoppingBlockRecipe add(IIngredient input, ItemStack output, int time) {
+    public List<ChoppingBlockRecipe> add(IIngredient input, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .output(output)
@@ -61,7 +64,7 @@ public class ChoppingBlock extends StandardListRegistry<ChoppingBlockRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.chopping_block.add1", type = MethodDescription.Type.ADDITION)
-    public ChoppingBlockRecipe add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
+    public List<ChoppingBlockRecipe> add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
         return recipeBuilder()
                 .time(time)
                 .chance(chance)
@@ -121,14 +124,15 @@ public class ChoppingBlock extends StandardListRegistry<ChoppingBlockRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @Nullable ChoppingBlockRecipe register() {
-            if (!validate()) return null;
-            ChoppingBlockRecipe recipe = null;
+        public @NotNull List<ChoppingBlockRecipe> register() {
+            if (!validate()) return Collections.emptyList();
+            List<ChoppingBlockRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {
-                recipe = new ChoppingBlockRecipe(stack, output.get(0), output.getOrEmpty(1), chance, time);
+                ChoppingBlockRecipe recipe = new ChoppingBlockRecipe(stack, output.get(0), output.getOrEmpty(1), chance, time);
+                list.add(recipe);
                 ModSupport.HORSE_POWER.get().choppingBlock.add(recipe);
             }
-            return recipe;
+            return list;
         }
     }
 }

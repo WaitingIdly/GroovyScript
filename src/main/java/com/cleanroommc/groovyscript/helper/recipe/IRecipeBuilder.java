@@ -27,7 +27,7 @@ public interface IRecipeBuilder<T> {
      *     <li>Should never return {@code null}.</li>
      * </ul>
      *
-     * @return the built recipes or an empty list if values are invalid
+     * @return all registered recipes or an empty collection if values are invalid
      */
     @RecipeBuilderRegistrationMethod
     @NotNull

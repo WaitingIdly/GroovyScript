@@ -19,8 +19,8 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -59,7 +59,7 @@ public class Precipitator extends VirtualizedRegistry<PrecipitatorRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), 100"))
-    public List<PrecipitatorRecipe> add(int energy, ItemStack output, int water) {
+    public Collection<PrecipitatorRecipe> add(int energy, ItemStack output, int water) {
         return recipeBuilder()
                 .energy(energy)
                 .water(water)
@@ -145,7 +145,7 @@ public class Precipitator extends VirtualizedRegistry<PrecipitatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PrecipitatorRecipe> register() {
+        public @NotNull Collection<PrecipitatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PrecipitatorRecipe recipe = PrecipitatorRecipeAccessor.createPrecipitatorRecipe(output.get(0), new FluidStack(FluidRegistry.WATER, water), energy);
             ModSupport.THERMAL_EXPANSION.get().precipitator.add(recipe);

@@ -126,7 +126,7 @@ public abstract class BaseRegistry extends StandardListRegistry<IRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe> register() {
+        public @NotNull Collection<IRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<List<ItemStack>> inputs = new LinkedList<>();
             Map<Integer, String> oredicts = new HashMap<>();

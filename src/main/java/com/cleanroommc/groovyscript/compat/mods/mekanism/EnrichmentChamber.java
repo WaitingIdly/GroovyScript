@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class EnrichmentChamber extends VirtualizedMekanismRegistry<EnrichmentRec
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:clay_ball'), item('minecraft:nether_star')", commented = true))
-    public List<EnrichmentRecipe> add(IIngredient ingredient, ItemStack output) {
+    public Collection<EnrichmentRecipe> add(IIngredient ingredient, ItemStack output) {
         return recipeBuilder().output(output).input(ingredient).register();
     }
 
@@ -72,7 +73,7 @@ public class EnrichmentChamber extends VirtualizedMekanismRegistry<EnrichmentRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EnrichmentRecipe> register() {
+        public @NotNull Collection<EnrichmentRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<EnrichmentRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

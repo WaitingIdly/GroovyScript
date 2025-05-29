@@ -13,7 +13,6 @@ import rustic.common.crafting.Recipes;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class EvaporatingBasin extends StandardListRegistry<IEvaporatingBasinRecipe> {
@@ -90,7 +89,7 @@ public class EvaporatingBasin extends StandardListRegistry<IEvaporatingBasinReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IEvaporatingBasinRecipe> register() {
+        public @NotNull Collection<IEvaporatingBasinRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IEvaporatingBasinRecipe recipe = new ExtendedEvaporatingBasinRecipe(output.get(0), fluidInput.get(0), time);
             ModSupport.RUSTIC.get().evaporatingBasin.add(recipe);

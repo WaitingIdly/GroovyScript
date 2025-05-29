@@ -13,8 +13,8 @@ import de.ellpeck.naturesaura.api.recipes.AltarRecipe;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -165,7 +165,7 @@ public class Altar extends VirtualizedRegistry<AltarRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AltarRecipe> register() {
+        public @NotNull Collection<AltarRecipe> register() {
             if (!validate()) return Collections.emptyList();
             AltarRecipe recipe = new AltarRecipe(super.name, input.get(0).toMcIngredient(), output.get(0), catalyst.toMcIngredient(), aura, time);
             ModSupport.NATURES_AURA.get().altar.add(recipe);

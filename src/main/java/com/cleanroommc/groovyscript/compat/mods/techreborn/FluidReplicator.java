@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 import techreborn.api.fluidreplicator.FluidReplicatorRecipe;
 import techreborn.api.fluidreplicator.FluidReplicatorRecipeList;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class FluidReplicator extends VirtualizedRegistry<FluidReplicatorRecipe> {
@@ -104,7 +104,7 @@ public class FluidReplicator extends VirtualizedRegistry<FluidReplicatorRecipe> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FluidReplicatorRecipe> register() {
+        public @NotNull Collection<FluidReplicatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             FluidReplicatorRecipe recipe = new FluidReplicatorRecipe(matter, fluidOutput.get(0).getFluid(), time, perTick);
             ModSupport.TECH_REBORN.get().fluidReplicator.add(recipe);

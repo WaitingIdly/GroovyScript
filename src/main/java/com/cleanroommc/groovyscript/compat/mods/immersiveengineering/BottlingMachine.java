@@ -111,7 +111,7 @@ public class BottlingMachine extends StandardListRegistry<BottlingMachineRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BottlingMachineRecipe> register() {
+        public @NotNull Collection<BottlingMachineRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BottlingMachineRecipe recipe = new BottlingMachineRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), fluidInput.get(0));
             ModSupport.IMMERSIVE_ENGINEERING.get().bottlingMachine.add(recipe);

@@ -20,7 +20,10 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @RegistryDescription(
@@ -373,7 +376,7 @@ public class Cauldron extends StandardListRegistry<ICauldronRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICauldronRecipe> register() {
+        public @NotNull Collection<ICauldronRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             ICauldronRecipe recipe = switch (type) {

@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -184,7 +185,7 @@ public class Vat extends VirtualizedRegistry<VatRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Recipe> register() {
+        public @NotNull Collection<Recipe> register() {
             if (!validate()) return Collections.emptyList();
             List<IRecipeInput> inputs = new ArrayList<>();
             for (int i = 0; i < itemInputs1.size(); i++) {

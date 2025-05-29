@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Fountain extends StandardListRegistry<FluidRarityRegistry.FluidRarityEntry> {
@@ -133,7 +132,7 @@ public class Fountain extends StandardListRegistry<FluidRarityRegistry.FluidRari
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FluidRarityRegistry.FluidRarityEntry> register() {
+        public @NotNull Collection<FluidRarityRegistry.FluidRarityEntry> register() {
             if (!validate()) return Collections.emptyList();
             FluidRarityRegistry.FluidRarityEntry recipe = FluidRarityEntryAccessor.createFluidRarityEntry(fluid, rarity, minimumAmount, variance);
             ModSupport.ASTRAL_SORCERY.get().fountain.add(recipe);

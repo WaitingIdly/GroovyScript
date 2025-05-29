@@ -145,7 +145,7 @@ public class Animator extends StandardListRegistry<IAnimatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IAnimatorRecipe> register() {
+        public @NotNull Collection<IAnimatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<IAnimatorRecipe> list = new ArrayList<>();
             if (lootTable != null) {

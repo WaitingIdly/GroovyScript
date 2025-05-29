@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class Quern extends ForgeRegistryWrapper<IQuernRecipe> {
         return new RecipeBuilder();
     }
 
-    public List<IQuernRecipe> add(IIngredient input, ItemStack output) {
+    public Collection<IQuernRecipe> add(IIngredient input, ItemStack output) {
         return add(input, output, 1);
     }
 
-    public List<IQuernRecipe> add(IIngredient input, ItemStack output, int rotations) {
+    public Collection<IQuernRecipe> add(IIngredient input, ItemStack output, int rotations) {
         return recipeBuilder()
                 .rotations(rotations)
                 .input(input)
@@ -92,7 +93,7 @@ public class Quern extends ForgeRegistryWrapper<IQuernRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IQuernRecipe> register() {
+        public @NotNull Collection<IQuernRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient oreDictIngredient) {
                 IQuernRecipe recipe = new QuernRecipe(oreDictIngredient.getOreDict(), output.get(0), rotations);

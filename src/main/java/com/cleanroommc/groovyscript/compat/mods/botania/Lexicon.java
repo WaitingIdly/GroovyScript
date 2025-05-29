@@ -229,12 +229,12 @@ public class Lexicon {
         }
 
         @MethodDescription(type = MethodDescription.Type.ADDITION)
-        public List<LexiconEntry> add(String name, LexiconCategory category) {
+        public Collection<LexiconEntry> add(String name, LexiconCategory category) {
             return entryBuilder().name(name).category(category).register();
         }
 
         @MethodDescription(type = MethodDescription.Type.ADDITION)
-        public List<LexiconEntry> add(String name, String category) {
+        public Collection<LexiconEntry> add(String name, String category) {
             return entryBuilder().name(name).category(category).register();
         }
 
@@ -406,7 +406,7 @@ public class Lexicon {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @NotNull List<LexiconEntry> register() {
+            public @NotNull Collection<LexiconEntry> register() {
                 if (!validate()) return Collections.emptyList();
                 LexiconEntry entry = new LexiconEntry(name, category);
                 if (priority) entry.setPriority();

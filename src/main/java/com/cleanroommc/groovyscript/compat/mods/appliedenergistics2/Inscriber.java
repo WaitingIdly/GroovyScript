@@ -131,7 +131,7 @@ public class Inscriber extends VirtualizedRegistry<IInscriberRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IInscriberRecipe> register() {
+        public @NotNull Collection<IInscriberRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IInscriberRecipeBuilder builder = AEApi.instance()
                     .registries()

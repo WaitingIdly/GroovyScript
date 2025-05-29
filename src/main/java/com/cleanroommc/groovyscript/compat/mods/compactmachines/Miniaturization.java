@@ -172,7 +172,7 @@ public class Miniaturization extends StandardListRegistry<MultiblockRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<org.dave.compactmachines3.miniaturization.MultiblockRecipe> register() {
+        public @NotNull Collection<org.dave.compactmachines3.miniaturization.MultiblockRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             org.dave.compactmachines3.miniaturization.MultiblockRecipe recipe = new org.dave.compactmachines3.miniaturization.MultiblockRecipe(

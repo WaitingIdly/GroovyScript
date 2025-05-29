@@ -18,6 +18,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<PressurizedRecipe> add(IIngredient inputSolid, FluidStack inputFluid, GasStack inputGas, ItemStack outputSolid, GasStack outputGas, double energy, int duration) {
+    public Collection<PressurizedRecipe> add(IIngredient inputSolid, FluidStack inputFluid, GasStack inputGas, ItemStack outputSolid, GasStack outputGas, double energy, int duration) {
         return recipeBuilder().duration(duration).energy(energy).gasOutput(outputGas).gasInput(inputGas).fluidInput(inputFluid).output(outputSolid).input(inputSolid).register();
     }
 
@@ -103,7 +104,7 @@ public class PressurizedReactionChamber extends VirtualizedMekanismRegistry<Pres
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PressurizedRecipe> register() {
+        public @NotNull Collection<PressurizedRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PressurizedOutput pressurizedOutput = new PressurizedOutput(output.getOrEmpty(0), gasOutput.get(0));
             if (input.isEmpty()) {

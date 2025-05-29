@@ -13,8 +13,8 @@ import de.ellpeck.naturesaura.api.recipes.OfferingRecipe;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(admonition = @Admonition("groovyscript.wiki.naturesaura.offering.note0"))
@@ -143,7 +143,7 @@ public class Offering extends VirtualizedRegistry<OfferingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<OfferingRecipe> register() {
+        public @NotNull Collection<OfferingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             OfferingRecipe recipe = new OfferingRecipe(super.name, input.get(0).toMcIngredient(), catalyst.toMcIngredient(), output.get(0));
             ModSupport.NATURES_AURA.get().offering.add(recipe);

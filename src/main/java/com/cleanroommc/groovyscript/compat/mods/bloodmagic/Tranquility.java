@@ -206,7 +206,7 @@ public class Tranquility extends VirtualizedRegistry<Pair<IBlockState, Tranquili
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Pair<IBlockState, TranquilityStack>> register() {
+        public @NotNull Collection<Pair<IBlockState, TranquilityStack>> register() {
             if (!validate()) return Collections.emptyList();
             TranquilityStack stack = new TranquilityStack(tranquility, value);
             if (block != null) {

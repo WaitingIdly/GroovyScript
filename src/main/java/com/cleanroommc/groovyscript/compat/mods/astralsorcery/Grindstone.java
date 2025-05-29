@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
@@ -113,7 +112,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<GrindstoneRecipe> register() {
+        public @NotNull Collection<GrindstoneRecipe> register() {
             if (!validate()) return Collections.emptyList();
             GrindstoneRecipe recipe = new GrindstoneRecipe(AstralSorcery.toItemHandle(input.get(0)), output.get(0), weight, secondaryChance);
             ModSupport.ASTRAL_SORCERY.get().grindstone.add(recipe);

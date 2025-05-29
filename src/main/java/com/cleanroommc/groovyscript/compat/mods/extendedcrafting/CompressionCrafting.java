@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class CompressionCrafting extends StandardListRegistry<CompressorRecipe> {
@@ -157,7 +156,7 @@ public class CompressionCrafting extends StandardListRegistry<CompressorRecipe> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CompressorRecipe> register() {
+        public @NotNull Collection<CompressorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CompressorRecipe recipe = new CompressorRecipe(output.get(0), input.get(0).toMcIngredient(), inputCount, catalyst.toMcIngredient(), consumeCatalyst, powerCost, powerRate);
             ModSupport.EXTENDED_CRAFTING.get().compressionCrafting.add(recipe);

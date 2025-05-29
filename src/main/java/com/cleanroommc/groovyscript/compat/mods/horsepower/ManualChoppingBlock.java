@@ -55,7 +55,7 @@ public class ManualChoppingBlock extends StandardListRegistry<ChoppingBlockRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<ChoppingBlockRecipe> add(IIngredient input, ItemStack output, int time) {
+    public Collection<ChoppingBlockRecipe> add(IIngredient input, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .output(output)
@@ -105,7 +105,7 @@ public class ManualChoppingBlock extends StandardListRegistry<ChoppingBlockRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ChoppingBlockRecipe> register() {
+        public @NotNull Collection<ChoppingBlockRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ChoppingBlockRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

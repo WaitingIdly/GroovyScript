@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class WaterNet extends StandardListRegistry<NetRecipe> {
@@ -80,7 +79,7 @@ public class WaterNet extends StandardListRegistry<NetRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<NetRecipe> register() {
+        public @NotNull Collection<NetRecipe> register() {
             if (!validate()) return Collections.emptyList();
             NetRecipe recipe = new NetRecipe(BlockNettedScreen.SifterType.WATER, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), 0, output.toArray(new ItemStack[0]));
             ModSupport.BETTER_WITH_ADDONS.get().waterNet.add(recipe);

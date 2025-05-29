@@ -15,7 +15,6 @@ import sonar.core.recipes.ISonarRecipeObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class AtomicCalculator extends StandardListRegistry<CalculatorRecipe> {
@@ -82,7 +81,7 @@ public class AtomicCalculator extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CalculatorRecipe> register() {
+        public @NotNull Collection<CalculatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = AtomicCalculatorRecipes.instance()

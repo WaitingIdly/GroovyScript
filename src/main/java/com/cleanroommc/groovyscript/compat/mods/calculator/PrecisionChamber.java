@@ -15,7 +15,6 @@ import sonar.core.recipes.ISonarRecipeObject;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class PrecisionChamber extends StandardListRegistry<CalculatorRecipe> {
@@ -85,7 +84,7 @@ public class PrecisionChamber extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CalculatorRecipe> register() {
+        public @NotNull Collection<CalculatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = PrecisionChamberRecipes.instance()

@@ -73,7 +73,7 @@ public class Temperer extends StandardListRegistry<TileEntityTemperer.TempererRe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TileEntityTemperer.TempererRecipe> register() {
+        public @NotNull Collection<TileEntityTemperer.TempererRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<TileEntityTemperer.TempererRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

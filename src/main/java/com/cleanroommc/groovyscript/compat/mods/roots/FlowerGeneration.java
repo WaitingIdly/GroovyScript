@@ -168,7 +168,7 @@ public class FlowerGeneration extends VirtualizedRegistry<FlowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FlowerRecipe> register() {
+        public @NotNull Collection<FlowerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             FlowerRecipe recipe = new FlowerRecipe(super.name, flower, allowedSoils);
             ModSupport.ROOTS.get().flowerGeneration.add(super.name, recipe);

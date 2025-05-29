@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -149,7 +150,7 @@ public class Solderer extends VirtualizedRegistry<SoldererManager.SoldererRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SoldererManager.SoldererRecipe> register() {
+        public @NotNull Collection<SoldererManager.SoldererRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<SoldererManager.SoldererRecipe> list = new ArrayList<>();
             for (ItemStack pat : pattern.getMatchingStacks()) {

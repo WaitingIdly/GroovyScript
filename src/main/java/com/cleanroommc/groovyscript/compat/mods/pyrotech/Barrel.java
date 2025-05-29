@@ -12,6 +12,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class Barrel extends ForgeRegistryWrapper<BarrelRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_dirt_water_to_lava', ore('ingotIron'), ore('ingotIron'), item('minecraft:dirt'), item('minecraft:dirt'), fluid('water'), fluid('lava'), 1000"))
-    public List<BarrelRecipe> add(String name, IIngredient input1, IIngredient input2, IIngredient input3, IIngredient input4, FluidStack fInput, FluidStack fOutput, int duration) {
+    public Collection<BarrelRecipe> add(String name, IIngredient input1, IIngredient input2, IIngredient input3, IIngredient input4, FluidStack fInput, FluidStack fOutput, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)

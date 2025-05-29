@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -90,7 +91,7 @@ public abstract class SimpleRecipeHandler extends SimpleRecipeHandlerAbstract<Si
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SimpleRecipe> register() {
+        public @NotNull Collection<SimpleRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IIngredient input1 = input.get(0);
             if (input1 instanceof OreDictIngredient oreDictIngredient) {

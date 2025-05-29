@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class Kiln extends ForgeRegistryWrapper<IKilnRecipe> {
         return new RecipeBuilder();
     }
 
-    public List<IKilnRecipe> add(IIngredient input, ItemStack output) {
+    public Collection<IKilnRecipe> add(IIngredient input, ItemStack output) {
         return add(input, output, 0);
     }
 
-    public List<IKilnRecipe> add(IIngredient input, ItemStack output, float experience) {
+    public Collection<IKilnRecipe> add(IIngredient input, ItemStack output, float experience) {
         return recipeBuilder()
                 .experience(experience)
                 .input(input)
@@ -92,7 +93,7 @@ public class Kiln extends ForgeRegistryWrapper<IKilnRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IKilnRecipe> register() {
+        public @NotNull Collection<IKilnRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient oreDictIngredient) {
                 IKilnRecipe recipe = new KilnRecipe(oreDictIngredient.getOreDict(), output.get(0), experience);

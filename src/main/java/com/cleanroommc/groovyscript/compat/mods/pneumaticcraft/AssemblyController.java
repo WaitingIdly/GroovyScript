@@ -165,7 +165,7 @@ public class AssemblyController extends VirtualizedRegistry<AssemblyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AssemblyRecipe> register() {
+        public @NotNull Collection<AssemblyRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<AssemblyRecipe> list = new ArrayList<>();
             for (ItemStack stack : input.get(0).getMatchingStacks()) {

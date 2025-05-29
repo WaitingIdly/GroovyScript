@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.bloodmagic.tartaric_forge.note", type = Admonition.Type.WARNING))
 public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
@@ -36,7 +35,7 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeTartaricForge> add(Collection<IIngredient> input, ItemStack output, double minimumSouls, double soulDrain) {
+    public Collection<RecipeTartaricForge> add(Collection<IIngredient> input, ItemStack output, double minimumSouls, double soulDrain) {
         return recipeBuilder()
                 .soulDrain(soulDrain)
                 .minimumSouls(minimumSouls)
@@ -145,7 +144,7 @@ public class TartaricForge extends StandardListRegistry<RecipeTartaricForge> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeTartaricForge> register() {
+        public @NotNull Collection<RecipeTartaricForge> register() {
             if (!validate()) return Collections.emptyList();
             RecipeTartaricForge recipe = new RecipeTartaricForge(IngredientHelper.toIngredientNonNullList(input), output.get(0), minimumSouls, soulDrain);
             ModSupport.BLOOD_MAGIC.get().tartaricForge.add(recipe);

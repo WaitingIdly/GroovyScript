@@ -86,7 +86,7 @@ public class GasificationUnit extends StandardListRegistry<IGasificationUnitReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IGasificationUnitRecipe> register() {
+        public @NotNull Collection<IGasificationUnitRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
                 var recipe = MagneticraftApi.getGasificationUnitRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.getOrEmpty(0), fluidOutput.getOrEmpty(0), duration, minTemperature, true);

@@ -191,7 +191,7 @@ public class BlueprintCrafting extends VirtualizedRegistry<BlueprintCraftingReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BlueprintCraftingRecipe> register() {
+        public @NotNull Collection<BlueprintCraftingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Object[] inputs = ArrayUtils.mapToArray(input, ImmersiveEngineering::toIngredientStack);
             BlueprintCraftingRecipe recipe = new BlueprintCraftingRecipe(category, output.get(0), inputs);

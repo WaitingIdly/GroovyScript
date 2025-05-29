@@ -77,7 +77,7 @@ public class Melter extends StandardListRegistry<RecipeMelter> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeMelter> register() {
+        public @NotNull Collection<RecipeMelter> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipeMelter> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);

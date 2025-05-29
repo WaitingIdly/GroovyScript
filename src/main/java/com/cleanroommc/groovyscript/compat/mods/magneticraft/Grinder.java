@@ -78,7 +78,7 @@ public class Grinder extends StandardListRegistry<IGrinderRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IGrinderRecipe> register() {
+        public @NotNull Collection<IGrinderRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
                 var recipe = MagneticraftApi.getGrinderRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), output.getOrEmpty(1), chance, ticks, true);

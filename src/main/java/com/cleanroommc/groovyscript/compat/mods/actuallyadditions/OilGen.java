@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class OilGen extends StandardListRegistry<OilGenRecipe> {
@@ -97,7 +96,7 @@ public class OilGen extends StandardListRegistry<OilGenRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<OilGenRecipe> register() {
+        public @NotNull Collection<OilGenRecipe> register() {
             if (!validate()) return Collections.emptyList();
             OilGenRecipe recipe = new OilGenRecipe(fluidInput.get(0).getFluid().getName(), amount, time);
             ModSupport.ACTUALLY_ADDITIONS.get().oilGen.add(recipe);

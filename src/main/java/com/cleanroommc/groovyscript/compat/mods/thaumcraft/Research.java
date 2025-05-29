@@ -20,8 +20,8 @@ import thaumcraft.common.lib.research.ResearchManager;
 import thaumcraft.common.lib.research.ScanEnchantment;
 import thaumcraft.common.lib.research.ScanPotion;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Research extends VirtualizedRegistry<ResearchCategory> {
@@ -236,7 +236,7 @@ public class Research extends VirtualizedRegistry<ResearchCategory> {
         }
 
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ResearchCategory> register() {
+        public @NotNull Collection<ResearchCategory> register() {
             ResearchCategory category = background2 == null
                     ? new ResearchCategory(key, researchKey, formula, icon, background)
                     : new ResearchCategory(key, researchKey, formula, icon, background, background2);

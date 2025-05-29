@@ -134,7 +134,7 @@ public class Mixer extends StandardListRegistry<MixerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MixerRecipe> register() {
+        public @NotNull Collection<MixerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Object[] inputs = ArrayUtils.mapToArray(input, ImmersiveEngineering::toIngredientStack);
             MixerRecipe recipe = new MixerRecipe(fluidOutput.get(0), fluidInput.get(0), inputs, energy);

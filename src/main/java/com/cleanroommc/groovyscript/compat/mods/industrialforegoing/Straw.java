@@ -30,7 +30,7 @@ public class Straw extends ForgeRegistryWrapper<StrawHandler> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.industrialforegoing.straw.add0", type = MethodDescription.Type.ADDITION)
-    public List<StrawHandler> add(FluidStack fluidInput, Collection<PotionEffect> effect) {
+    public Collection<StrawHandler> add(FluidStack fluidInput, Collection<PotionEffect> effect) {
         return recipeBuilder()
                 .effect(effect)
                 .fluidInput(fluidInput)
@@ -38,7 +38,7 @@ public class Straw extends ForgeRegistryWrapper<StrawHandler> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.industrialforegoing.straw.add1", type = MethodDescription.Type.ADDITION)
-    public List<StrawHandler> add(String name, FluidStack fluidInput, Collection<PotionEffect> effect) {
+    public Collection<StrawHandler> add(String name, FluidStack fluidInput, Collection<PotionEffect> effect) {
         return recipeBuilder()
                 .effect(effect)
                 .name(name)

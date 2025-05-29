@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "ore('gemQuartz') * 8, item('minecraft:netherrack'), item('minecraft:quartz_ore')", commented = true))
-    public List<CombinerRecipe> add(IIngredient ingredient, ItemStack extra, ItemStack output) {
+    public Collection<CombinerRecipe> add(IIngredient ingredient, ItemStack extra, ItemStack output) {
         return recipeBuilder().extra(extra).output(output).input(ingredient).register();
     }
 
@@ -81,7 +82,7 @@ public class Combiner extends VirtualizedMekanismRegistry<CombinerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CombinerRecipe> register() {
+        public @NotNull Collection<CombinerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<CombinerRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

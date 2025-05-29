@@ -9,8 +9,8 @@ import reborncore.api.praescriptum.recipes.Recipe;
 import reborncore.api.praescriptum.recipes.RecipeHandler;
 import techreborn.api.recipe.Recipes;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription(override = @MethodOverride(method = {
@@ -68,7 +68,7 @@ public class WireMill extends AbstractPraescriptumRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Recipe> register() {
+        public @NotNull Collection<Recipe> register() {
             if (!validate()) return Collections.emptyList();
 
             Recipe recipe = Recipes.wireMill.createRecipe();

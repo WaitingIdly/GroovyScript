@@ -52,7 +52,7 @@ public class Category extends VirtualizedRegistry<String> {
     }
 
     @MethodDescription
-    public List<CustomCategory> add(String id,
+    public Collection<CustomCategory> add(String id,
                                     Function<IGuiHelper, ? extends IRecipeCategory<? extends IRecipeWrapper>> category,
                                     List<?> catalysts,
                                     List<? extends IRecipeWrapper> wrappers) {
@@ -275,7 +275,7 @@ public class Category extends VirtualizedRegistry<String> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CustomCategory> register() {
+        public @NotNull Collection<CustomCategory> register() {
             if (!validate()) return Collections.emptyList();
             var customCategory = new CustomCategory(id, category, catalyst, wrapper);
             ModSupport.JEI.get().category.add(customCategory);

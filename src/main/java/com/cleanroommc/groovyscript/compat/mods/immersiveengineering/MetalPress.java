@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -216,7 +217,7 @@ public class MetalPress extends VirtualizedRegistry<MetalPressRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MetalPressRecipe> register() {
+        public @NotNull Collection<MetalPressRecipe> register() {
             if (!validate()) return Collections.emptyList();
             MetalPressRecipe recipe = new MetalPressRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), ApiUtils.createComparableItemStack(mold, true), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().metalPress.add(recipe);

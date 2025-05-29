@@ -9,8 +9,8 @@ import reborncore.api.praescriptum.fuels.Fuel;
 import reborncore.api.praescriptum.fuels.FuelHandler;
 import techreborn.api.recipe.Fuels;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByInput", example = @Example("fluid('fluidbiofuel')"))))
 public class SemiFluidGenerator extends AbstractGeneratorRegistry {
@@ -63,7 +63,7 @@ public class SemiFluidGenerator extends AbstractGeneratorRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Fuel> register() {
+        public @NotNull Collection<Fuel> register() {
             if (!validate()) return Collections.emptyList();
 
             Fuel recipe = Fuels.semiFluidGenerator.addFuel();

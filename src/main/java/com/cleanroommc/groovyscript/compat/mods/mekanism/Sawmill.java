@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,17 +32,17 @@ public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.sawmill.add0", type = MethodDescription.Type.ADDITION)
-    public List<SawmillRecipe> add(IIngredient ingredient, ItemStack output) {
+    public Collection<SawmillRecipe> add(IIngredient ingredient, ItemStack output) {
         return add(ingredient, output, null, 0.0);
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.sawmill.add1", type = MethodDescription.Type.ADDITION)
-    public List<SawmillRecipe> add(IIngredient ingredient, ItemStack output, ItemStack secondary) {
+    public Collection<SawmillRecipe> add(IIngredient ingredient, ItemStack output, ItemStack secondary) {
         return add(ingredient, output, secondary, 1.0);
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.sawmill.add2", type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond_block'), item('minecraft:diamond') * 9, item('minecraft:clay_ball'), 0.7", commented = true))
-    public List<SawmillRecipe> add(IIngredient ingredient, ItemStack output, ItemStack secondary, double chance) {
+    public Collection<SawmillRecipe> add(IIngredient ingredient, ItemStack output, ItemStack secondary, double chance) {
         return recipeBuilder().extra(secondary).chance(chance).output(output).input(ingredient).register();
     }
 
@@ -100,7 +101,7 @@ public class Sawmill extends VirtualizedMekanismRegistry<SawmillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SawmillRecipe> register() {
+        public @NotNull Collection<SawmillRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ChanceOutput chanceOutput = IngredientHelper.isEmpty(extra)
                     ? new ChanceOutput(output.get(0))

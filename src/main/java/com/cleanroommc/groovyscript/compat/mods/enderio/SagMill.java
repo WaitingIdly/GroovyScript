@@ -21,7 +21,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.enderio.sag_mill.note", type = Admonition.Type.WARNING))
 public class SagMill extends StandardListRegistry<Recipe> {
@@ -121,7 +120,7 @@ public class SagMill extends StandardListRegistry<Recipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Recipe> register() {
+        public @NotNull Collection<Recipe> register() {
             if (!validate()) return Collections.emptyList();
             RecipeOutput[] outputs = new RecipeOutput[output.size()];
             for (int i = 0; i < outputs.length; i++) {

@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class StoneMiningLens extends StandardListRegistry<WeightedOre> {
@@ -92,7 +91,7 @@ public class StoneMiningLens extends StandardListRegistry<WeightedOre> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WeightedOre> register() {
+        public @NotNull Collection<WeightedOre> register() {
             if (!validate()) return Collections.emptyList();
             WeightedOre recipe = new WeightedOre(ore, weight);
             ModSupport.ACTUALLY_ADDITIONS.get().stoneMiningLens.add(recipe);

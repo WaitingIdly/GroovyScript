@@ -14,7 +14,6 @@ import slimeknights.tconstruct.library.DryingRecipe;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Drying extends StandardListRegistry<DryingRecipe> {
@@ -115,7 +114,7 @@ public class Drying extends StandardListRegistry<DryingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DryingRecipe> register() {
+        public @NotNull Collection<DryingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             DryingRecipe recipe = new DryingRecipe(MeltingRecipeBuilder.recipeMatchFromIngredient(input.get(0)), output.get(0), time);
             add(recipe);

@@ -89,7 +89,7 @@ public class BlastFurnaceFuel extends StandardListRegistry<BlastFurnaceRecipe.Bl
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BlastFurnaceRecipe.BlastFurnaceFuel> register() {
+        public @NotNull Collection<BlastFurnaceRecipe.BlastFurnaceFuel> register() {
             if (!validate()) return Collections.emptyList();
             BlastFurnaceRecipe.BlastFurnaceFuel recipe = new BlastFurnaceRecipe.BlastFurnaceFuel(ImmersiveEngineering.toIngredientStack(input.get(0)), time);
             ModSupport.IMMERSIVE_ENGINEERING.get().blastFurnaceFuel.add(recipe);

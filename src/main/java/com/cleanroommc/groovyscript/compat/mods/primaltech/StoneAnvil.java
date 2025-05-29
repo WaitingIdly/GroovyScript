@@ -33,7 +33,7 @@ public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<StoneAnvilRecipes> add(ItemStack output, IIngredient input) {
+    public Collection<StoneAnvilRecipes> add(ItemStack output, IIngredient input) {
         return recipeBuilder()
                 .input(input)
                 .output(output)
@@ -79,7 +79,7 @@ public class StoneAnvil extends StandardListRegistry<StoneAnvilRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<StoneAnvilRecipes> register() {
+        public @NotNull Collection<StoneAnvilRecipes> register() {
             if (!validate()) return Collections.emptyList();
             List<StoneAnvilRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {

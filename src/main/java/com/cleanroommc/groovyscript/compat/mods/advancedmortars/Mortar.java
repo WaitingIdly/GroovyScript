@@ -199,7 +199,7 @@ public class Mortar extends VirtualizedRegistry<RecipeMortar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeMortar> register() {
+        public @NotNull Collection<RecipeMortar> register() {
             if (!validate()) return Collections.emptyList();
             RecipeMortar recipe = new RecipeMortar(output.get(0), duration, secondaryOutput, secondaryOutputChance, IngredientHelper.toIngredientNonNullList(input));
             types.stream().map(EnumMortarType::fromName).forEach(enumMortarType -> add(enumMortarType, recipe));

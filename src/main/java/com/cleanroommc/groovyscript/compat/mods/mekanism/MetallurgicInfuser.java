@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,12 +33,12 @@ public class MetallurgicInfuser extends VirtualizedMekanismRegistry<MetallurgicI
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.metallurgic_infuser.add0", type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:nether_star'), infusionType('groovy_example'), 50, item('minecraft:clay')", commented = true))
-    public List<MetallurgicInfuserRecipe> add(IIngredient ingredient, InfuseType infuseType, int infuseAmount, ItemStack output) {
+    public Collection<MetallurgicInfuserRecipe> add(IIngredient ingredient, InfuseType infuseType, int infuseAmount, ItemStack output) {
         return recipeBuilder().infuse(infuseType).amount(infuseAmount).output(output).input(ingredient).register();
     }
 
     @MethodDescription(description = "groovyscript.wiki.mekanism.metallurgic_infuser.add1", type = MethodDescription.Type.ADDITION)
-    public List<MetallurgicInfuserRecipe> add(IIngredient ingredient, String infuseType, int infuseAmount, ItemStack output) {
+    public Collection<MetallurgicInfuserRecipe> add(IIngredient ingredient, String infuseType, int infuseAmount, ItemStack output) {
         return recipeBuilder().infuse(infuseType).amount(infuseAmount).output(output).input(ingredient).register();
     }
 
@@ -109,7 +110,7 @@ public class MetallurgicInfuser extends VirtualizedMekanismRegistry<MetallurgicI
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MetallurgicInfuserRecipe> register() {
+        public @NotNull Collection<MetallurgicInfuserRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<MetallurgicInfuserRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

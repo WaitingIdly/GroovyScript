@@ -13,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class CompostBin extends ForgeRegistryWrapper<CompostBinRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay2', ore('ingotIron') * 5, item('minecraft:clay_ball') * 20, 2"))
-    public List<CompostBinRecipe> add(String name, IIngredient input, ItemStack output, int compostValue) {
+    public Collection<CompostBinRecipe> add(String name, IIngredient input, ItemStack output, int compostValue) {
         return recipeBuilder()
                 .compostValue(compostValue)
                 .name(name)

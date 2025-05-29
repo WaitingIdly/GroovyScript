@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -148,7 +148,7 @@ public class Pyre extends VirtualizedRegistry<PyreCraftingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PyreCraftingRecipe> register() {
+        public @NotNull Collection<PyreCraftingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PyreCraftingRecipe recipe = new PyreCraftingRecipe(output.get(0), xp);
             input.forEach(i -> recipe.addIngredient(i.toMcIngredient()));

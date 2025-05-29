@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CompactingBinRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class CompactingBin extends ForgeRegistryWrapper<CompactingBinRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay', ore('ingotIron') * 5, item('minecraft:clay_ball') * 20, 9"))
-    public List<CompactingBinRecipe> add(String name, IIngredient input, ItemStack output, int hits) {
+    public Collection<CompactingBinRecipe> add(String name, IIngredient input, ItemStack output, int hits) {
         return recipeBuilder()
                 .toolUses(hits)
                 .name(name)

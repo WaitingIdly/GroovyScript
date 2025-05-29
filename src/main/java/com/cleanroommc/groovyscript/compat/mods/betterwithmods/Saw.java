@@ -111,7 +111,7 @@ public class Saw extends StandardListRegistry<SawRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SawRecipe> register() {
+        public @NotNull Collection<SawRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             SawRecipe recipe = new SawRecipe(input, output);

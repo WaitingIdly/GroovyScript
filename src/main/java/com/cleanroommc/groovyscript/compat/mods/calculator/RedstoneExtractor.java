@@ -15,7 +15,6 @@ import sonar.core.recipes.ISonarRecipeObject;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class RedstoneExtractor extends StandardListRegistry<DefaultSonarRecipe.Value> {
@@ -76,7 +75,7 @@ public class RedstoneExtractor extends StandardListRegistry<DefaultSonarRecipe.V
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DefaultSonarRecipe.Value> register() {
+        public @NotNull Collection<DefaultSonarRecipe.Value> register() {
             if (!validate()) return Collections.emptyList();
 
             DefaultSonarRecipe.Value recipe = RedstoneExtractorRecipes.instance()

@@ -127,7 +127,7 @@ public class Crusher extends StandardListRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrusherRecipe> register() {
+        public @NotNull Collection<CrusherRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CrusherRecipe recipe = new CrusherRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy);
             if (!secondaryOutputItems.isEmpty()) {

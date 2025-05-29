@@ -77,7 +77,7 @@ public class Anvil extends StandardListRegistry<AnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AnvilRecipe> register() {
+        public @NotNull Collection<AnvilRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<AnvilRecipe> list = new ArrayList<>();
             for (var input1 : input.get(0).getMatchingStacks()) {

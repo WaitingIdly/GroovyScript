@@ -60,7 +60,7 @@ public class FireForge extends StandardListRegistry<DragonForgeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DragonForgeRecipe> register() {
+        public @NotNull Collection<DragonForgeRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<DragonForgeRecipe> list = new ArrayList<>();
             for (var inputStack : input.get(0).getMatchingStacks()) {

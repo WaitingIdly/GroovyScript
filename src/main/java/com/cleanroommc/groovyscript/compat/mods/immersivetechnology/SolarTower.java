@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class SolarTower extends StandardListRegistry<SolarTowerRecipe> {
@@ -89,7 +88,7 @@ public class SolarTower extends StandardListRegistry<SolarTowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SolarTowerRecipe> register() {
+        public @NotNull Collection<SolarTowerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SolarTowerRecipe recipe = new SolarTowerRecipe(fluidOutput.get(0), fluidInput.get(0), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().solarTower.add(recipe);

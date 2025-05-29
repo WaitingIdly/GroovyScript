@@ -20,8 +20,8 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition("groovyscript.wiki.thermalexpansion.refinery.note0")
@@ -117,7 +117,7 @@ public class Refinery extends VirtualizedRegistry<RefineryRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, fluid('ender') * 100, fluid('steam') * 150, item('minecraft:clay'), 25"))
-    public List<RefineryRecipe> add(int energy, FluidStack fluidInput, FluidStack outputFluid, ItemStack outputItem, int chance) {
+    public Collection<RefineryRecipe> add(int energy, FluidStack fluidInput, FluidStack outputFluid, ItemStack outputItem, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -221,7 +221,7 @@ public class Refinery extends VirtualizedRegistry<RefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RefineryRecipe> register() {
+        public @NotNull Collection<RefineryRecipe> register() {
             if (!validate()) return Collections.emptyList();
             RefineryRecipe recipe = RefineryRecipeAccessor.createRefineryRecipe(fluidInput.get(0), fluidOutput.get(0), output.getOrEmpty(0), energy, chance);
             ModSupport.THERMAL_EXPANSION.get().refinery.add(recipe);

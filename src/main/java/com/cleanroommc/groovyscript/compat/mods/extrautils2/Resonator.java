@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Resonator extends StandardListRegistry<IResonatorRecipe> {
@@ -173,7 +172,7 @@ public class Resonator extends StandardListRegistry<IResonatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IResonatorRecipe> register() {
+        public @NotNull Collection<IResonatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IResonatorRecipe recipe = new ResonatorRecipe(input.get(0).getMatchingStacks()[0], output.get(0), energy, ownerTag) {
 

@@ -10,8 +10,8 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import essentialcraft.api.OreSmeltingRecipe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(reloadability = RegistryDescription.Reloadability.DISABLED, admonition = {
         @Admonition(value = "groovyscript.wiki.essentialcraft.magmatic_smeltery.note0", type = Admonition.Type.WARNING),
@@ -125,7 +125,7 @@ public class MagmaticSmeltery extends VirtualizedRegistry<OreSmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<OreSmeltingRecipe> register() {
+        public @NotNull Collection<OreSmeltingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             OreSmeltingRecipe recipe = new OreSmeltingRecipe(input, output, color, factor);
             recipe.register();

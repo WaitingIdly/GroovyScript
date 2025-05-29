@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.BrickOvenRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class BrickOven extends ForgeRegistryWrapper<BrickOvenRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt_brick', item('minecraft:apple'), item('minecraft:dirt'), 1000"))
-    public List<BrickOvenRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
+    public Collection<BrickOvenRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)

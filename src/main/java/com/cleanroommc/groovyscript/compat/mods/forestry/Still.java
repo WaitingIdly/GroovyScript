@@ -10,6 +10,7 @@ import forestry.factory.recipes.StillRecipe;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Still extends ForestryRegistry<IStillRecipe> {
         restoreFromBackup().forEach(StillRecipeManagerAccessor.getRecipes()::add);
     }
 
-    public List<IStillRecipe> add(FluidStack output, int time, FluidStack input) {
+    public Collection<IStillRecipe> add(FluidStack output, int time, FluidStack input) {
         return recipeBuilder().time(time).fluidOutput(output).fluidInput(input).register();
     }
 

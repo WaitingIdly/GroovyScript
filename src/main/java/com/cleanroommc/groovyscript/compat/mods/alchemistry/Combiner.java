@@ -91,7 +91,7 @@ public class Combiner extends StandardListRegistry<CombinerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CombinerRecipe> register() {
+        public @NotNull Collection<CombinerRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             List<ItemStack> inputs = input.stream().map(x -> x.isEmpty() ? ItemStack.EMPTY : IngredientHelper.toItemStack(x)).collect(Collectors.toList());

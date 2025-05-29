@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -189,7 +189,7 @@ public class Lightwell extends VirtualizedRegistry<WellLiquefaction.Liquefaction
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WellLiquefaction.LiquefactionEntry> register() {
+        public @NotNull Collection<WellLiquefaction.LiquefactionEntry> register() {
             if (!validate()) return Collections.emptyList();
             WellLiquefaction.LiquefactionEntry recipe = new WellLiquefaction.LiquefactionEntry(catalyst, output, productionMultiplier, shatterMultiplier, color);
             ModSupport.ASTRAL_SORCERY.get().lightwell.add(recipe);

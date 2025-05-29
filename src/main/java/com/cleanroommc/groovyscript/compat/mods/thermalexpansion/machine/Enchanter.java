@@ -18,10 +18,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -87,7 +84,7 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), item('minecraft:gold_ingot'), item('minecraft:diamond'), 1000"))
-    public List<EnchanterRecipe> add(int energy, IIngredient primaryInput, IIngredient secondaryInput, ItemStack output, int experience) {
+    public Collection<EnchanterRecipe> add(int energy, IIngredient primaryInput, IIngredient secondaryInput, ItemStack output, int experience) {
         return recipeBuilder()
                 .energy(energy)
                 .experience(experience)
@@ -186,7 +183,7 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EnchanterRecipe> register() {
+        public @NotNull Collection<EnchanterRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<EnchanterRecipe> recipes = new ArrayList<>();
 

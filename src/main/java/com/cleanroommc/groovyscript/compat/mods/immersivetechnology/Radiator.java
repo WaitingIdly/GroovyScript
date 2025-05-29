@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Radiator extends StandardListRegistry<RadiatorRecipe> {
@@ -89,7 +88,7 @@ public class Radiator extends StandardListRegistry<RadiatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RadiatorRecipe> register() {
+        public @NotNull Collection<RadiatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             RadiatorRecipe recipe = new RadiatorRecipe(fluidOutput.get(0), fluidInput.get(0), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().radiator.add(recipe);

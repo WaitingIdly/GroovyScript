@@ -13,8 +13,8 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -137,7 +137,7 @@ public class Fusion extends VirtualizedRegistry<IFusionRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IFusionRecipe> register() {
+        public @NotNull Collection<IFusionRecipe> register() {
             if (!validate()) return Collections.emptyList();
             GroovyFusionRecipe recipe = new GroovyFusionRecipe(output.get(0), catalyst, input, energy, tier);
             ModSupport.DRACONIC_EVOLUTION.get().fusion.add(recipe);

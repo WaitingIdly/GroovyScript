@@ -64,7 +64,7 @@ public class Crucible extends StandardListRegistry<MachineRecipes.MachineRecipe<
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> register() {
+        public @NotNull Collection<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> register() {
             if (!validate()) return Collections.emptyList();
             List<MachineRecipes.MachineRecipe<ItemStack, FluidStack>> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

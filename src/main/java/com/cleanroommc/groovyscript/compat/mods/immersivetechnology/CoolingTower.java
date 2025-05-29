@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class CoolingTower extends StandardListRegistry<CoolingTowerRecipe> {
@@ -89,7 +88,7 @@ public class CoolingTower extends StandardListRegistry<CoolingTowerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CoolingTowerRecipe> register() {
+        public @NotNull Collection<CoolingTowerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CoolingTowerRecipe recipe = new CoolingTowerRecipe(fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidOutput.getOrEmpty(2), fluidInput.get(0), fluidInput.getOrEmpty(1), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().coolingTower.add(recipe);

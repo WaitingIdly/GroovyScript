@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class PressureChamber extends StandardListRegistry<IPressureChamberRecipe> {
@@ -80,7 +79,7 @@ public class PressureChamber extends StandardListRegistry<IPressureChamberRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IPressureChamberRecipe> register() {
+        public @NotNull Collection<IPressureChamberRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IPressureChamberRecipe recipe = new PressureChamberRecipe.SimpleRecipe(input.stream().map(PneumaticCraft::toItemIngredient).toArray(ItemIngredient[]::new), pressure, output.toArray(new ItemStack[0]));
             ModSupport.PNEUMATIC_CRAFT.get().pressureChamber.add(recipe);

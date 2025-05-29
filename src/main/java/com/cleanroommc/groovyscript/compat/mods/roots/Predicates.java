@@ -124,7 +124,7 @@ public class Predicates extends NamedRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MatchingStates> register() {
+        public @NotNull Collection<MatchingStates> register() {
             if (!validate()) return Collections.emptyList();
             BlockStateContainer container = blockstate.getBlock().getBlockState();
 

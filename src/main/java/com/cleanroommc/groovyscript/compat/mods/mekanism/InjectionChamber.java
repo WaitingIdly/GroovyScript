@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class InjectionChamber extends VirtualizedMekanismRegistry<InjectionRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond'), gas('water'), item('minecraft:nether_star')", commented = true))
-    public List<InjectionRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
+    public Collection<InjectionRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
         return recipeBuilder().gasInput(gasInput).output(output).input(ingredient).register();
     }
 
@@ -76,7 +77,7 @@ public class InjectionChamber extends VirtualizedMekanismRegistry<InjectionRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<InjectionRecipe> register() {
+        public @NotNull Collection<InjectionRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<InjectionRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

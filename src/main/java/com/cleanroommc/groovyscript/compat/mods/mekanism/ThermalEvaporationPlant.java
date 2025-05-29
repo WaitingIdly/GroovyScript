@@ -13,8 +13,8 @@ import mekanism.common.recipe.machines.ThermalEvaporationRecipe;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<ThermalEvaporationRecipe> {
@@ -29,7 +29,7 @@ public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<Thermal
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "fluid('water'), fluid('steam')", commented = true))
-    public List<ThermalEvaporationRecipe> add(FluidStack input, FluidStack output) {
+    public Collection<ThermalEvaporationRecipe> add(FluidStack input, FluidStack output) {
         return recipeBuilder().fluidInput(input).fluidOutput(output).register();
     }
 
@@ -65,7 +65,7 @@ public class ThermalEvaporationPlant extends VirtualizedMekanismRegistry<Thermal
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ThermalEvaporationRecipe> register() {
+        public @NotNull Collection<ThermalEvaporationRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ThermalEvaporationRecipe recipe = new ThermalEvaporationRecipe(fluidInput.get(0), fluidOutput.get(0));
             ModSupport.MEKANISM.get().thermalEvaporationPlant.add(recipe);

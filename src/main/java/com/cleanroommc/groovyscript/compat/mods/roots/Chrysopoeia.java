@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -149,7 +149,7 @@ public class Chrysopoeia extends VirtualizedRegistry<ChrysopoeiaRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ChrysopoeiaRecipe> register() {
+        public @NotNull Collection<ChrysopoeiaRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ChrysopoeiaRecipe recipe = new ChrysopoeiaRecipe(new IngredientWithStack(IngredientHelper.toItemStack(input.get(0))), output.get(0)/*, byproduct, overload, byproductChance*/);
             recipe.setRegistryName(super.name);

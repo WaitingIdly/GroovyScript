@@ -77,7 +77,7 @@ public class Packager extends StandardListRegistry<RecipePackager> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipePackager> register() {
+        public @NotNull Collection<RecipePackager> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipePackager> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);

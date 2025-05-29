@@ -144,7 +144,7 @@ public class Dissolver extends StandardListRegistry<DissolverRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DissolverRecipe> register() {
+        public @NotNull Collection<DissolverRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             DissolverRecipe recipe = new DissolverRecipe(input.get(0).toMcIngredient(), false, new ProbabilitySet(probabilityGroup, relativeProbability, rolls));

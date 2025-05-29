@@ -33,7 +33,7 @@ public class WaterSaw extends StandardListRegistry<WaterSawRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<WaterSawRecipes> add(ItemStack output, IIngredient input, int choppingTime) {
+    public Collection<WaterSawRecipes> add(ItemStack output, IIngredient input, int choppingTime) {
         return recipeBuilder()
                 .choppingTime(choppingTime)
                 .input(input)
@@ -90,7 +90,7 @@ public class WaterSaw extends StandardListRegistry<WaterSawRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WaterSawRecipes> register() {
+        public @NotNull Collection<WaterSawRecipes> register() {
             if (!validate()) return Collections.emptyList();
             List<WaterSawRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {

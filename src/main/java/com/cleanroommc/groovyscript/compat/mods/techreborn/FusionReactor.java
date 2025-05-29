@@ -13,6 +13,7 @@ import techreborn.api.reactor.FusionReactorRecipe;
 import techreborn.api.reactor.FusionReactorRecipeHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -127,7 +128,7 @@ public class FusionReactor extends VirtualizedRegistry<FusionReactorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FusionReactorRecipe> register() {
+        public @NotNull Collection<FusionReactorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<FusionReactorRecipe> list = new ArrayList<>();
             for (ItemStack top : input.get(0).getMatchingStacks()) {

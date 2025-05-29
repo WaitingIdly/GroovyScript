@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(admonition = @Admonition("groovyscript.wiki.betterwithaddons.fire_net.note0"))
 public class FireNet extends StandardListRegistry<NetRecipe> {
@@ -78,7 +77,7 @@ public class FireNet extends StandardListRegistry<NetRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<NetRecipe> register() {
+        public @NotNull Collection<NetRecipe> register() {
             if (!validate()) return Collections.emptyList();
             NetRecipe recipe = new NetRecipe(BlockNettedScreen.SifterType.FIRE, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), 0, output.toArray(new ItemStack[0]));
             ModSupport.BETTER_WITH_ADDONS.get().fireNet.add(recipe);

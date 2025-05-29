@@ -66,7 +66,7 @@ public class DruidAltar extends StandardListRegistry<IDruidAltarRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IDruidAltarRecipe> register() {
+        public @NotNull Collection<IDruidAltarRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<IDruidAltarRecipe> list = new ArrayList<>();
             for (var input1 : input.get(0).getMatchingStacks()) {

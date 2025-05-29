@@ -19,10 +19,7 @@ import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES, admonition = @Admonition(value = "groovyscript.wiki.betterwithaddons.rotting.note0", type = Admonition.Type.WARNING))
 public class Rotting extends VirtualizedRegistry<Map.Entry<Item, RotInfo>> {
@@ -148,7 +145,7 @@ public class Rotting extends VirtualizedRegistry<Map.Entry<Item, RotInfo>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RotHandler.RotInfo> register() {
+        public @NotNull Collection<RotInfo> register() {
             if (!validate()) return Collections.emptyList();
             List<RotHandler.RotInfo> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

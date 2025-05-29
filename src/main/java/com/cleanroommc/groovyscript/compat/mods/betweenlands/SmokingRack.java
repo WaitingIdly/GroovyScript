@@ -76,7 +76,7 @@ public class SmokingRack extends StandardListRegistry<ISmokingRackRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ISmokingRackRecipe> register() {
+        public @NotNull Collection<ISmokingRackRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ISmokingRackRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

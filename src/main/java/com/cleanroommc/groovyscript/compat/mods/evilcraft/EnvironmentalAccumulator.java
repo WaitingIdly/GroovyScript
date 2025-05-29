@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Locale;
 
 @RegistryDescription
@@ -155,7 +154,7 @@ public class EnvironmentalAccumulator extends StandardListRegistry<IRecipe<Envir
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>> register() {
+        public @NotNull Collection<IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties>> register() {
             if (!validate()) return Collections.emptyList();
             IRecipe<EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeComponent, EnvironmentalAccumulatorRecipeProperties> recipe = org.cyclops.evilcraft.block.EnvironmentalAccumulator.getInstance()
                     .getRecipeRegistry()

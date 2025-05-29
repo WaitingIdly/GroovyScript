@@ -15,6 +15,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -178,7 +179,7 @@ public class Amadron extends VirtualizedRegistry<AmadronOffer> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AmadronOffer> register() {
+        public @NotNull Collection<AmadronOffer> register() {
             if (!validate()) return Collections.emptyList();
             Object o = fluidOutput.isEmpty() ? output.getOrEmpty(0) : fluidOutput.get(0);
             if (input.isEmpty()) {

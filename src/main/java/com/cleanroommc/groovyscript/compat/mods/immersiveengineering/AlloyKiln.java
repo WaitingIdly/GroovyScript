@@ -101,7 +101,7 @@ public class AlloyKiln extends StandardListRegistry<AlloyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AlloyRecipe> register() {
+        public @NotNull Collection<AlloyRecipe> register() {
             if (!validate()) return Collections.emptyList();
             AlloyRecipe recipe = new AlloyRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), ImmersiveEngineering.toIngredientStack(input.get(1)), time);
             ModSupport.IMMERSIVE_ENGINEERING.get().alloyKiln.add(recipe);

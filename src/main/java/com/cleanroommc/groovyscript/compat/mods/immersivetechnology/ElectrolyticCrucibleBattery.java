@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ElectrolyticCrucibleBattery extends StandardListRegistry<ElectrolyticCrucibleBatteryRecipe> {
@@ -100,7 +99,7 @@ public class ElectrolyticCrucibleBattery extends StandardListRegistry<Electrolyt
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ElectrolyticCrucibleBatteryRecipe> register() {
+        public @NotNull Collection<ElectrolyticCrucibleBatteryRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ElectrolyticCrucibleBatteryRecipe recipe = new ElectrolyticCrucibleBatteryRecipe(fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidOutput.getOrEmpty(2), output.get(0), fluidInput.get(0), energy, time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().electrolyticCrucibleBattery.add(recipe);

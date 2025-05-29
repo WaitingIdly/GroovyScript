@@ -193,7 +193,7 @@ public class SoulBinder extends VirtualizedRegistry<ISoulBinderRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BasicSoulBinderRecipe> register() {
+        public @NotNull Collection<BasicSoulBinderRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BasicSoulBinderRecipe recipe = new BasicSoulBinderRecipe(
                     input.get(0).getMatchingStacks()[0],

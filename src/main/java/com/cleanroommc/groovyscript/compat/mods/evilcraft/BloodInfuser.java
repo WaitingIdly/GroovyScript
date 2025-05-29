@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class BloodInfuser extends StandardListRegistry<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> {
@@ -130,7 +129,7 @@ public class BloodInfuser extends StandardListRegistry<IRecipe<IngredientFluidSt
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> register() {
+        public @NotNull Collection<IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties>> register() {
             if (!validate()) return Collections.emptyList();
             IRecipe<IngredientFluidStackAndTierRecipeComponent, IngredientRecipeComponent, DurationXpRecipeProperties> recipe = org.cyclops.evilcraft.block.BloodInfuser.getInstance()
                     .getRecipeRegistry()

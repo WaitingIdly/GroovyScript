@@ -17,6 +17,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), item('minecraft:gold_ingot'), item('minecraft:gold_ingot'), 100"))
-    public List<PulverizerRecipe> add(int energy, IIngredient input, ItemStack primaryOutput, ItemStack secondaryOutput, int chance) {
+    public Collection<PulverizerRecipe> add(int energy, IIngredient input, ItemStack primaryOutput, ItemStack secondaryOutput, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -135,7 +136,7 @@ public class Pulverizer extends VirtualizedRegistry<PulverizerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PulverizerRecipe> register() {
+        public @NotNull Collection<PulverizerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<PulverizerRecipe> recipes = new ArrayList<>();
 

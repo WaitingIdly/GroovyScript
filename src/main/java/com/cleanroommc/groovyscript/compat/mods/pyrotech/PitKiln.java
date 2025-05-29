@@ -13,6 +13,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.KilnPitRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class PitKiln extends ForgeRegistryWrapper<KilnPitRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'clay_to_iron', item('minecraft:clay_ball') * 5, item('minecraft:iron_ingot'), 1200, 0.5f, [item('minecraft:dirt'), item('minecraft:cobblestone')]"))
-    public List<KilnPitRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, Iterable<ItemStack> failureOutput) {
+    public Collection<KilnPitRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, Iterable<ItemStack> failureOutput) {
         return recipeBuilder()
                 .burnTime(burnTime)
                 .failureChance(failureChance)

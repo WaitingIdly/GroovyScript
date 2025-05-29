@@ -13,7 +13,6 @@ import rustic.common.crafting.Recipes;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class BrewingBarrel extends StandardListRegistry<IBrewingBarrelRecipe> {
@@ -70,7 +69,7 @@ public class BrewingBarrel extends StandardListRegistry<IBrewingBarrelRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IBrewingBarrelRecipe> register() {
+        public @NotNull Collection<IBrewingBarrelRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IBrewingBarrelRecipe recipe = new BrewingBarrelRecipe(fluidOutput.get(0), fluidInput.get(0));
             ModSupport.RUSTIC.get().brewingBarrel.add(recipe);

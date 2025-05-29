@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
 public class RiverGrate extends StandardListRegistry<MachineRecipes.MachineRecipe<Double, ItemStack>> {
@@ -75,7 +74,7 @@ public class RiverGrate extends StandardListRegistry<MachineRecipes.MachineRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MachineRecipes.MachineRecipe<Double, ItemStack>> register() {
+        public @NotNull Collection<MachineRecipes.MachineRecipe<Double, ItemStack>> register() {
             if (!validate()) return Collections.emptyList();
             var recipe = new MachineRecipes.MachineRecipe<>(weight, output.get(0), allowStoneParts);
             ModSupport.FACTORY_TECH.get().riverGrate.add(recipe);

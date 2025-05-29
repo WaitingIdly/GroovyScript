@@ -248,7 +248,7 @@ public class Tank extends VirtualizedRegistry<TankMachineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TankMachineRecipe> register() {
+        public @NotNull Collection<TankMachineRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Things in = RecipeUtils.toThings(input.get(0));
             Things out = new Things().add(output.getOrEmpty(0));

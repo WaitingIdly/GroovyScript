@@ -13,8 +13,8 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
@@ -33,7 +33,7 @@ public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'iron_to_clay', ore('ingotIron'), item('minecraft:clay_ball'), 9, 'granite', 'hammer'"))
-    public List<AnvilRecipe> add(String name, IIngredient input, ItemStack output, int hits, String tier, String type) {
+    public Collection<AnvilRecipe> add(String name, IIngredient input, ItemStack output, int hits, String tier, String type) {
         AnvilRecipe.EnumTier enumTier = EnumHelper.valueOfNullable(AnvilRecipe.EnumTier.class, tier, false);
         AnvilRecipe.EnumType enumType = EnumHelper.valueOfNullable(AnvilRecipe.EnumType.class, type, false);
         if (enumTier == null || enumType == null) {
@@ -150,7 +150,7 @@ public class Anvil extends ForgeRegistryWrapper<AnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AnvilRecipe> register() {
+        public @NotNull Collection<AnvilRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             AnvilRecipe recipe = new AnvilRecipe(output.get(0), input.get(0).toMcIngredient(), hits, type, tier).setRegistryName(super.name);

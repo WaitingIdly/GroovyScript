@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Energizer extends StandardListRegistry<EnergizeRecipe> {
@@ -85,7 +84,7 @@ public class Energizer extends StandardListRegistry<EnergizeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EnergizeRecipe> register() {
+        public @NotNull Collection<EnergizeRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             EnergizeRecipe recipe = new EnergizeRecipe(LazyAE2.matchesIIngredient(input.get(0)), energy, output.get(0));

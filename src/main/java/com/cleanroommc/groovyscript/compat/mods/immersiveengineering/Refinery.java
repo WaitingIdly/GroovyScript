@@ -105,7 +105,7 @@ public class Refinery extends StandardListRegistry<RefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RefineryRecipe> register() {
+        public @NotNull Collection<RefineryRecipe> register() {
             if (!validate()) return Collections.emptyList();
             RefineryRecipe recipe = new RefineryRecipe(fluidOutput.get(0), fluidInput.get(0), fluidInput.get(1), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().refinery.add(recipe);

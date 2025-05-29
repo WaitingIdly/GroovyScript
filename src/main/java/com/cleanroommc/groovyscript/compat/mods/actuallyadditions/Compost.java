@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Compost extends StandardListRegistry<CompostRecipe> {
@@ -105,7 +104,7 @@ public class Compost extends StandardListRegistry<CompostRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CompostRecipe> register() {
+        public @NotNull Collection<CompostRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CompostRecipe recipe = new CompostRecipe(input.get(0).toMcIngredient(), inputDisplay, output.get(0), outputDisplay);
             ModSupport.ACTUALLY_ADDITIONS.get().compost.add(recipe);

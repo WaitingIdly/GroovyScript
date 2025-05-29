@@ -34,7 +34,7 @@ public class WoodenBasin extends StandardListRegistry<WoodenBasinRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<WoodenBasinRecipes> add(ItemStack output, FluidStack fluid, IIngredient... inputs) {
+    public Collection<WoodenBasinRecipes> add(ItemStack output, FluidStack fluid, IIngredient... inputs) {
         return recipeBuilder()
                 .input(inputs)
                 .fluidInput(fluid)
@@ -88,7 +88,7 @@ public class WoodenBasin extends StandardListRegistry<WoodenBasinRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WoodenBasinRecipes> register() {
+        public @NotNull Collection<WoodenBasinRecipes> register() {
             if (!validate()) return Collections.emptyList();
             List<WoodenBasinRecipes> list = new ArrayList<>();
             List<List<Object>> cartesian = IngredientHelper.cartesianProductOres(input);

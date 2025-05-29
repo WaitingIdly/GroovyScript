@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class TreasureChest extends StandardListRegistry<TreasureChestLoot> {
@@ -89,7 +88,7 @@ public class TreasureChest extends StandardListRegistry<TreasureChestLoot> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TreasureChestLoot> register() {
+        public @NotNull Collection<TreasureChestLoot> register() {
             if (!validate()) return Collections.emptyList();
             TreasureChestLoot recipe = new TreasureChestLoot(output.get(0), weight, min, max);
             ModSupport.ACTUALLY_ADDITIONS.get().treasureChest.add(recipe);

@@ -73,7 +73,7 @@ public class Agitator extends StandardListRegistry<TileEntityAgitator.AgitatorRe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TileEntityAgitator.AgitatorRecipe> register() {
+        public @NotNull Collection<TileEntityAgitator.AgitatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<TileEntityAgitator.AgitatorRecipe> list = new ArrayList<>();
             if (input.isEmpty()) {

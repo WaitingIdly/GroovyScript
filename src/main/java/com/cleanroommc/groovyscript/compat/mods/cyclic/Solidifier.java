@@ -80,7 +80,7 @@ public class Solidifier extends StandardListRegistry<RecipeSolidifier> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeSolidifier> register() {
+        public @NotNull Collection<RecipeSolidifier> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipeSolidifier> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);

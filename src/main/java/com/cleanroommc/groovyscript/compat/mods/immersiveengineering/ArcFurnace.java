@@ -182,7 +182,7 @@ public class ArcFurnace extends StandardListRegistry<ArcFurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ArcFurnaceRecipe> register() {
+        public @NotNull Collection<ArcFurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Object[] additives = ArrayUtils.mapToArray(input, ImmersiveEngineering::toIngredientStack);
             ArcFurnaceRecipe recipe = new ArcFurnaceRecipe(output.get(0), ImmersiveEngineering.toIngredientStack(mainInput), slag, time, energyPerTick, additives);

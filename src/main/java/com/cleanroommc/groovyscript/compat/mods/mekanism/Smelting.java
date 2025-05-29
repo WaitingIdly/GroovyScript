@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class Smelting extends VirtualizedMekanismRegistry<SmeltingRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond_block'), item('minecraft:clay')", commented = true))
-    public List<SmeltingRecipe> add(IIngredient ingredient, ItemStack output) {
+    public Collection<SmeltingRecipe> add(IIngredient ingredient, ItemStack output) {
         return recipeBuilder().output(output).input(ingredient).register();
     }
 
@@ -77,7 +78,7 @@ public class Smelting extends VirtualizedMekanismRegistry<SmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SmeltingRecipe> register() {
+        public @NotNull Collection<SmeltingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<SmeltingRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

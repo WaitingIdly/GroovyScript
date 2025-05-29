@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Empowerer extends StandardListRegistry<EmpowererRecipe> {
@@ -194,7 +193,7 @@ public class Empowerer extends StandardListRegistry<EmpowererRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EmpowererRecipe> register() {
+        public @NotNull Collection<EmpowererRecipe> register() {
             if (!validate()) return Collections.emptyList();
             EmpowererRecipe recipe = new EmpowererRecipe(
                     mainInput.toMcIngredient(),

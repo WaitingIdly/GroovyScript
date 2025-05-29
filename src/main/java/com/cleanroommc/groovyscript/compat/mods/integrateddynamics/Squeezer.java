@@ -141,7 +141,7 @@ public class Squeezer extends StandardListRegistry<IRecipe<IngredientRecipeCompo
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe<IngredientRecipeComponent, IngredientsAndFluidStackRecipeComponent, DummyPropertiesComponent>> register() {
+        public @NotNull Collection<IRecipe<IngredientRecipeComponent, IngredientsAndFluidStackRecipeComponent, DummyPropertiesComponent>> register() {
             if (!validate()) return Collections.emptyList();
 
             if (basic) {

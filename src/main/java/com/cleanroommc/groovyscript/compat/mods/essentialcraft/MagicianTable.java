@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.essentialcraft.magician_table.note0", type = Admonition.Type.WARNING))
 public class MagicianTable extends StandardListRegistry<MagicianTableRecipe> {
@@ -71,7 +70,7 @@ public class MagicianTable extends StandardListRegistry<MagicianTableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MagicianTableRecipe> register() {
+        public @NotNull Collection<MagicianTableRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Ingredient[] inputIngredient = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             MagicianTableRecipe recipe = new MagicianTableRecipe(inputIngredient, output.get(0), mru);

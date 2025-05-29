@@ -17,6 +17,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class Charger extends VirtualizedRegistry<ChargerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, item('minecraft:obsidian'), item('minecraft:diamond') * 2", commented = true))
-    public List<ChargerRecipe> add(int energy, IIngredient input, ItemStack output) {
+    public Collection<ChargerRecipe> add(int energy, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -123,7 +124,7 @@ public class Charger extends VirtualizedRegistry<ChargerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ChargerRecipe> register() {
+        public @NotNull Collection<ChargerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ChargerRecipe> recipes = new ArrayList<>();
 

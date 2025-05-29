@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -114,7 +113,7 @@ public class Crucible extends StandardListRegistry<CookingPotRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CookingPotRecipe> register() {
+        public @NotNull Collection<CookingPotRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             CookingPotRecipe recipe = new CookingPotRecipe(input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList()), output, heat);

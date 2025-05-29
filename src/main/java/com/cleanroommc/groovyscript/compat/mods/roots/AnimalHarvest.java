@@ -13,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -116,7 +116,7 @@ public class AnimalHarvest extends VirtualizedRegistry<AnimalHarvestRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AnimalHarvestRecipe> register() {
+        public @NotNull Collection<AnimalHarvestRecipe> register() {
             if (!validate()) return Collections.emptyList();
             AnimalHarvestRecipe recipe = new AnimalHarvestRecipe(super.name, entity);
             ModSupport.ROOTS.get().animalHarvest.add(super.name, recipe);

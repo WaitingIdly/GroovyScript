@@ -19,7 +19,6 @@ import rustic.common.util.ElixirUtils;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Alchemy extends StandardListRegistry<ICondenserRecipe> {
@@ -139,7 +138,7 @@ public class Alchemy extends StandardListRegistry<ICondenserRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICondenserRecipe> register() {
+        public @NotNull Collection<ICondenserRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             ICondenserRecipe recipe = new CondenserRecipe(

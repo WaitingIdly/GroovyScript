@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.DistillationTowerRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = {
         @MethodDescription(method = "removeByInput", example = @Example("item('techreborn:dynamiccell').withNbt(['Fluid': ['FluidName': 'fluidoil', 'Amount': 1000]])")),
@@ -73,7 +73,7 @@ public class DistillationTower extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DistillationTowerRecipe> register() {
+        public @NotNull Collection<DistillationTowerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ItemStack output3 = output.size() >= 3 ? output.get(2) : null;

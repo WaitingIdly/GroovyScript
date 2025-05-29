@@ -108,7 +108,7 @@ public class LureTree extends StandardListRegistry<TileEntityLureTree.TreeFood> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TileEntityLureTree.TreeFood> register() {
+        public @NotNull Collection<TileEntityLureTree.TreeFood> register() {
             if (!validate()) return Collections.emptyList();
             List<TileEntityLureTree.TreeFood> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

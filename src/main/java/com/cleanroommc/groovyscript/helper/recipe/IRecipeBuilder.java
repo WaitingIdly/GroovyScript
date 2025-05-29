@@ -3,7 +3,7 @@ package com.cleanroommc.groovyscript.helper.recipe;
 import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderRegistrationMethod;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * A groovy recipe builder template
@@ -31,5 +31,5 @@ public interface IRecipeBuilder<T> {
      */
     @RecipeBuilderRegistrationMethod
     @NotNull
-    List<T> register();
+    Collection<T> register();
 }

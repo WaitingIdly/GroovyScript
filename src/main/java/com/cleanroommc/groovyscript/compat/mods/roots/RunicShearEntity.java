@@ -15,9 +15,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -157,7 +157,7 @@ public class RunicShearEntity extends VirtualizedRegistry<RunicShearEntityRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RunicShearEntityRecipe> register() {
+        public @NotNull Collection<RunicShearEntityRecipe> register() {
             if (!validate()) return Collections.emptyList();
             RunicShearEntityRecipe recipe;
             if (functionMap == null) recipe = new RunicShearEntityRecipe(super.name, output.get(0), entity, cooldown);

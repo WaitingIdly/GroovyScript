@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Distiller extends StandardListRegistry<DistillerRecipe> {
@@ -117,7 +116,7 @@ public class Distiller extends StandardListRegistry<DistillerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DistillerRecipe> register() {
+        public @NotNull Collection<DistillerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             DistillerRecipe recipe = new DistillerRecipe(fluidOutput.get(0), fluidInput.get(0), output.getOrEmpty(0), energy, time, chance);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().distiller.add(recipe);

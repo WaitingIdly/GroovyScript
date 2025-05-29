@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class SoakingBox extends StandardListRegistry<CherryBoxRecipe> {
@@ -77,7 +76,7 @@ public class SoakingBox extends StandardListRegistry<CherryBoxRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CherryBoxRecipe> register() {
+        public @NotNull Collection<CherryBoxRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CherryBoxRecipe recipe = new CherryBoxRecipe(BlockCherryBox.CherryBoxType.SOAKING, BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), output.get(0));
             ModSupport.BETTER_WITH_ADDONS.get().soakingBox.add(recipe);

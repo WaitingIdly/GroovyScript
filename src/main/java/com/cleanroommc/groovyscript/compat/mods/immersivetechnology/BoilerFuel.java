@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
 public class BoilerFuel extends StandardListRegistry<BoilerRecipe.BoilerFuelRecipe> {
@@ -84,7 +83,7 @@ public class BoilerFuel extends StandardListRegistry<BoilerRecipe.BoilerFuelReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BoilerRecipe.BoilerFuelRecipe> register() {
+        public @NotNull Collection<BoilerRecipe.BoilerFuelRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BoilerRecipe.BoilerFuelRecipe recipe = new BoilerRecipe.BoilerFuelRecipe(fluidInput.get(0), time, heat);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().boilerFuel.add(recipe);

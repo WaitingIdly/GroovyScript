@@ -88,7 +88,7 @@ public class SluiceBox extends StandardListRegistry<ISluiceBoxRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ISluiceBoxRecipe> register() {
+        public @NotNull Collection<ISluiceBoxRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
                 var recipe = MagneticraftApi.getSluiceBoxRecipeManager().createRecipe(ore.getMatchingStacks()[0], output, chances, true);

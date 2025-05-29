@@ -33,7 +33,7 @@ public class ClayKiln extends StandardListRegistry<ClayKilnRecipes> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<ClayKilnRecipes> add(ItemStack output, IIngredient input, int cookTime) {
+    public Collection<ClayKilnRecipes> add(ItemStack output, IIngredient input, int cookTime) {
         return recipeBuilder()
                 .cookTime(cookTime)
                 .input(input)
@@ -90,7 +90,7 @@ public class ClayKiln extends StandardListRegistry<ClayKilnRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ClayKilnRecipes> register() {
+        public @NotNull Collection<ClayKilnRecipes> register() {
             if (!validate()) return Collections.emptyList();
             List<ClayKilnRecipes> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {

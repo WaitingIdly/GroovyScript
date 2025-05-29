@@ -88,7 +88,7 @@ public class CrushingTub extends StandardListRegistry<ICrushingTubRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICrushingTubRecipe> register() {
+        public @NotNull Collection<ICrushingTubRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ICrushingTubRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

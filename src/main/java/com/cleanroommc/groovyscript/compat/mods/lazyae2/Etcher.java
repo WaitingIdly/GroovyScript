@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Etcher extends StandardListRegistry<EtchRecipe> {
@@ -92,7 +91,7 @@ public class Etcher extends StandardListRegistry<EtchRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EtchRecipe> register() {
+        public @NotNull Collection<EtchRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             EtchRecipe recipe = new EtchRecipe(LazyAE2.matchesIIngredient(top), LazyAE2.matchesIIngredient(bottom), LazyAE2.matchesIIngredient(input.get(0)), output.get(0));

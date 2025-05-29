@@ -12,6 +12,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.StoneKilnRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class StoneKiln extends ForgeRegistryWrapper<StoneKilnRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'clay_to_iron_stone', item('minecraft:clay_ball') * 5, item('minecraft:iron_ingot'), 1200, 0.5f, item('minecraft:dirt'), item('minecraft:cobblestone')"))
-    public List<StoneKilnRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, ItemStack... failureOutput) {
+    public Collection<StoneKilnRecipe> add(String name, IIngredient input, ItemStack output, int burnTime, float failureChance, ItemStack... failureOutput) {
         return recipeBuilder()
                 .burnTime(burnTime)
                 .failureChance(failureChance)

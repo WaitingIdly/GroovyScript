@@ -18,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class DryingBasin extends StandardListRegistry<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> {
@@ -127,7 +126,7 @@ public class DryingBasin extends StandardListRegistry<IRecipe<IngredientAndFluid
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> register() {
+        public @NotNull Collection<IRecipe<IngredientAndFluidStackRecipeComponent, IngredientAndFluidStackRecipeComponent, DurationRecipeProperties>> register() {
             if (!validate()) return Collections.emptyList();
 
             ItemStack itemInput = input.isEmpty() ? ItemStack.EMPTY : IngredientHelper.toItemStack(input.get(0));

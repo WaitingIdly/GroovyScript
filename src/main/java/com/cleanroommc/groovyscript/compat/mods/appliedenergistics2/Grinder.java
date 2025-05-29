@@ -127,7 +127,7 @@ public class Grinder extends VirtualizedRegistry<IGrinderRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IGrinderRecipe> register() {
+        public @NotNull Collection<IGrinderRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IGrinderRecipeBuilder builder = AEApi.instance()
                     .registries()

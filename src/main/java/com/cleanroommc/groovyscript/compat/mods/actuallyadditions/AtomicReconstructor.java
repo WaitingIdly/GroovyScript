@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class AtomicReconstructor extends StandardListRegistry<LensConversionRecipe> {
@@ -34,7 +33,7 @@ public class AtomicReconstructor extends StandardListRegistry<LensConversionReci
         return ActuallyAdditionsAPI.RECONSTRUCTOR_LENS_CONVERSION_RECIPES;
     }
 
-    public List<LensConversionRecipe> add(IIngredient input, ItemStack output, int energy, Lens type) {
+    public Collection<LensConversionRecipe> add(IIngredient input, ItemStack output, int energy, Lens type) {
         return recipeBuilder()
                 .type(type)
                 .energy(energy)
@@ -112,7 +111,7 @@ public class AtomicReconstructor extends StandardListRegistry<LensConversionReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<LensConversionRecipe> register() {
+        public @NotNull Collection<LensConversionRecipe> register() {
             if (!validate()) return Collections.emptyList();
             LensConversionRecipe recipe = new LensConversionRecipe(input.get(0).toMcIngredient(), output.get(0), energyUse, type);
             ModSupport.ACTUALLY_ADDITIONS.get().atomicReconstructor.add(recipe);

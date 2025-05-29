@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class RadiatingChamber extends StandardListRegistry<RadiatingChamberRecipe> {
@@ -101,7 +100,7 @@ public class RadiatingChamber extends StandardListRegistry<RadiatingChamberRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RadiatingChamberRecipe> register() {
+        public @NotNull Collection<RadiatingChamberRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Ingredient[] inputIngredient = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             // the attribute names lie to the devs, they're called 'int mruRequired' and 'float costModifier'

@@ -96,7 +96,7 @@ public class Sieve extends StandardListRegistry<ISieveRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ISieveRecipe> register() {
+        public @NotNull Collection<ISieveRecipe> register() {
             if (!validate()) return Collections.emptyList();
             float primaryChance = chances.size() >= 1 ? chances.getFloat(0) : 0;
             float secondaryChance = chances.size() >= 2 ? chances.getFloat(1) : 0;

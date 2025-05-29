@@ -78,7 +78,7 @@ public class Saw extends StandardListRegistry<MachineRecipes.MachineRecipe<ItemS
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> register() {
+        public @NotNull Collection<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> register() {
             if (!validate()) return Collections.emptyList();
             List<MachineRecipes.MachineRecipe<ItemStack, ItemStack>> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

@@ -14,6 +14,7 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -151,7 +152,7 @@ public class EntityMelting extends VirtualizedRegistry<EntityMeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EntityMeltingRecipe> register() {
+        public @NotNull Collection<EntityMeltingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             EntityMeltingRecipe recipe = new EntityMeltingRecipe(input, output);
             add(recipe);

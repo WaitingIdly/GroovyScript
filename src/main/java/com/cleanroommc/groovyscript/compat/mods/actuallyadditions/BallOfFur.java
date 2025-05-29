@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class BallOfFur extends StandardListRegistry<BallOfFurReturn> {
@@ -70,7 +69,7 @@ public class BallOfFur extends StandardListRegistry<BallOfFurReturn> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BallOfFurReturn> register() {
+        public @NotNull Collection<BallOfFurReturn> register() {
             if (!validate()) return Collections.emptyList();
             BallOfFurReturn recipe = new BallOfFurReturn(output.get(0), weight);
             ModSupport.ACTUALLY_ADDITIONS.get().ballOfFur.add(recipe);

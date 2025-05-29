@@ -12,8 +12,8 @@ import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.WasherRecipe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
@@ -28,7 +28,7 @@ public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('water'), gas('hydrogen')", commented = true))
-    public List<WasherRecipe> add(GasStack input, GasStack output) {
+    public Collection<WasherRecipe> add(GasStack input, GasStack output) {
         return recipeBuilder().gasOutput(output).gasInput(input).register();
     }
 
@@ -65,7 +65,7 @@ public class Washer extends VirtualizedMekanismRegistry<WasherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WasherRecipe> register() {
+        public @NotNull Collection<WasherRecipe> register() {
             if (!validate()) return Collections.emptyList();
             WasherRecipe recipe = new WasherRecipe(gasInput.get(0), gasOutput.get(0));
             ModSupport.MEKANISM.get().washer.add(recipe);

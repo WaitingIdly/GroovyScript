@@ -246,7 +246,7 @@ public class Excavator extends VirtualizedRegistry<Pair<ExcavatorHandler.Mineral
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ExcavatorHandler.MineralMix> register() {
+        public @NotNull Collection<ExcavatorHandler.MineralMix> register() {
             if (!validate()) return Collections.emptyList();
             ExcavatorHandler.MineralMix recipe = new ExcavatorHandler.MineralMix(name, fail, ores.toArray(new String[0]), chances.elements());
 

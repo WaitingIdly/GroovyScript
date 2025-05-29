@@ -17,6 +17,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class Sawmill extends VirtualizedRegistry<SawmillRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian') * 4, item('minecraft:gold_ingot'), item('minecraft:diamond'), 25"))
-    public List<SawmillRecipe> add(int energy, IIngredient input, ItemStack outputItem, ItemStack secondaryOutput, int chance) {
+    public Collection<SawmillRecipe> add(int energy, IIngredient input, ItemStack outputItem, ItemStack secondaryOutput, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -137,7 +138,7 @@ public class Sawmill extends VirtualizedRegistry<SawmillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SawmillRecipe> register() {
+        public @NotNull Collection<SawmillRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<SawmillRecipe> recipes = new ArrayList<>();
 

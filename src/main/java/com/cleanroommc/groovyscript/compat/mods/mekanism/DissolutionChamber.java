@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class DissolutionChamber extends VirtualizedMekanismRegistry<DissolutionR
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:packed_ice'), gas('water')", commented = true))
-    public List<DissolutionRecipe> add(IIngredient ingredient, GasStack output) {
+    public Collection<DissolutionRecipe> add(IIngredient ingredient, GasStack output) {
         return recipeBuilder().gasOutput(output).input(ingredient).register();
     }
 
@@ -74,7 +75,7 @@ public class DissolutionChamber extends VirtualizedMekanismRegistry<DissolutionR
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DissolutionRecipe> register() {
+        public @NotNull Collection<DissolutionRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<DissolutionRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

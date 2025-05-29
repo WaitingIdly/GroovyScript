@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Evaporator extends StandardListRegistry<EvaporatorRecipe> {
@@ -33,7 +32,7 @@ public class Evaporator extends StandardListRegistry<EvaporatorRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<EvaporatorRecipe> add(FluidStack input, ItemStack output) {
+    public Collection<EvaporatorRecipe> add(FluidStack input, ItemStack output) {
         return recipeBuilder().fluidInput(input).output(output).register();
     }
 
@@ -76,7 +75,7 @@ public class Evaporator extends StandardListRegistry<EvaporatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EvaporatorRecipe> register() {
+        public @NotNull Collection<EvaporatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             EvaporatorRecipe recipe = new EvaporatorRecipe(fluidInput.get(0), output.get(0));
             ModSupport.ALCHEMISTRY.get().evaporator.add(recipe);

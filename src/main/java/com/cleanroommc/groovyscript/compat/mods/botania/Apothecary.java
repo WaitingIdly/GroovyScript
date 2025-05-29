@@ -36,7 +36,7 @@ public class Apothecary extends StandardListRegistry<RecipePetals> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipePetals> add(ItemStack output, IIngredient... inputs) {
+    public Collection<RecipePetals> add(ItemStack output, IIngredient... inputs) {
         return recipeBuilder()
                 .output(output)
                 .input(inputs)
@@ -108,7 +108,7 @@ public class Apothecary extends StandardListRegistry<RecipePetals> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipePetals> register() {
+        public @NotNull Collection<RecipePetals> register() {
             if (!validate()) return Collections.emptyList();
             RecipePetals recipe = new RecipePetals(
                     output.get(0),

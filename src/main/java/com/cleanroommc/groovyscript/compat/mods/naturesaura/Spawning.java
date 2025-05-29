@@ -14,8 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.naturesaura.spawning.note0", type = Admonition.Type.WARNING))
@@ -160,7 +160,7 @@ public class Spawning extends VirtualizedRegistry<AnimalSpawnerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AnimalSpawnerRecipe> register() {
+        public @NotNull Collection<AnimalSpawnerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             AnimalSpawnerRecipe recipe = new AnimalSpawnerRecipe(super.name, entity, aura, time, input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new));
             ModSupport.NATURES_AURA.get().spawning.add(recipe);

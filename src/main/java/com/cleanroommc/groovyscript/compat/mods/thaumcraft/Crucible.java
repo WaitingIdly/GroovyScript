@@ -53,7 +53,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<CrucibleRecipe> add(String researchKey, ItemStack result, IIngredient catalyst, AspectList tags) {
+    public Collection<CrucibleRecipe> add(String researchKey, ItemStack result, IIngredient catalyst, AspectList tags) {
         return recipeBuilder().researchKey(researchKey).catalyst(catalyst).aspect(tags).output(result).register();
     }
 
@@ -192,7 +192,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrucibleRecipe> register() {
+        public @NotNull Collection<CrucibleRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CrucibleRecipe recipe = new CrucibleRecipe(researchKey, output.get(0), catalyst.toMcIngredient(), aspects);
             ModSupport.THAUMCRAFT.get().crucible.add(recipe);

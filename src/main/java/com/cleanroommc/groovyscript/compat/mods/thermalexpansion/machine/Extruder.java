@@ -23,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -72,7 +71,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:gold_block'), 100, 1000, false"))
-    public List<ExtruderRecipe> add(int energy, ItemStack output, int fluidHot, int fluidCold, boolean sedimentary) {
+    public Collection<ExtruderRecipe> add(int energy, ItemStack output, int fluidHot, int fluidCold, boolean sedimentary) {
         return recipeBuilder()
                 .energy(energy)
                 .fluidCold(fluidCold)
@@ -214,7 +213,7 @@ public class Extruder extends VirtualizedRegistry<Pair<Boolean, ExtruderRecipe>>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ExtruderRecipe> register() {
+        public @NotNull Collection<ExtruderRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ExtruderRecipe recipe = ExtruderRecipeAccessor.createExtruderRecipe(output.get(0), new FluidStack(FluidRegistry.LAVA, fluidHot), new FluidStack(FluidRegistry.WATER, fluidCold), energy);
             ModSupport.THERMAL_EXPANSION.get().extruder.add(sedimentary, recipe);

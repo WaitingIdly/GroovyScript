@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         reloadability = RegistryDescription.Reloadability.FLAWED,
@@ -154,7 +153,7 @@ public class Rituals extends VirtualizedRegistry<RitualBase> {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @NotNull List<RitualBase.RitualRecipe> register() {
+            public @NotNull Collection<RitualBase.RitualRecipe> register() {
                 if (!validate()) return Collections.emptyList();
                 RitualBase.RitualRecipe recipe = new RitualBase.RitualRecipe(ritual, input.stream().map(IIngredient::toMcIngredient).toArray());
                 this.ritual.setRecipe(recipe);

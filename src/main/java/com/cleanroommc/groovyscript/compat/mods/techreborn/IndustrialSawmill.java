@@ -11,8 +11,8 @@ import reborncore.api.recipe.RecipeHandler;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.IndustrialSawmillRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = @MethodDescription(method = "removeByOutput", example = @Example("item('minecraft:planks:4')"))))
 public class IndustrialSawmill extends AbstractGenericTechRebornRegistry {
@@ -91,7 +91,7 @@ public class IndustrialSawmill extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IndustrialSawmillRecipe> register() {
+        public @NotNull Collection<IndustrialSawmillRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             ItemStack output3 = output.size() >= 3 ? output.get(2) : null;

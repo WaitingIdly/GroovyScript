@@ -78,7 +78,7 @@ public class Compost extends StandardListRegistry<ICompostBinRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICompostBinRecipe> register() {
+        public @NotNull Collection<ICompostBinRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ICompostBinRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

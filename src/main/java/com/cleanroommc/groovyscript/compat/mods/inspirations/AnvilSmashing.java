@@ -15,8 +15,8 @@ import net.minecraft.block.state.IBlockState;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -180,7 +180,7 @@ public class AnvilSmashing extends VirtualizedRegistry<Pair<IBlockState, IBlockS
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Object> register() {
+        public @NotNull Collection<Object> register() {
             if (!validate()) return Collections.emptyList();
             if (inputBlock == null) {
                 ModSupport.INSPIRATIONS.get().anvilSmashing.add(inputBlockState, output);

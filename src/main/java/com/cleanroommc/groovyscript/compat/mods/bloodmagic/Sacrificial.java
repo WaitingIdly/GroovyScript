@@ -16,8 +16,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -141,7 +141,7 @@ public class Sacrificial extends VirtualizedRegistry<Pair<ResourceLocation, Inte
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Pair<ResourceLocation, Integer>> register() {
+        public @NotNull Collection<Pair<ResourceLocation, Integer>> register() {
             if (!validate()) return Collections.emptyList();
             ModSupport.BLOOD_MAGIC.get().sacrificial.add(entity, value);
             return Collections.singletonList(Pair.of(entity, value));

@@ -15,7 +15,6 @@ import sonar.core.recipes.ISonarRecipeObject;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ConductorMast extends StandardListRegistry<DefaultSonarRecipe.Value> {
@@ -92,7 +91,7 @@ public class ConductorMast extends StandardListRegistry<DefaultSonarRecipe.Value
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<DefaultSonarRecipe.Value> register() {
+        public @NotNull Collection<DefaultSonarRecipe.Value> register() {
             if (!validate()) return Collections.emptyList();
 
             DefaultSonarRecipe.Value recipe = ConductorMastRecipes.instance()

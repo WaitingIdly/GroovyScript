@@ -18,6 +18,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:diamond'), gas('hydrogen'), item('minecraft:nether_star')", commented = true))
-    public List<OsmiumCompressorRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
+    public Collection<OsmiumCompressorRecipe> add(IIngredient ingredient, GasStack gasInput, ItemStack output) {
         return recipeBuilder().gasInput(gasInput).output(output).input(ingredient).register();
     }
 
@@ -78,7 +79,7 @@ public class OsmiumCompressor extends VirtualizedMekanismRegistry<OsmiumCompress
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<OsmiumCompressorRecipe> register() {
+        public @NotNull Collection<OsmiumCompressorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Gas gas = gasInput.isEmpty() ? MekanismFluids.LiquidOsmium : gasInput.get(0).getGas();
             List<OsmiumCompressorRecipe> recipes = new ArrayList<>();

@@ -21,10 +21,7 @@ import party.lemons.arcaneworld.crafting.ritual.Ritual;
 import party.lemons.arcaneworld.crafting.ritual.RitualRegistry;
 import party.lemons.arcaneworld.crafting.ritual.impl.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RegistryDescription
 public class RitualWrapper extends ForgeRegistryWrapper<Ritual> {
@@ -343,7 +340,7 @@ public class RitualWrapper extends ForgeRegistryWrapper<Ritual> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Ritual> register() {
+        public @NotNull Collection<Ritual> register() {
             if (!validate()) return Collections.emptyList();
             var ingredients = input.stream().map(IIngredient::toMcIngredient).toArray(Ingredient[]::new);
             Ritual recipe = switch (ritualType) {

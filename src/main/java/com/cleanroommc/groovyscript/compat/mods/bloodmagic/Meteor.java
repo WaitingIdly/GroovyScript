@@ -13,10 +13,7 @@ import com.cleanroommc.groovyscript.registry.VirtualizedRegistry;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RegistryDescription
 public class Meteor extends VirtualizedRegistry<WayofTime.bloodmagic.meteor.Meteor> {
@@ -167,7 +164,7 @@ public class Meteor extends VirtualizedRegistry<WayofTime.bloodmagic.meteor.Mete
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WayofTime.bloodmagic.meteor.Meteor> register() {
+        public @NotNull Collection<WayofTime.bloodmagic.meteor.Meteor> register() {
             if (!validate()) return Collections.emptyList();
             WayofTime.bloodmagic.meteor.Meteor recipe = new WayofTime.bloodmagic.meteor.Meteor(catalyst, components, explosionStrength, radius);
             recipe.setCost(cost);

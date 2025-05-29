@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         admonition = {
@@ -44,7 +43,7 @@ public class BloodAltar extends StandardListRegistry<RecipeBloodAltar> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeBloodAltar> add(IIngredient input, ItemStack output, int minimumTier, int syphon, int consumeRate, int drainRate) {
+    public Collection<RecipeBloodAltar> add(IIngredient input, ItemStack output, int minimumTier, int syphon, int consumeRate, int drainRate) {
         return recipeBuilder()
                 .minimumTier(minimumTier)
                 .consumeRate(consumeRate)
@@ -156,7 +155,7 @@ public class BloodAltar extends StandardListRegistry<RecipeBloodAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeBloodAltar> register() {
+        public @NotNull Collection<RecipeBloodAltar> register() {
             if (!validate()) return Collections.emptyList();
             RecipeBloodAltar recipe = new RecipeBloodAltar(input.get(0).toMcIngredient(), output.get(0), minimumTier, syphon, consumeRate, drainRate);
             ModSupport.BLOOD_MAGIC.get().bloodAltar.add(recipe);

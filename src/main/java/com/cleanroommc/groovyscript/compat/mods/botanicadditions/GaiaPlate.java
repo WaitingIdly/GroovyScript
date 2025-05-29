@@ -14,7 +14,6 @@ import tk.zeitheron.botanicadds.api.GaiaPlateRecipes;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class GaiaPlate extends StandardListRegistry<GaiaPlateRecipes.RecipeGaiaPlate> {
@@ -83,7 +82,7 @@ public class GaiaPlate extends StandardListRegistry<GaiaPlateRecipes.RecipeGaiaP
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<GaiaPlateRecipes.RecipeGaiaPlate> register() {
+        public @NotNull Collection<GaiaPlateRecipes.RecipeGaiaPlate> register() {
             if (!validate()) return Collections.emptyList();
             Object[] inputs = input.stream()
                     .map(i -> i instanceof OreDictIngredient oreDictIngredient ? oreDictIngredient.getOreDict() : i.getMatchingStacks()[0])

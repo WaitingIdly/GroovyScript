@@ -18,10 +18,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RegistryDescription
 public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
@@ -70,7 +67,7 @@ public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, item('minecraft:obsidian'), item('minecraft:gold_ingot') * 2, item('minecraft:clay'), item('minecraft:diamond'), 5", commented = true))
-    public List<SmelterRecipe> add(int energy, IIngredient input0, IIngredient input1, ItemStack output0, ItemStack output1, int chance) {
+    public Collection<SmelterRecipe> add(int energy, IIngredient input0, IIngredient input1, ItemStack output0, ItemStack output1, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -160,7 +157,7 @@ public class Smelter extends VirtualizedRegistry<SmelterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SmelterRecipe> register() {
+        public @NotNull Collection<SmelterRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<SmelterRecipe> recipes = new ArrayList<>();
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {

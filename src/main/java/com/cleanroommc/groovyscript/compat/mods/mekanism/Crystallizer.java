@@ -12,8 +12,8 @@ import mekanism.common.recipe.machines.CrystallizerRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe> {
@@ -28,7 +28,7 @@ public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('cleanGold'), item('minecraft:gold_ingot')", commented = true))
-    public List<CrystallizerRecipe> add(GasStack input, ItemStack output) {
+    public Collection<CrystallizerRecipe> add(GasStack input, ItemStack output) {
         return recipeBuilder().gasInput(input).output(output).register();
     }
 
@@ -65,7 +65,7 @@ public class Crystallizer extends VirtualizedMekanismRegistry<CrystallizerRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrystallizerRecipe> register() {
+        public @NotNull Collection<CrystallizerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CrystallizerRecipe recipe = new CrystallizerRecipe(gasInput.get(0), output.get(0));
             ModSupport.MEKANISM.get().crystallizer.add(recipe);

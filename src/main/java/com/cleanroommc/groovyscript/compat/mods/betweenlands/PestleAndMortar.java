@@ -67,7 +67,7 @@ public class PestleAndMortar extends StandardListRegistry<IPestleAndMortarRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IPestleAndMortarRecipe> register() {
+        public @NotNull Collection<IPestleAndMortarRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<IPestleAndMortarRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

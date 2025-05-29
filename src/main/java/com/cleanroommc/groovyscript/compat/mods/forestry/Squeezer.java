@@ -13,10 +13,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Squeezer extends ForestryRegistry<ISqueezerRecipe> {
@@ -33,7 +30,7 @@ public class Squeezer extends ForestryRegistry<ISqueezerRecipe> {
         restoreFromBackup().forEach(SqueezerRecipeManagerAccessor.getRecipes()::add);
     }
 
-    public List<ISqueezerRecipe> add(FluidStack output, ItemStack remnant, int time, int remnantChance, IIngredient... inputs) {
+    public Collection<ISqueezerRecipe> add(FluidStack output, ItemStack remnant, int time, int remnantChance, IIngredient... inputs) {
         return recipeBuilder().chance(remnantChance).time(time).output(remnant).fluidOutput(output).input(inputs).register();
     }
 

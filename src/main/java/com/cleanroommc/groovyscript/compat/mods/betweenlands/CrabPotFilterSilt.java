@@ -66,7 +66,7 @@ public class CrabPotFilterSilt extends StandardListRegistry<ICrabPotFilterRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICrabPotFilterRecipeSilt> register() {
+        public @NotNull Collection<ICrabPotFilterRecipeSilt> register() {
             if (!validate()) return Collections.emptyList();
             List<ICrabPotFilterRecipeSilt> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

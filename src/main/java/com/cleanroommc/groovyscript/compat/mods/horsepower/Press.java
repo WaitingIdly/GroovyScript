@@ -55,7 +55,7 @@ public class Press extends StandardListRegistry<PressRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<PressRecipe> add(IIngredient input, ItemStack output) {
+    public Collection<PressRecipe> add(IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .output(output)
                 .input(input)
@@ -63,7 +63,7 @@ public class Press extends StandardListRegistry<PressRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<PressRecipe> add(IIngredient input, FluidStack output) {
+    public Collection<PressRecipe> add(IIngredient input, FluidStack output) {
         return recipeBuilder()
                 .fluidOutput(output)
                 .input(input)
@@ -103,7 +103,7 @@ public class Press extends StandardListRegistry<PressRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PressRecipe> register() {
+        public @NotNull Collection<PressRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<PressRecipe> list = new ArrayList<>();
             if (fluidOutput.isEmpty()) {

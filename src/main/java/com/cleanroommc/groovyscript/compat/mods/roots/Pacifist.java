@@ -14,8 +14,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(
@@ -119,7 +119,7 @@ public class Pacifist extends VirtualizedRegistry<PacifistEntry> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PacifistEntry> register() {
+        public @NotNull Collection<PacifistEntry> register() {
             if (!validate()) return Collections.emptyList();
             PacifistEntry recipe = new PacifistEntry(entity, super.name.toString());
             ((PacifistEntryAccessor) recipe).setName(super.name);

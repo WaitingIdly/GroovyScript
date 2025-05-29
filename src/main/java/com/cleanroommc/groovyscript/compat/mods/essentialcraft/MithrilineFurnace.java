@@ -13,8 +13,8 @@ import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class MithrilineFurnace extends VirtualizedRegistry<MithrilineFurnaceRecipe> {
@@ -93,7 +93,7 @@ public class MithrilineFurnace extends VirtualizedRegistry<MithrilineFurnaceReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MithrilineFurnaceRecipe> register() {
+        public @NotNull Collection<MithrilineFurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             int stackSize = input.get(0).getAmount();
             Ingredient inputItem = input.get(0).withAmount(1).toMcIngredient();

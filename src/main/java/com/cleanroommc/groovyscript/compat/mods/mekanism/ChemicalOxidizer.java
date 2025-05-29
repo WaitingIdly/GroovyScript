@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ChemicalOxidizer extends VirtualizedMekanismRegistry<OxidationRecip
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "ore('dustGold'), gas('gold')", commented = true))
-    public List<OxidationRecipe> add(IIngredient ingredient, GasStack output) {
+    public Collection<OxidationRecipe> add(IIngredient ingredient, GasStack output) {
         return recipeBuilder().gasOutput(output).input(ingredient).register();
     }
 
@@ -74,7 +75,7 @@ public class ChemicalOxidizer extends VirtualizedMekanismRegistry<OxidationRecip
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<OxidationRecipe> register() {
+        public @NotNull Collection<OxidationRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<OxidationRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

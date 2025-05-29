@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ChaliceInteraction extends StandardListRegistry<LiquidInteraction> {
@@ -174,7 +173,7 @@ public class ChaliceInteraction extends StandardListRegistry<LiquidInteraction> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<LiquidInteraction> register() {
+        public @NotNull Collection<LiquidInteraction> register() {
             if (!validate()) return Collections.emptyList();
             LiquidInteraction recipe = null;
             for (int i = 0; i < this.output.size(); i++) {

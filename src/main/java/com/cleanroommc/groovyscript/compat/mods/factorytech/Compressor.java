@@ -67,7 +67,7 @@ public class Compressor extends StandardListRegistry<TileEntityCompressionChambe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TileEntityCompressionChamber.CompressorRecipe> register() {
+        public @NotNull Collection<TileEntityCompressionChamber.CompressorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<TileEntityCompressionChamber.CompressorRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

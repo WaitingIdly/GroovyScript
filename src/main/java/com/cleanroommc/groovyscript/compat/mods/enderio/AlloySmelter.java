@@ -201,7 +201,7 @@ public class AlloySmelter extends VirtualizedRegistry<IManyToOneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Void> register() {
+        public @NotNull Collection<Void> register() {
             if (!validate()) return Collections.emptyList();
             AlloyRecipeManager.getInstance().addRecipe(true, ArrayUtils.mapToList(input, RecipeInput::new, new NNList<>()), output.get(0), energy, xp, level);
             return Collections.emptyList(); // TODO make return different stuff

@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Tatara extends StandardListRegistry<SmeltingRecipe> {
@@ -76,7 +75,7 @@ public class Tatara extends StandardListRegistry<SmeltingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SmeltingRecipe> register() {
+        public @NotNull Collection<SmeltingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SmeltingRecipe recipe = new SmeltingRecipe(BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), output.get(0));
             ModSupport.BETTER_WITH_ADDONS.get().tatara.add(recipe);

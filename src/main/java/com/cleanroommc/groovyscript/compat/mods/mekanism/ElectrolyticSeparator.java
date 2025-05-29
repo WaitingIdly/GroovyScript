@@ -14,8 +14,8 @@ import mekanism.common.recipe.machines.SeparatorRecipe;
 import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<SeparatorRecipe> {
@@ -30,7 +30,7 @@ public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<Separator
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "fluid('lava') * 10, gas('cleanGold') * 5, gas('cleanCopper') * 3, 3000", commented = true))
-    public List<SeparatorRecipe> add(FluidStack input, GasStack leftOutput, GasStack rightOutput, double energy) {
+    public Collection<SeparatorRecipe> add(FluidStack input, GasStack leftOutput, GasStack rightOutput, double energy) {
         return recipeBuilder().energy(energy).gasOutput(leftOutput, rightOutput).fluidInput(input).register();
     }
 
@@ -77,7 +77,7 @@ public class ElectrolyticSeparator extends VirtualizedMekanismRegistry<Separator
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SeparatorRecipe> register() {
+        public @NotNull Collection<SeparatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SeparatorRecipe recipe = new SeparatorRecipe(fluidInput.get(0), energy, gasOutput.get(0), gasOutput.get(1));
             ModSupport.MEKANISM.get().electrolyticSeparator.add(recipe);

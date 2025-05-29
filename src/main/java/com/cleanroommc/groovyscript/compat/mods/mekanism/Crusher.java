@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "item('minecraft:clay_ball'), item('minecraft:gold_ingot')", commented = true))
-    public List<CrusherRecipe> add(IIngredient ingredient, ItemStack output) {
+    public Collection<CrusherRecipe> add(IIngredient ingredient, ItemStack output) {
         return recipeBuilder().output(output).input(ingredient).register();
     }
 
@@ -71,7 +72,7 @@ public class Crusher extends VirtualizedMekanismRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrusherRecipe> register() {
+        public @NotNull Collection<CrusherRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<CrusherRecipe> recipes = new ArrayList<>();
             for (ItemStack itemStack : input.get(0).getMatchingStacks()) {

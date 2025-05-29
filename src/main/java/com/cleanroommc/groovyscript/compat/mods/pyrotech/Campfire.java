@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CampfireRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Campfire extends ForgeRegistryWrapper<CampfireRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt', item('minecraft:apple'), item('minecraft:dirt'), 1000"))
-    public List<CampfireRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
+    public Collection<CampfireRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)

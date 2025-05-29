@@ -88,7 +88,7 @@ public class Explosion extends StandardListRegistry<ExplosionCraftingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ExplosionCraftingRecipe> register() {
+        public @NotNull Collection<ExplosionCraftingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ExplosionCraftingRecipe> list = new ArrayList<>();
             for (ItemStack stack : input.get(0).getMatchingStacks()) {

@@ -112,7 +112,7 @@ public class HydraulicPress extends StandardListRegistry<IHydraulicPressRecipe> 
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IHydraulicPressRecipe> register() {
+        public @NotNull Collection<IHydraulicPressRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient ore) {
                 var recipe = MagneticraftApi.getHydraulicPressRecipeManager().createRecipe(ore.getMatchingStacks()[0], output.get(0), ticks, mode, true);

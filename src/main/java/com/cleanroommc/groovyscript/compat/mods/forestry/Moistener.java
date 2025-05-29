@@ -11,6 +11,7 @@ import forestry.factory.recipes.MoistenerRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Moistener extends ForestryRegistry<IMoistenerRecipe> {
         restoreFromBackup().forEach(MoistenerRecipeManagerAccessor.getRecipes()::add);
     }
 
-    public List<IMoistenerRecipe> add(ItemStack output, IIngredient input, int time) {
+    public Collection<IMoistenerRecipe> add(ItemStack output, IIngredient input, int time) {
         return recipeBuilder().time(time).output(output).input(input).register();
     }
 

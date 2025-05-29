@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class WindRune extends StandardListRegistry<WindImbueRecipe> {
@@ -84,7 +83,7 @@ public class WindRune extends StandardListRegistry<WindImbueRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WindImbueRecipe> register() {
+        public @NotNull Collection<WindImbueRecipe> register() {
             if (!validate()) return Collections.emptyList();
             Ingredient inputItem = input.get(0).toMcIngredient();
             WindImbueRecipe recipe = new WindImbueRecipe(inputItem, output.get(0), espe);  // also adds the recipe

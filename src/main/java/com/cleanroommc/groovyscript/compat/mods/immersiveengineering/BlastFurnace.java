@@ -111,7 +111,7 @@ public class BlastFurnace extends StandardListRegistry<BlastFurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BlastFurnaceRecipe> register() {
+        public @NotNull Collection<BlastFurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BlastFurnaceRecipe recipe = new BlastFurnaceRecipe(output.get(0), ImmersiveEngineering.toIEInput(input.get(0)), time, IngredientHelper.copy(slag));
             ModSupport.IMMERSIVE_ENGINEERING.get().blastFurnace.add(recipe);

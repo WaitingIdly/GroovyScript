@@ -15,6 +15,7 @@ import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,11 +34,11 @@ public class SpinningWheel extends ForgeRegistryWrapper<ISpinningWheelRecipe> {
         return new RecipeBuilder();
     }
 
-    public List<ISpinningWheelRecipe> add(IIngredient input, ItemStack output) {
+    public Collection<ISpinningWheelRecipe> add(IIngredient input, ItemStack output) {
         return add(input, output, 1);
     }
 
-    public List<ISpinningWheelRecipe> add(IIngredient input, ItemStack output, int rotations) {
+    public Collection<ISpinningWheelRecipe> add(IIngredient input, ItemStack output, int rotations) {
         return recipeBuilder()
                 .rotations(rotations)
                 .input(input)
@@ -92,7 +93,7 @@ public class SpinningWheel extends ForgeRegistryWrapper<ISpinningWheelRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ISpinningWheelRecipe> register() {
+        public @NotNull Collection<ISpinningWheelRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.get(0) instanceof OreDictIngredient oreDictIngredient) {
                 ISpinningWheelRecipe recipe = new SpinningWheelRecipe(oreDictIngredient.getOreDict(), output.get(0), rotations);

@@ -33,7 +33,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeRuneAltar> add(ItemStack output, int mana, IIngredient... inputs) {
+    public Collection<RecipeRuneAltar> add(ItemStack output, int mana, IIngredient... inputs) {
         return recipeBuilder().mana(mana).output(output).input(inputs).register();
     }
 
@@ -115,7 +115,7 @@ public class RuneAltar extends StandardListRegistry<RecipeRuneAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeRuneAltar> register() {
+        public @NotNull Collection<RecipeRuneAltar> register() {
             if (!validate()) return Collections.emptyList();
             RecipeRuneAltar recipe = new RecipeRuneAltar(
                     output.get(0),

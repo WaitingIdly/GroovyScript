@@ -119,7 +119,7 @@ public class SliceNSplice extends StandardListRegistry<IManyToOneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRecipe> register() {
+        public @NotNull Collection<IRecipe> register() {
             if (!validate()) return Collections.emptyList();
             RecipeOutput recipeOutput = new RecipeOutput(output.get(0), 1, xp);
             List<IRecipeInput> inputs = new ArrayList<>();

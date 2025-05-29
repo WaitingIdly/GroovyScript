@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Refrigerator extends StandardListRegistry<MachineRecipes.MachineRecipe<FluidStack, ItemStack>> {
@@ -58,7 +57,7 @@ public class Refrigerator extends StandardListRegistry<MachineRecipes.MachineRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MachineRecipes.MachineRecipe<FluidStack, ItemStack>> register() {
+        public @NotNull Collection<MachineRecipes.MachineRecipe<FluidStack, ItemStack>> register() {
             if (!validate()) return Collections.emptyList();
             var recipe = new MachineRecipes.MachineRecipe<>(fluidInput.get(0), output.get(0));
             ModSupport.FACTORY_TECH.get().refrigerator.add(recipe);

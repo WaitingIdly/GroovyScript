@@ -18,7 +18,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
 
 @RegistryDescription
 public class Transmutation extends VirtualizedRegistry<TransmutationRecipe> {
@@ -177,7 +180,7 @@ public class Transmutation extends VirtualizedRegistry<TransmutationRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TransmutationRecipe> register() {
+        public @NotNull Collection<TransmutationRecipe> register() {
             if (!validate()) return Collections.emptyList();
             TransmutationRecipe recipe = new TransmutationRecipe(start);
             recipe.setRegistryName(super.name);

@@ -91,7 +91,7 @@ public class ThermopneumaticProcessingPlant extends StandardListRegistry<IThermo
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IThermopneumaticProcessingPlantRecipe> register() {
+        public @NotNull Collection<IThermopneumaticProcessingPlantRecipe> register() {
             if (!validate()) return Collections.emptyList();
             if (input.isEmpty()) {
                 var recipe = new BasicThermopneumaticProcessingPlantRecipe(fluidInput.get(0), ItemStack.EMPTY, fluidOutput.get(0), requiredTemperature, pressure);

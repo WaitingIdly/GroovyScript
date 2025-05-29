@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(
@@ -164,7 +163,7 @@ public class AlchemyTable extends StandardListRegistry<RecipeAlchemyTable> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeAlchemyTable> register() {
+        public @NotNull Collection<RecipeAlchemyTable> register() {
             if (!validate()) return Collections.emptyList();
             RecipeAlchemyTable recipe = new RecipeAlchemyTable(IngredientHelper.toIngredientNonNullList(input), output.get(0), syphon, ticks, minimumTier);
             ModSupport.BLOOD_MAGIC.get().alchemyTable.add(recipe);

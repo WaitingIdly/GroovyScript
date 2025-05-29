@@ -53,7 +53,7 @@ public class InfusionCrafting extends VirtualizedRegistry<Pair<ResourceLocation,
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<InfusionRecipe> add(String research, ItemStack outputResult, int inst, Collection<AspectStack> aspects, IIngredient centralItem, IIngredient... input) {
+    public Collection<InfusionRecipe> add(String research, ItemStack outputResult, int inst, Collection<AspectStack> aspects, IIngredient centralItem, IIngredient... input) {
         return recipeBuilder().researchKey(research).mainInput(centralItem).instability(inst).aspect(aspects).input(input).output(outputResult).register();
     }
 
@@ -215,7 +215,7 @@ public class InfusionCrafting extends VirtualizedRegistry<Pair<ResourceLocation,
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<InfusionRecipe> register() {
+        public @NotNull Collection<InfusionRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             Object[] inputs = this.input.stream().map(IIngredient::toMcIngredient).toArray();

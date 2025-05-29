@@ -153,7 +153,7 @@ public class Squeezer extends StandardListRegistry<SqueezerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SqueezerRecipe> register() {
+        public @NotNull Collection<SqueezerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SqueezerRecipe recipe = new SqueezerRecipe(fluidOutput.getOrEmpty(0), output.getOrEmpty(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy);
             ModSupport.IMMERSIVE_ENGINEERING.get().squeezer.add(recipe);

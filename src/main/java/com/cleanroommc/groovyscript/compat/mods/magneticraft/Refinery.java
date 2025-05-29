@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Refinery extends StandardListRegistry<IRefineryRecipe> {
@@ -67,7 +66,7 @@ public class Refinery extends StandardListRegistry<IRefineryRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IRefineryRecipe> register() {
+        public @NotNull Collection<IRefineryRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IRefineryRecipe recipe = MagneticraftApi.getRefineryRecipeManager().createRecipe(fluidInput.get(0), fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidOutput.getOrEmpty(2), duration);
             ModSupport.MAGNETICRAFT.get().refinery.add(recipe);

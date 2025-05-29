@@ -18,6 +18,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian') * 2, item('minecraft:clay')"))
-    public List<FurnaceRecipe> add(int energy, IIngredient input, ItemStack output) {
+    public Collection<FurnaceRecipe> add(int energy, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -144,7 +145,7 @@ public class Furnace extends VirtualizedRegistry<FurnaceRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FurnaceRecipe> register() {
+        public @NotNull Collection<FurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<FurnaceRecipe> recipes = new ArrayList<>();
 

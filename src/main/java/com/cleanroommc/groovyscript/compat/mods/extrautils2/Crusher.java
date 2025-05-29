@@ -12,10 +12,7 @@ import com.rwtema.extrautils2.api.machine.IMachineRecipe;
 import com.rwtema.extrautils2.api.machine.XUMachineCrusher;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RegistryDescription
 public class Crusher extends VirtualizedRegistry<IMachineRecipe> {
@@ -132,7 +129,7 @@ public class Crusher extends VirtualizedRegistry<IMachineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IMachineRecipe> register() {
+        public @NotNull Collection<IMachineRecipe> register() {
             if (!validate()) return Collections.emptyList();
             com.rwtema.extrautils2.api.machine.RecipeBuilder builder = com.rwtema.extrautils2.api.machine.RecipeBuilder.newbuilder(XUMachineCrusher.INSTANCE);
             builder.setItemInput(XUMachineCrusher.INPUT, Arrays.asList(input.get(0).getMatchingStacks()), input.get(0).getAmount());

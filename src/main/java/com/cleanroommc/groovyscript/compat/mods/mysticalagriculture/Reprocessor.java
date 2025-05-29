@@ -36,7 +36,7 @@ public class Reprocessor extends StandardListRegistry<ReprocessorRecipe> {
 //        return add(input, output, amount, false);
 //    }
 
-    public List<ReprocessorRecipe> add(IIngredient input, ItemStack output/*, int amount, boolean exact*/) {
+    public Collection<ReprocessorRecipe> add(IIngredient input, ItemStack output/*, int amount, boolean exact*/) {
         return recipeBuilder()
 //                .exact(exact)
 //                .amount(amount)
@@ -108,7 +108,7 @@ public class Reprocessor extends StandardListRegistry<ReprocessorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ReprocessorRecipe> register() {
+        public @NotNull Collection<ReprocessorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ReprocessorRecipe> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {

@@ -14,8 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.smeltery.MeltingRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @Property(property = "input", comp = @Comp(eq = 1))
 public class MeltingRecipeBuilder extends AbstractRecipeBuilder<MeltingRecipe> {
@@ -73,7 +73,7 @@ public class MeltingRecipeBuilder extends AbstractRecipeBuilder<MeltingRecipe> {
 
     @Override
     @RecipeBuilderRegistrationMethod
-    public @NotNull List<MeltingRecipe> register() {
+    public @NotNull Collection<MeltingRecipe> register() {
         if (!validate()) return Collections.emptyList();
         int amount = fluidOutput.get(0).amount;
         IIngredient input = this.input.get(0);

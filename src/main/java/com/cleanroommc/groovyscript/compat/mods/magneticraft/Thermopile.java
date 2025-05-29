@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Thermopile extends StandardListRegistry<IThermopileRecipe> {
@@ -83,7 +82,7 @@ public class Thermopile extends StandardListRegistry<IThermopileRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IThermopileRecipe> register() {
+        public @NotNull Collection<IThermopileRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IThermopileRecipe recipe = MagneticraftApi.getThermopileRecipeManager().createRecipe(state, temperature, conductivity);
             ModSupport.MAGNETICRAFT.get().thermopile.add(recipe);

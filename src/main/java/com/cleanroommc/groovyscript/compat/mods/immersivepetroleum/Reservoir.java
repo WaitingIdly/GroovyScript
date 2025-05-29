@@ -226,7 +226,7 @@ public class Reservoir extends VirtualizedRegistry<Pair<PumpjackHandler.Reservoi
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PumpjackHandler.ReservoirType> register() {
+        public @NotNull Collection<PumpjackHandler.ReservoirType> register() {
             if (!validate()) return Collections.emptyList();
 
             PumpjackHandler.ReservoirType recipe = new PumpjackHandler.ReservoirType(name, fluidOutput.getOrEmpty(0).getFluid().getName(), minSize, maxSize, replenishRate);

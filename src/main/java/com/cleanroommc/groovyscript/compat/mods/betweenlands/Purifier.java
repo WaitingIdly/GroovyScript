@@ -66,7 +66,7 @@ public class Purifier extends StandardListRegistry<IPurifierRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IPurifierRecipe> register() {
+        public @NotNull Collection<IPurifierRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<IPurifierRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

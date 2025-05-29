@@ -74,7 +74,7 @@ public class Imbuing extends StandardListRegistry<ImbuingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ImbuingRecipe> register() {
+        public @NotNull Collection<ImbuingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ImbuingRecipe> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);

@@ -88,7 +88,7 @@ public class Hydrator extends StandardListRegistry<RecipeHydrate> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeHydrate> register() {
+        public @NotNull Collection<RecipeHydrate> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipeHydrate> list = new ArrayList<>();
             List<List<ItemStack>> cartesian = IngredientHelper.cartesianProductItemStacks(input);

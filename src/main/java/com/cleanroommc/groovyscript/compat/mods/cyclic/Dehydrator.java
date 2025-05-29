@@ -95,7 +95,7 @@ public class Dehydrator extends StandardListRegistry<RecipeDeHydrate> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeDeHydrate> register() {
+        public @NotNull Collection<RecipeDeHydrate> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipeDeHydrate> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).toMcIngredient().getMatchingStacks()) {

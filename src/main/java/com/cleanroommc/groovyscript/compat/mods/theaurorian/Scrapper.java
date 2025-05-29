@@ -68,7 +68,7 @@ public class Scrapper extends StandardListRegistry<ScrapperRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ScrapperRecipe> register() {
+        public @NotNull Collection<ScrapperRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ScrapperRecipe> list = new ArrayList<>();
             for (ItemStack input1 : input.get(0).getMatchingStacks()) {

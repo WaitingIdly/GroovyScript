@@ -19,6 +19,7 @@ import scala.collection.SeqLike;
 import scala.collection.convert.Decorators;
 import scala.collection.immutable.Map;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -100,7 +101,7 @@ public class WorkbenchPlus extends VirtualizedRegistry<IngredientRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IngredientRecipe> register() {
+        public @NotNull Collection<IngredientRecipe> register() {
             if (!validate()) return Collections.emptyList();
             //convert Java List to Scala Seq
             List<List<IngredientWithCount>> inputJavaList = input.stream()

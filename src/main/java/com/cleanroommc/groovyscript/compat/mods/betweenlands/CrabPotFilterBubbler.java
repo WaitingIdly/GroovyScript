@@ -66,7 +66,7 @@ public class CrabPotFilterBubbler extends StandardListRegistry<ICrabPotFilterRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICrabPotFilterRecipeBubbler> register() {
+        public @NotNull Collection<ICrabPotFilterRecipeBubbler> register() {
             if (!validate()) return Collections.emptyList();
             List<ICrabPotFilterRecipeBubbler> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

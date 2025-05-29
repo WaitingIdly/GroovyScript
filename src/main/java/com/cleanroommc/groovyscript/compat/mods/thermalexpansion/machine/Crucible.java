@@ -20,6 +20,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,7 +66,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), fluid('water') * 1000"))
-    public List<CrucibleRecipe> add(int energy, IIngredient input, FluidStack fluidOutput) {
+    public Collection<CrucibleRecipe> add(int energy, IIngredient input, FluidStack fluidOutput) {
         return recipeBuilder()
                 .energy(energy)
                 .input(input)
@@ -143,7 +144,7 @@ public class Crucible extends VirtualizedRegistry<CrucibleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrucibleRecipe> register() {
+        public @NotNull Collection<CrucibleRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<CrucibleRecipe> recipes = new ArrayList<>();
 

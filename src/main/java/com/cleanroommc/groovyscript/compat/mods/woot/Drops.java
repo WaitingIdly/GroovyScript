@@ -210,7 +210,7 @@ public class Drops extends VirtualizedRegistry<Object> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ItemStack> register() {
+        public @NotNull Collection<ItemStack> register() {
             if (!validate()) return Collections.emptyList();
             ModSupport.WOOT.get().drops.add(name, output.get(0), chance, size);
             return Collections.singletonList(output.get(0));

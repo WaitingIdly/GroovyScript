@@ -66,7 +66,7 @@ public class CrushingTable extends StandardListRegistry<ICrushingTableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICrushingTableRecipe> register() {
+        public @NotNull Collection<ICrushingTableRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ICrushingTableRecipe> list = new ArrayList<>();
             if (input.get(0) instanceof OreDictIngredient ore) {

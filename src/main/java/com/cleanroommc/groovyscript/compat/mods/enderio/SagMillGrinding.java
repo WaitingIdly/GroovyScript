@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.enderio.sag_mill.note", type = Admonition.Type.WARNING))
 public class SagMillGrinding extends StandardListRegistry<GrindingBall> {
@@ -102,7 +101,7 @@ public class SagMillGrinding extends StandardListRegistry<GrindingBall> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<GrindingBall> register() {
+        public @NotNull Collection<GrindingBall> register() {
             if (!validate()) return Collections.emptyList();
             GrindingBall recipe = new GrindingBall(new RecipeInput(input.get(0)), grinding, chance, power, duration);
             ModSupport.ENDER_IO.get().sagMillGrinding.add(recipe);

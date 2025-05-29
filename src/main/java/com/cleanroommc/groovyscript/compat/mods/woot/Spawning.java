@@ -18,8 +18,8 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -163,7 +163,7 @@ public class Spawning extends VirtualizedRegistry<Pair<WootMobName, SpawnRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ISpawnRecipe> register() {
+        public @NotNull Collection<ISpawnRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             SpawnRecipe recipe = defaultSpawnRecipe

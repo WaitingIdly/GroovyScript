@@ -250,7 +250,7 @@ public class Spells extends VirtualizedRegistry<SpellBase> {
 
             @Override
             @RecipeBuilderRegistrationMethod
-            public @NotNull List<SpellBase.SpellRecipe> register() {
+            public @NotNull Collection<SpellBase.SpellRecipe> register() {
                 if (!validate()) return Collections.emptyList();
                 SpellBase.SpellRecipe recipe = new SpellBase.SpellRecipe(input.stream().map(IIngredient::toMcIngredient).toArray());
                 this.spell.setRecipe(recipe);
@@ -303,7 +303,7 @@ public class Spells extends VirtualizedRegistry<SpellBase> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Map<CostType, IModifierCost>> register() {
+        public @NotNull Collection<Map<CostType, IModifierCost>> register() {
             if (!validate()) return Collections.emptyList();
             if (list.isEmpty()) return Collections.singletonList(epicsquid.roots.modifiers.Cost.noCost());
             return Collections.singletonList(epicsquid.roots.modifiers.Cost.of(list.toArray(new IModifierCost[0])));

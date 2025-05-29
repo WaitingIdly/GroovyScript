@@ -2,14 +2,7 @@ package com.cleanroommc.groovyscript.compat.mods.prodigytech;
 
 import com.cleanroommc.groovyscript.api.GroovyLog;
 import com.cleanroommc.groovyscript.api.IIngredient;
-import com.cleanroommc.groovyscript.api.documentation.annotations.Comp;
-import com.cleanroommc.groovyscript.api.documentation.annotations.Example;
-import com.cleanroommc.groovyscript.api.documentation.annotations.MethodDescription;
-import com.cleanroommc.groovyscript.api.documentation.annotations.Property;
-import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderDescription;
-import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderMethodDescription;
-import com.cleanroommc.groovyscript.api.documentation.annotations.RecipeBuilderRegistrationMethod;
-import com.cleanroommc.groovyscript.api.documentation.annotations.RegistryDescription;
+import com.cleanroommc.groovyscript.api.documentation.annotations.*;
 import com.cleanroommc.groovyscript.compat.mods.ModSupport;
 import com.cleanroommc.groovyscript.helper.recipe.AbstractRecipeBuilder;
 import com.cleanroommc.groovyscript.registry.StandardListRegistry;
@@ -88,7 +81,7 @@ public class ExplosionFurnace extends StandardListRegistry<ExplosionFurnaceManag
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ExplosionFurnaceManager.ExplosionFurnaceRecipe> register() {
+        public @NotNull Collection<ExplosionFurnaceManager.ExplosionFurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<ExplosionFurnaceManager.ExplosionFurnaceRecipe> list = new ArrayList<>();
             IIngredient inputItem = input.get(0);

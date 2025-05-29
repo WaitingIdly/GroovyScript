@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class GasTurbine extends StandardListRegistry<GasTurbineRecipe> {
@@ -89,7 +88,7 @@ public class GasTurbine extends StandardListRegistry<GasTurbineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<GasTurbineRecipe> register() {
+        public @NotNull Collection<GasTurbineRecipe> register() {
             if (!validate()) return Collections.emptyList();
             GasTurbineRecipe recipe = new GasTurbineRecipe(fluidOutput.get(0), fluidInput.get(0), time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().gasTurbine.add(recipe);

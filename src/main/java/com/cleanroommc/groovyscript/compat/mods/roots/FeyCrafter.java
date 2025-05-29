@@ -13,8 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription(
@@ -128,7 +128,7 @@ public class FeyCrafter extends VirtualizedRegistry<Pair<ResourceLocation, FeyCr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FeyCraftingRecipe> register() {
+        public @NotNull Collection<FeyCraftingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             FeyCraftingRecipe recipe = new FeyCraftingRecipe(output.get(0), xp);
             input.forEach(i -> recipe.addIngredient(i.toMcIngredient()));

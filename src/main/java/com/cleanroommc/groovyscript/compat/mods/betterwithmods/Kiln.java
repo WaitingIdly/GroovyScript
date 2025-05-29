@@ -136,7 +136,7 @@ public class Kiln extends StandardListRegistry<KilnRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<KilnRecipe> register() {
+        public @NotNull Collection<KilnRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             KilnRecipe recipe = new KilnRecipe(input, output, heat);

@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -76,7 +75,7 @@ public class Aggregator extends StandardListRegistry<AggRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AggRecipe> register() {
+        public @NotNull Collection<AggRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             AggRecipe recipe = new AggRecipe(input.stream().map(LazyAE2::matchesIIngredient).collect(Collectors.toList()), output.get(0));

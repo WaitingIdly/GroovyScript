@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class LightTransmutation extends StandardListRegistry<LightOreTransmutations.Transmutation> {
@@ -194,7 +193,7 @@ public class LightTransmutation extends StandardListRegistry<LightOreTransmutati
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<LightOreTransmutations.Transmutation> register() {
+        public @NotNull Collection<LightOreTransmutations.Transmutation> register() {
             if (!validate()) return Collections.emptyList();
             LightOreTransmutations.Transmutation recipe;
             if (inBlock == null) {

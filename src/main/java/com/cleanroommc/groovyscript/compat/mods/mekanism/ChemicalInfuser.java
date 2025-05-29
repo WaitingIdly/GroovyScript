@@ -11,8 +11,8 @@ import mekanism.common.recipe.inputs.ChemicalPairInput;
 import mekanism.common.recipe.machines.ChemicalInfuserRecipe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuserRecipe> {
@@ -27,7 +27,7 @@ public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuser
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('copper') * 10, gas('iron'), gas('gold') * 15", commented = true))
-    public List<ChemicalInfuserRecipe> add(GasStack leftInput, GasStack rightInput, GasStack output) {
+    public Collection<ChemicalInfuserRecipe> add(GasStack leftInput, GasStack rightInput, GasStack output) {
         return recipeBuilder().gasInput(leftInput, rightInput).gasOutput(output).register();
     }
 
@@ -65,7 +65,7 @@ public class ChemicalInfuser extends VirtualizedMekanismRegistry<ChemicalInfuser
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ChemicalInfuserRecipe> register() {
+        public @NotNull Collection<ChemicalInfuserRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ChemicalInfuserRecipe recipe = new ChemicalInfuserRecipe(gasInput.get(0), gasInput.get(1), gasOutput.get(0));
             ModSupport.MEKANISM.get().chemicalInfuser.add(recipe);

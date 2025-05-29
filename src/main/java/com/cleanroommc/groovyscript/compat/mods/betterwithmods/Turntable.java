@@ -132,7 +132,7 @@ public class Turntable extends StandardListRegistry<TurntableRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TurntableRecipe> register() {
+        public @NotNull Collection<TurntableRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             TurntableRecipe recipe = new TurntableRecipe(input, output, outputBlock, rotations);

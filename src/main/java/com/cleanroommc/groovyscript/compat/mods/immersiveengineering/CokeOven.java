@@ -120,7 +120,7 @@ public class CokeOven extends StandardListRegistry<CokeOvenRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CokeOvenRecipe> register() {
+        public @NotNull Collection<CokeOvenRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CokeOvenRecipe recipe = new CokeOvenRecipe(output.get(0), ImmersiveEngineering.toIEInput(input.get(0)), time, creosote);
             ModSupport.IMMERSIVE_ENGINEERING.get().cokeOven.add(recipe);

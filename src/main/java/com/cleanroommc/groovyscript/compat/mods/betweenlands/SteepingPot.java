@@ -161,7 +161,7 @@ public class SteepingPot extends StandardListRegistry<SteepingPotRecipes> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SteepingPotRecipes> register() {
+        public @NotNull Collection<SteepingPotRecipes> register() {
             if (!validate()) return Collections.emptyList();
 
             for (var ingredient : input) {

@@ -91,7 +91,7 @@ public class FabricationChamber extends StandardListRegistry<FabricationSonarRec
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FabricationSonarRecipe> register() {
+        public @NotNull Collection<FabricationSonarRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             FabricationSonarRecipe recipe = FabricationChamberRecipes.instance()

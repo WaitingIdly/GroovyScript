@@ -16,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -125,7 +126,7 @@ public class SummonCreature extends VirtualizedRegistry<SummonCreatureRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SummonCreatureRecipe> register() {
+        public @NotNull Collection<SummonCreatureRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<Ingredient> ingredients = input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList());
             SummonCreatureRecipe recipe = new SummonCreatureRecipe(super.name, entity, ingredients);

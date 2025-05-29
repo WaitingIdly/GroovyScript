@@ -39,22 +39,22 @@ public class ElvenTrade extends StandardListRegistry<RecipeElvenTrade> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeElvenTrade> add(ItemStack[] outputs, IIngredient... inputs) {
+    public Collection<RecipeElvenTrade> add(ItemStack[] outputs, IIngredient... inputs) {
         return recipeBuilder().input(inputs).output(outputs).register();
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeElvenTrade> add(Collection<ItemStack> outputs, Collection<IIngredient> inputs) {
+    public Collection<RecipeElvenTrade> add(Collection<ItemStack> outputs, Collection<IIngredient> inputs) {
         return recipeBuilder().input(inputs).output(outputs).register();
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeElvenTrade> add(ItemStack output, IIngredient... inputs) {
+    public Collection<RecipeElvenTrade> add(ItemStack output, IIngredient... inputs) {
         return recipeBuilder().input(inputs).output(output).register();
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipeElvenTrade> add(ItemStack output, Collection<IIngredient> inputs) {
+    public Collection<RecipeElvenTrade> add(ItemStack output, Collection<IIngredient> inputs) {
         return recipeBuilder().input(inputs).output(output).register();
     }
 
@@ -112,7 +112,7 @@ public class ElvenTrade extends StandardListRegistry<RecipeElvenTrade> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeElvenTrade> register() {
+        public @NotNull Collection<RecipeElvenTrade> register() {
             if (!validate()) return Collections.emptyList();
             RecipeElvenTrade recipe = new RecipeElvenTrade(output.toArray(new ItemStack[0]), convertIngredients(input.toArray(new IIngredient[0])));
             add(recipe);

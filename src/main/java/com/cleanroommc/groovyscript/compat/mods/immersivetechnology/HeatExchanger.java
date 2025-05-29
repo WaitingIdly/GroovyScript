@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class HeatExchanger extends StandardListRegistry<HeatExchangerRecipe> {
@@ -98,7 +97,7 @@ public class HeatExchanger extends StandardListRegistry<HeatExchangerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<HeatExchangerRecipe> register() {
+        public @NotNull Collection<HeatExchangerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             HeatExchangerRecipe recipe = new HeatExchangerRecipe(fluidOutput.get(0), fluidOutput.getOrEmpty(1), fluidInput.get(0), fluidInput.get(1), energy, time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().heatExchanger.add(recipe);

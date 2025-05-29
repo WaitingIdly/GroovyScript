@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(category = RegistryDescription.Category.ENTRIES)
 public class DeepDrill extends StandardListRegistry<Pair<ItemStack, Double>> {
@@ -62,7 +61,7 @@ public class DeepDrill extends StandardListRegistry<Pair<ItemStack, Double>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Pair<ItemStack, Double>> register() {
+        public @NotNull Collection<Pair<ItemStack, Double>> register() {
             if (!validate()) return Collections.emptyList();
             var recipe = new Pair<>(output.get(0), weight);
             ModSupport.FACTORY_TECH.get().deepDrill.add(recipe);

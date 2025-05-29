@@ -14,8 +14,8 @@ import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -118,7 +118,7 @@ public class Moss extends VirtualizedRegistry<Pair<ItemStack, ItemStack>> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<Pair<ItemStack, ItemStack>> register() {
+        public @NotNull Collection<Pair<ItemStack, ItemStack>> register() {
             if (!validate()) return Collections.emptyList();
             ModSupport.ROOTS.get().moss.add(input.get(0).getMatchingStacks()[0], output.get(0));
             Moss.reload();

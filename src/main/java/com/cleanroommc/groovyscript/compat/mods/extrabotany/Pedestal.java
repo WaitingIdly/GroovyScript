@@ -33,7 +33,7 @@ public class Pedestal extends StandardListRegistry<RecipePedestal> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<RecipePedestal> add(IIngredient input, ItemStack output) {
+    public Collection<RecipePedestal> add(IIngredient input, ItemStack output) {
         return recipeBuilder().input(input).output(output).register();
     }
 
@@ -76,7 +76,7 @@ public class Pedestal extends StandardListRegistry<RecipePedestal> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipePedestal> register() {
+        public @NotNull Collection<RecipePedestal> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipePedestal> list = new ArrayList<>();
             for (ItemStack matchingStack : input.get(0).getMatchingStacks()) {

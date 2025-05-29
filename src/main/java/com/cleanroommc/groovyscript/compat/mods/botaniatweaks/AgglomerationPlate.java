@@ -17,7 +17,6 @@ import vazkii.botania.common.block.ModBlocks;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Objects;
 
 @RegistryDescription
@@ -190,7 +189,7 @@ public class AgglomerationPlate extends StandardListRegistry<AgglomerationRecipe
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AgglomerationRecipe> register() {
+        public @NotNull Collection<AgglomerationRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             //noinspection UnstableApiUsage

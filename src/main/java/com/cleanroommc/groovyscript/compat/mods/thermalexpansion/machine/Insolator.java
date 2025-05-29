@@ -18,10 +18,7 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -86,7 +83,7 @@ public class Insolator extends VirtualizedRegistry<InsolatorRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, 100, item('minecraft:obsidian'), item('minecraft:gold_ingot') * 2, item('minecraft:clay'), item('minecraft:diamond'), 5, InsolatorManager.Type.TREE", imports = "cofh.thermalexpansion.util.managers.machine.InsolatorManager"))
-    public List<InsolatorRecipe> add(int energy, int water, IIngredient primaryInput, IIngredient secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, InsolatorManager.Type type) {
+    public Collection<InsolatorRecipe> add(int energy, int water, IIngredient primaryInput, IIngredient secondaryInput, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, InsolatorManager.Type type) {
         return recipeBuilder()
                 .energy(energy)
                 .water(water)
@@ -209,7 +206,7 @@ public class Insolator extends VirtualizedRegistry<InsolatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<InsolatorRecipe> register() {
+        public @NotNull Collection<InsolatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<InsolatorRecipe> recipes = new ArrayList<>();
 

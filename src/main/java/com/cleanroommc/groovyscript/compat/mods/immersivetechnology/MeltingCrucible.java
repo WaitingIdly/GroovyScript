@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class MeltingCrucible extends StandardListRegistry<MeltingCrucibleRecipe> {
@@ -98,7 +97,7 @@ public class MeltingCrucible extends StandardListRegistry<MeltingCrucibleRecipe>
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MeltingCrucibleRecipe> register() {
+        public @NotNull Collection<MeltingCrucibleRecipe> register() {
             if (!validate()) return Collections.emptyList();
             MeltingCrucibleRecipe recipe = new MeltingCrucibleRecipe(fluidOutput.get(0), ImmersiveEngineering.toIngredientStack(input.get(0)), energy, time);
             ModSupport.IMMERSIVE_TECHNOLOGY.get().meltingCrucible.add(recipe);

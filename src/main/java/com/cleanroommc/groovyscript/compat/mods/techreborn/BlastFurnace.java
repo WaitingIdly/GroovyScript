@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.BlastFurnaceRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         admonition = @Admonition(value = "groovyscript.wiki.techreborn.blast_furnace.note0", type = Admonition.Type.INFO),
@@ -75,7 +75,7 @@ public class BlastFurnace extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BlastFurnaceRecipe> register() {
+        public @NotNull Collection<BlastFurnaceRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ItemStack output2 = output.size() >= 2 ? output.get(1) : null;
             BlastFurnaceRecipe recipe = new BlastFurnaceRecipe(

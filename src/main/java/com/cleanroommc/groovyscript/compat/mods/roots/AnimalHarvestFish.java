@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -126,7 +126,7 @@ public class AnimalHarvestFish extends VirtualizedRegistry<AnimalHarvestFishReci
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AnimalHarvestFishRecipe> register() {
+        public @NotNull Collection<AnimalHarvestFishRecipe> register() {
             if (!validate()) return Collections.emptyList();
             AnimalHarvestFishRecipe recipe = new AnimalHarvestFishRecipe(super.name, output.get(0), weight);
             ModSupport.ROOTS.get().animalHarvestFish.add(super.name, recipe);

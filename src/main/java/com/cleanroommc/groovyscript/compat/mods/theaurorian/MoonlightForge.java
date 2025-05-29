@@ -68,7 +68,7 @@ public class MoonlightForge extends StandardListRegistry<MoonlightForgeRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MoonlightForgeRecipe> register() {
+        public @NotNull Collection<MoonlightForgeRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<MoonlightForgeRecipe> list = new ArrayList<>();
             for (ItemStack input1 : input.get(0).getMatchingStacks()) {

@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription(
@@ -126,7 +125,7 @@ public class StygianIronAnvil extends StandardListRegistry<IAnvilRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IAnvilRecipe> register() {
+        public @NotNull Collection<IAnvilRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             if (((AnvilManagerAccessor) Woot.anvilManager).getValidBaseItems().stream().noneMatch(x -> x.isItemEqual(base)))

@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(
         admonition = {
@@ -155,7 +154,7 @@ public class PlasticMixer extends StandardListRegistry<PlasticMixerRegistry.Plas
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PlasticMixerRegistry.PlasticMixerRecipe> register() {
+        public @NotNull Collection<PlasticMixerRegistry.PlasticMixerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PlasticMixerRegistry.PlasticMixerRecipe recipe = PlasticMixerRecipeAccessor.createPlasticMixerRecipe(fluidInput.get(0), output.get(0), requiredTemperature, allowMelting, allowSolidifying, useDye, meta);
             ModSupport.PNEUMATIC_CRAFT.get().plasticMixer.add(recipe);

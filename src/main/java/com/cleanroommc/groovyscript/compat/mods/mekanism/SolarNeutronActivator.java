@@ -12,8 +12,8 @@ import mekanism.common.recipe.inputs.GasInput;
 import mekanism.common.recipe.machines.SolarNeutronRecipe;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeutronRecipe> {
@@ -28,7 +28,7 @@ public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeut
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "gas('water'), gas('hydrogen')", commented = true))
-    public List<SolarNeutronRecipe> add(GasStack input, GasStack output) {
+    public Collection<SolarNeutronRecipe> add(GasStack input, GasStack output) {
         return recipeBuilder().gasOutput(output).gasInput(input).register();
     }
 
@@ -65,7 +65,7 @@ public class SolarNeutronActivator extends VirtualizedMekanismRegistry<SolarNeut
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SolarNeutronRecipe> register() {
+        public @NotNull Collection<SolarNeutronRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SolarNeutronRecipe recipe = new SolarNeutronRecipe(gasInput.get(0), gasOutput.get(0));
             ModSupport.MEKANISM.get().solarNeutronActivator.add(recipe);

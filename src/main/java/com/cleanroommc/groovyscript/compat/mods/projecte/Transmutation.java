@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Transmutation extends StandardListRegistry<WorldTransmutations.Entry> {
@@ -132,7 +131,7 @@ public class Transmutation extends StandardListRegistry<WorldTransmutations.Entr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<WorldTransmutations.Entry> register() {
+        public @NotNull Collection<WorldTransmutations.Entry> register() {
             if (!validate()) return Collections.emptyList();
             WorldTransmutations.Entry recipe = new WorldTransmutations.Entry(input, ImmutablePair.of(output, altOutput));
             ModSupport.PROJECT_E.get().transmutation.add(recipe);

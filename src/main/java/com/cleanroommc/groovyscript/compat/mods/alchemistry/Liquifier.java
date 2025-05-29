@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
@@ -33,7 +32,7 @@ public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<LiquifierRecipe> add(IIngredient input, FluidStack output) {
+    public Collection<LiquifierRecipe> add(IIngredient input, FluidStack output) {
         return recipeBuilder().input(input).fluidOutput(output).register();
     }
 
@@ -76,7 +75,7 @@ public class Liquifier extends StandardListRegistry<LiquifierRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<LiquifierRecipe> register() {
+        public @NotNull Collection<LiquifierRecipe> register() {
             if (!validate()) return Collections.emptyList();
             LiquifierRecipe recipe = new LiquifierRecipe(IngredientHelper.toItemStack(input.get(0)), fluidOutput.get(0));
             ModSupport.ALCHEMISTRY.get().liquifier.add(recipe);

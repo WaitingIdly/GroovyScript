@@ -173,7 +173,7 @@ public class Brew extends VirtualizedRegistry<vazkii.botania.api.brew.Brew> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<vazkii.botania.api.brew.Brew> register() {
+        public @NotNull Collection<vazkii.botania.api.brew.Brew> register() {
             if (!validate()) return Collections.emptyList();
             if (name == null) name = key;
             vazkii.botania.api.brew.Brew brew = new vazkii.botania.api.brew.Brew(key, name, color, cost, effects.toArray(new PotionEffect[0]));

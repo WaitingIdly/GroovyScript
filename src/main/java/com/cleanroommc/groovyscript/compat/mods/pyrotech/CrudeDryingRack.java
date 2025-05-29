@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.CrudeDryingRackRecip
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class CrudeDryingRack extends ForgeRegistryWrapper<CrudeDryingRackRecipe>
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt', item('minecraft:apple'), item('minecraft:dirt'), 1200"))
-    public List<CrudeDryingRackRecipe> add(String name, IIngredient input, ItemStack output, int dryTime) {
+    public Collection<CrudeDryingRackRecipe> add(String name, IIngredient input, ItemStack output, int dryTime) {
         return recipeBuilder()
                 .dryTime(dryTime)
                 .name(name)

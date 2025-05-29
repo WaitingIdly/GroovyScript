@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.basic.recipe.TanningRackRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class TanningRack extends ForgeRegistryWrapper<TanningRackRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt', item('minecraft:apple'), item('minecraft:dirt'), 1200, item('minecraft:clay_ball')"))
-    public List<TanningRackRecipe> add(String name, IIngredient input, ItemStack output, int dryTime, ItemStack failureItem) {
+    public Collection<TanningRackRecipe> add(String name, IIngredient input, ItemStack output, int dryTime, ItemStack failureItem) {
         return recipeBuilder()
                 .dryTime(dryTime)
                 .failureItem(failureItem)

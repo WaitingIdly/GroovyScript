@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class OilHeater extends StandardListRegistry<IOilHeaterRecipe> {
@@ -75,7 +74,7 @@ public class OilHeater extends StandardListRegistry<IOilHeaterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IOilHeaterRecipe> register() {
+        public @NotNull Collection<IOilHeaterRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IOilHeaterRecipe recipe = MagneticraftApi.getOilHeaterRecipeManager().createRecipe(fluidInput.get(0), fluidOutput.get(0), duration, minTemperature);
             ModSupport.MAGNETICRAFT.get().oilHeater.add(recipe);

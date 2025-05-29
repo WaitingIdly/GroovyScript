@@ -16,8 +16,8 @@ import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class InfusionAltar extends VirtualizedRegistry<BasicInfusionRecipe> {
@@ -170,7 +170,7 @@ public class InfusionAltar extends VirtualizedRegistry<BasicInfusionRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BasicInfusionRecipe> register() {
+        public @NotNull Collection<BasicInfusionRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BasicInfusionRecipe recipe = new BasicInfusionRecipe(output.get(0), AstralSorcery.toItemHandle(input.get(0))) {
 

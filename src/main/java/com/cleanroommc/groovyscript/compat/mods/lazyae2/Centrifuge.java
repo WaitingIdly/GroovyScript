@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Centrifuge extends StandardListRegistry<PurifyRecipe> {
@@ -75,7 +74,7 @@ public class Centrifuge extends StandardListRegistry<PurifyRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PurifyRecipe> register() {
+        public @NotNull Collection<PurifyRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             PurifyRecipe recipe = new PurifyRecipe(LazyAE2.matchesIIngredient(input.get(0)), output.get(0));

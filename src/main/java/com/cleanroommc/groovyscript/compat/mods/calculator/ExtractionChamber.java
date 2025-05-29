@@ -100,7 +100,7 @@ public class ExtractionChamber extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CalculatorRecipe> register() {
+        public @NotNull Collection<CalculatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             List<Object> specialOutput = new ArrayList<>();

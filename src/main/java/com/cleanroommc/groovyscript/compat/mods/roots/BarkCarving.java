@@ -16,8 +16,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 @RegistryDescription
@@ -161,7 +161,7 @@ public class BarkCarving extends VirtualizedRegistry<BarkRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<BarkRecipe> register() {
+        public @NotNull Collection<BarkRecipe> register() {
             if (!validate()) return Collections.emptyList();
             BarkRecipe recipe;
             recipe = new BarkRecipe(super.name, output.get(0), input.get(0).toMcIngredient().getMatchingStacks()[0]);

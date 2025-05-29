@@ -11,6 +11,7 @@ import com.codetaylor.mc.pyrotech.modules.tech.machine.recipe.StoneOvenRecipe;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class StoneOven extends ForgeRegistryWrapper<StoneOvenRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("'apple_to_dirt_stone', item('minecraft:apple'), item('minecraft:dirt'), 1000"))
-    public List<StoneOvenRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
+    public Collection<StoneOvenRecipe> add(String name, IIngredient input, ItemStack output, int duration) {
         return recipeBuilder()
                 .duration(duration)
                 .name(name)

@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 import techreborn.api.Reference;
 import techreborn.api.recipe.machines.VacuumFreezerRecipe;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription(override = @MethodOverride(method = {
         @MethodDescription(method = "removeByInput", example = @Example("item('techreborn:dynamiccell').withNbt(['Fluid': ['FluidName': 'water', 'Amount': 1000]])")),
@@ -64,7 +64,7 @@ public class VacuumFreezer extends AbstractGenericTechRebornRegistry {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<VacuumFreezerRecipe> register() {
+        public @NotNull Collection<VacuumFreezerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             VacuumFreezerRecipe recipe = new VacuumFreezerRecipe(Helper.getStackFromIIngredient(input.get(0)), output.get(0), time, perTick);
             ModSupport.TECH_REBORN.get().vacuumFreezer.add(recipe);

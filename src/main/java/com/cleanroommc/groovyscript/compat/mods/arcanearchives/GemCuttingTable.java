@@ -16,8 +16,8 @@ import net.minecraft.item.crafting.Ingredient;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription(admonition = @Admonition(value = "groovyscript.wiki.arcanearchives.gem_cutting_table.note0", type = Admonition.Type.WARNING))
@@ -118,7 +118,7 @@ public class GemCuttingTable extends VirtualizedRegistry<IGCTRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IGCTRecipe> register() {
+        public @NotNull Collection<IGCTRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IGCTRecipe recipe = new GCTRecipe(super.name, output.get(0), input.stream().map(x -> new IngredientStack(x.toMcIngredient(), x.getAmount())).collect(Collectors.toList()));
             ModSupport.ARCANE_ARCHIVES.get().gemCuttingTable.add(recipe);

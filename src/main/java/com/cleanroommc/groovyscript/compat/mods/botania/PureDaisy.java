@@ -13,7 +13,6 @@ import vazkii.botania.api.recipe.RecipePureDaisy;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
@@ -29,12 +28,12 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.botania.pure_daisy.add0", type = MethodDescription.Type.ADDITION)
-    public List<RecipePureDaisy> add(IBlockState output, IBlockState input, int time) {
+    public Collection<RecipePureDaisy> add(IBlockState output, IBlockState input, int time) {
         return recipeBuilder().time(time).output(output).input(input).register();
     }
 
     @MethodDescription(description = "groovyscript.wiki.botania.pure_daisy.add1", type = MethodDescription.Type.ADDITION)
-    public List<RecipePureDaisy> add(IBlockState output, IBlockState input) {
+    public Collection<RecipePureDaisy> add(IBlockState output, IBlockState input) {
         return recipeBuilder().output(output).input(input).register();
     }
 
@@ -152,7 +151,7 @@ public class PureDaisy extends StandardListRegistry<RecipePureDaisy> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipePureDaisy> register() {
+        public @NotNull Collection<RecipePureDaisy> register() {
             if (!validate()) return Collections.emptyList();
             RecipePureDaisy recipe = new RecipePureDaisy(input, output, time);
             add(recipe);

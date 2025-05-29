@@ -11,10 +11,7 @@ import com.rwtema.extrautils2.api.machine.IMachineRecipe;
 import com.rwtema.extrautils2.api.machine.XUMachineFurnace;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @RegistryDescription(
         admonition = @Admonition(
@@ -124,7 +121,7 @@ public class Furnace extends VirtualizedRegistry<IMachineRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<IMachineRecipe> register() {
+        public @NotNull Collection<IMachineRecipe> register() {
             if (!validate()) return Collections.emptyList();
             com.rwtema.extrautils2.api.machine.RecipeBuilder builder = com.rwtema.extrautils2.api.machine.RecipeBuilder.newbuilder(XUMachineFurnace.INSTANCE);
             builder.setItemInput(XUMachineFurnace.INPUT, Arrays.asList(input.get(0).getMatchingStacks()), input.get(0).getAmount());

@@ -181,7 +181,7 @@ public class AtomicReshaper extends VirtualizedRegistry<AtomicReshaperManager.At
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AtomicReshaperManager.AtomicReshaperRecipe> register() {
+        public @NotNull Collection<AtomicReshaperManager.AtomicReshaperRecipe> register() {
             if (!validate()) return Collections.emptyList();
             IIngredient inputItem = input.get(0);
             if (inputItem instanceof OreDictIngredient oreDictIngredient) {

@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RegistryDescription
@@ -121,7 +120,7 @@ public class MillStone extends StandardListRegistry<MillRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<MillRecipe> register() {
+        public @NotNull Collection<MillRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             MillRecipe recipe = new MillRecipe(input.stream().map(IIngredient::toMcIngredient).collect(Collectors.toList()), output);

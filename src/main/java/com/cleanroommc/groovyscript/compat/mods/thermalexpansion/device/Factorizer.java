@@ -50,7 +50,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<FactorizerManager.FactorizerRecipe> add(boolean combine, boolean split, IIngredient input, ItemStack output) {
+    public Collection<FactorizerManager.FactorizerRecipe> add(boolean combine, boolean split, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .combine(combine)
                 .split(split)
@@ -182,7 +182,7 @@ public class Factorizer extends VirtualizedRegistry<Pair<Boolean, FactorizerMana
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<FactorizerManager.FactorizerRecipe> register() {
+        public @NotNull Collection<FactorizerManager.FactorizerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<FactorizerManager.FactorizerRecipe> recipes = new ArrayList<>();
 

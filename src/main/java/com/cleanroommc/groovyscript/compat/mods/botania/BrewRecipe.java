@@ -108,7 +108,7 @@ public class BrewRecipe extends StandardListRegistry<RecipeBrew> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeBrew> register() {
+        public @NotNull Collection<RecipeBrew> register() {
             if (!validate()) return Collections.emptyList();
             RecipeBrew recipe = new RecipeBrew(
                     brew,

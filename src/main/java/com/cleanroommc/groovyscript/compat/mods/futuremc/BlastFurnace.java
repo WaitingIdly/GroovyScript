@@ -13,7 +13,6 @@ import thedarkcolour.futuremc.recipe.furnace.BlastFurnaceRecipes;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class BlastFurnace extends StandardListRegistry<SimpleRecipe> {
@@ -63,7 +62,7 @@ public class BlastFurnace extends StandardListRegistry<SimpleRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<SimpleRecipe> register() {
+        public @NotNull Collection<SimpleRecipe> register() {
             if (!validate()) return Collections.emptyList();
             SimpleRecipe recipe = new SimpleRecipe(input.get(0).toMcIngredient(), output.get(0));
             ModSupport.FUTURE_MC.get().blastFurnace.add(recipe);

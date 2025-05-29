@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Crusher extends StandardListRegistry<CrusherRecipe> {
@@ -97,7 +96,7 @@ public class Crusher extends StandardListRegistry<CrusherRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CrusherRecipe> register() {
+        public @NotNull Collection<CrusherRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CrusherRecipe recipe = new CrusherRecipe(input.get(0).toMcIngredient(), output.get(0), output.size() < 2 ? ItemStack.EMPTY : output.get(1), chance);
             ModSupport.ACTUALLY_ADDITIONS.get().crusher.add(recipe);

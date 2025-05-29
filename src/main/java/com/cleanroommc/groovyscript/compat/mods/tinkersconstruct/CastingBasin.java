@@ -17,7 +17,6 @@ import slimeknights.tconstruct.library.smeltery.ICastingRecipe;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class CastingBasin extends StandardListRegistry<ICastingRecipe> {
@@ -135,7 +134,7 @@ public class CastingBasin extends StandardListRegistry<ICastingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ICastingRecipe> register() {
+        public @NotNull Collection<ICastingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             CastingRecipe recipe = new CastingRecipe(
                     output.get(0),

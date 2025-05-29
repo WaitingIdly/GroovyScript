@@ -56,7 +56,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example(value = "1000, compactorMode('plate'), item('minecraft:obsidian') * 2, item('minecraft:gold_ingot')", commented = true))
-    public List<CompactorRecipe> add(int energy, CompactorManager.Mode mode, IIngredient input, ItemStack output) {
+    public Collection<CompactorRecipe> add(int energy, CompactorManager.Mode mode, IIngredient input, ItemStack output) {
         return recipeBuilder()
                 .energy(energy)
                 .mode(mode)
@@ -178,7 +178,7 @@ public class Compactor extends VirtualizedRegistry<Pair<CompactorManager.Mode, C
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CompactorRecipe> register() {
+        public @NotNull Collection<CompactorRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<CompactorRecipe> recipes = new ArrayList<>();
 

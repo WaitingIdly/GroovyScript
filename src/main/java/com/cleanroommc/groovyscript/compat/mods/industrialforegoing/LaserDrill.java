@@ -249,7 +249,7 @@ public class LaserDrill extends VirtualizedRegistry<Pair<LaserDrillEntry.LaserDr
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<LaserDrillEntry.LaserDrillEntryExtended> register() {
+        public @NotNull Collection<LaserDrillEntry.LaserDrillEntryExtended> register() {
             if (!validate()) return Collections.emptyList();
             LaserDrillEntry.LaserDrillEntryExtended recipe = LaserDrillEntry.findForOre(output.get(0), new LaserDrillEntry.LaserDrillEntryExtended(lensMeta, output.get(0)));
             LaserDrillEntry.OreRarity entry = new LaserDrillEntry.OreRarity(weight, whitelist, blacklist, maxY, minY);

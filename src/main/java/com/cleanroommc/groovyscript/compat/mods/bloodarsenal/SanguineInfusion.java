@@ -173,7 +173,7 @@ public class SanguineInfusion extends StandardListRegistry<RecipeSanguineInfusio
         @SuppressWarnings("unchecked")
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeSanguineInfusion> register() {
+        public @NotNull Collection<RecipeSanguineInfusion> register() {
             if (!validate()) return Collections.emptyList();
             List<Pair<Object, Integer>> inputs = new ArrayList<>();
             for (var ingredient : input) {

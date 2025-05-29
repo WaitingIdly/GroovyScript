@@ -164,7 +164,7 @@ public class Enchanter extends VirtualizedRegistry<EnchanterRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<EnchanterRecipe> register() {
+        public @NotNull Collection<EnchanterRecipe> register() {
             if (!validate()) return Collections.emptyList();
             EnchanterRecipe recipe = new CustomEnchanterRecipe(input, amount, enchantment, costMultiplier, lapis, book);
             ModSupport.ENDER_IO.get().enchanter.add(recipe);

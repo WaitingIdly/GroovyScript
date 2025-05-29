@@ -55,7 +55,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.grindstone.add0", type = MethodDescription.Type.ADDITION)
-    public List<GrindstoneRecipe> add(IIngredient input, ItemStack output, int time) {
+    public Collection<GrindstoneRecipe> add(IIngredient input, ItemStack output, int time) {
         return recipeBuilder()
                 .time(time)
                 .output(output)
@@ -64,7 +64,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
     }
 
     @MethodDescription(description = "groovyscript.wiki.horsepower.grindstone.add1", type = MethodDescription.Type.ADDITION)
-    public List<GrindstoneRecipe> add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
+    public Collection<GrindstoneRecipe> add(IIngredient input, ItemStack output, ItemStack secondary, int chance, int time) {
         return recipeBuilder()
                 .time(time)
                 .chance(chance)
@@ -119,7 +119,7 @@ public class Grindstone extends StandardListRegistry<GrindstoneRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<GrindstoneRecipe> register() {
+        public @NotNull Collection<GrindstoneRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<GrindstoneRecipe> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

@@ -16,7 +16,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Electrolyzer extends StandardListRegistry<ElectrolyzerRecipe> {
@@ -131,7 +130,7 @@ public class Electrolyzer extends StandardListRegistry<ElectrolyzerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<ElectrolyzerRecipe> register() {
+        public @NotNull Collection<ElectrolyzerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             ElectrolyzerRecipe recipe = new ElectrolyzerRecipe(
                     fluidInput.get(0),

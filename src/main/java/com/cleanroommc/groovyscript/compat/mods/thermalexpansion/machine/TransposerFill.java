@@ -17,10 +17,7 @@ import net.minecraftforge.fluids.FluidStack;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RegistryDescription(
@@ -73,7 +70,7 @@ public class TransposerFill extends VirtualizedRegistry<TransposerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION, example = @Example("1000, item('minecraft:obsidian'), fluid('water') * 50, item('minecraft:diamond') * 2, 100"))
-    public List<TransposerRecipe> add(int energy, IIngredient input, FluidStack fluidInput, ItemStack outputItem, int chance) {
+    public Collection<TransposerRecipe> add(int energy, IIngredient input, FluidStack fluidInput, ItemStack outputItem, int chance) {
         return recipeBuilder()
                 .energy(energy)
                 .chance(chance)
@@ -165,7 +162,7 @@ public class TransposerFill extends VirtualizedRegistry<TransposerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<TransposerRecipe> register() {
+        public @NotNull Collection<TransposerRecipe> register() {
             if (!validate()) return Collections.emptyList();
             List<TransposerRecipe> recipes = new ArrayList<>();
             for (ItemStack input0 : input.get(0).getMatchingStacks()) {

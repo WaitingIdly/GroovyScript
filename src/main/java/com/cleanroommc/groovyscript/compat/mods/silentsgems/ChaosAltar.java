@@ -82,7 +82,7 @@ public class ChaosAltar extends StandardListRegistry<RecipeChaosAltar> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<RecipeChaosAltar> register() {
+        public @NotNull Collection<RecipeChaosAltar> register() {
             if (!validate()) return Collections.emptyList();
             List<RecipeChaosAltar> list = new ArrayList<>();
             for (var stack : input.get(0).getMatchingStacks()) {

@@ -13,7 +13,10 @@ import sonar.calculator.mod.common.recipes.AnalysingChamberRecipes;
 import sonar.calculator.mod.common.recipes.CalculatorRecipe;
 import sonar.core.recipes.ISonarRecipeObject;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 
 
 /**
@@ -119,7 +122,7 @@ public class AnalysingChamber extends StandardListRegistry<CalculatorRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<CalculatorRecipe> register() {
+        public @NotNull Collection<CalculatorRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             CalculatorRecipe recipe = AnalysingChamberRecipes.instance()

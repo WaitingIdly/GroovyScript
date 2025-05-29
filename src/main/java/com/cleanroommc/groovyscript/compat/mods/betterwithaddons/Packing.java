@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Packing extends StandardListRegistry<PackingRecipe> {
@@ -85,7 +84,7 @@ public class Packing extends StandardListRegistry<PackingRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<PackingRecipe> register() {
+        public @NotNull Collection<PackingRecipe> register() {
             if (!validate()) return Collections.emptyList();
             PackingRecipe recipe = new PackingRecipe(BetterWithAddons.FromIngredient.fromIIngredient(input.get(0)), compress);
             recipe.setJeiOutput(IngredientHelper.isEmpty(jeiOutput) ? IngredientHelper.toItemStack(compress) : jeiOutput);

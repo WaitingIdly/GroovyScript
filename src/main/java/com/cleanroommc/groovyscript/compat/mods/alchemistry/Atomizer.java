@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 @RegistryDescription
 public class Atomizer extends StandardListRegistry<AtomizerRecipe> {
@@ -34,7 +33,7 @@ public class Atomizer extends StandardListRegistry<AtomizerRecipe> {
     }
 
     @MethodDescription(type = MethodDescription.Type.ADDITION)
-    public List<AtomizerRecipe> add(FluidStack input, ItemStack output) {
+    public Collection<AtomizerRecipe> add(FluidStack input, ItemStack output) {
         return recipeBuilder().fluidInput(input).output(output).register();
     }
 
@@ -92,7 +91,7 @@ public class Atomizer extends StandardListRegistry<AtomizerRecipe> {
 
         @Override
         @RecipeBuilderRegistrationMethod
-        public @NotNull List<AtomizerRecipe> register() {
+        public @NotNull Collection<AtomizerRecipe> register() {
             if (!validate()) return Collections.emptyList();
 
             AtomizerRecipe recipe = new AtomizerRecipe(false, fluidInput.get(0), output.get(0));

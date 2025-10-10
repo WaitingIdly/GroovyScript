@@ -1582,6 +1582,19 @@ groovyscript.wiki.futuremc.stonecutter.title=Stoenecutter
 groovyscript.wiki.futuremc.stonecutter.description=Converts an input itemstack into an output itemstack via selecting the desired output from the Stonecutter GUI.
 
 
+# Gadgetry: Core
+groovyscript.wiki.gadgetrycore.alloy_furnace.title=Alloy Furnace
+groovyscript.wiki.gadgetrycore.alloy_furnace.description=Converts up to three input itemstacks into an output itemstack
+
+
+# Gadgetry: Machines
+groovyscript.wiki.gadgetrymachines.distiller.title=Distiller
+groovyscript.wiki.gadgetrymachines.distiller.description=Converts an input fluidstack into an output fluidstack, with the ability to also require an input item and/or output an itemstack
+
+groovyscript.wiki.gadgetrymachines.grinder.title=Grinder
+groovyscript.wiki.gadgetrymachines.grinder.description=Converts an input itemstack into an output itemstack
+
+
 # Horse Power
 groovyscript.wiki.horsepower.chopping_block.title=Horse Chopping Block
 groovyscript.wiki.horsepower.chopping_block.description=Converts an itemstack input into an itemstack output, with the chance of an additional output after a configurable amount of processing has been done. Depending on if the config option `Separate Chopping Recipes` is true, this may affect both Horse and Hand Chopping Blocks. Only the Horse Chopping Block can produce secondary outputs.

@@ -75,6 +75,8 @@ final Map<String, List<String>> mod_dependencies = [
         'factory-tech-278822:3845293'                         : [debug_factory_tech],
         'forestry-59751:2918418'                              : [debug_forestry],
         'future-mc-310059:5626387'                            : [debug_future_mc],
+        'gadgetry-core-282775:2633658'                        : [debug_gadgetry, debug_gadgetry_machines],
+        'gadgetry-machines-282776:2634495'                    : [debug_gadgetry],
         'guide-api-228832:2645992'                            : [debug_blood_arsenal, debug_blood_magic, debug_woot],
         'guidebook-253874:2989594'                            : [debug_arcane_archives],
         'hammer-lib-247401:5259462'                           : [debug_botanic_additions],
